@@ -1,5 +1,14 @@
 package com.proyectojava.plane.infrastructure;
 
-public interface PlaneRepository {
+import java.util.List;
+import java.util.Optional;
 
+import com.proyectojava.plane.domain.models.Plane;
+
+public interface PlaneRepository {
+    void save (Plane plane);
+    void update(Plane plane);
+    Optional<Plane>findById(int id_avion);
+    void delete(int id_avion);
+    List<Plane>findAll();
 }

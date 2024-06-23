@@ -1,5 +1,14 @@
 package com.proyectojava.gate.infrastructure;
 
-public interface GateRepository {
+import java.util.List;
+import java.util.Optional;
 
+import com.proyectojava.gate.domain.models.Gate;
+
+public interface GateRepository {
+    void save (Gate gate);
+    void uptade (Gate gate);
+    Optional<Gate>findById(int id_puerta);
+    void delete(int id_puerta);
+    List<Gate>findAll();
 }
