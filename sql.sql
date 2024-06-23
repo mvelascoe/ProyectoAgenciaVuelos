@@ -4,7 +4,7 @@ USE Vuelos_globales;
 CREATE TABLE flightconnection(
     id_trayectoria  INT AUTO_INCREMENT,
     trayectoria_numero VARCHAR(20) NOT NULL,
-    id_ticket INT,
+    id_trip INT,
     id_avion INT,
     id_aeropuerto VARCHAR(5), 
     PRIMARY KEY(id_trayectoria)
@@ -116,16 +116,16 @@ CREATE TABLE airline(
     PRIMARY KEY(id_aerolinea)
 );
 
-CREATE TABLE tickets(
-    id_ticket INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE trip(
+    id_trip INT NOT NULL AUTO_INCREMENT,
     precio DOUBLE,
-    PRIMARY KEY(id_ticket)
+    PRIMARY KEY(id_trip)
 );
 
 CREATE TABLE tripboooking(
     id_trip_booking INT NOT NULL AUTO_INCREMENT,
     fecha_ticket DATE,
-    id_ticket INT,
+    id_trip INT,
     PRIMARY KEY(id_trip_booking)
 );
 
@@ -162,7 +162,7 @@ CREATE TABLE documenttype(
 
 
 ALTER TABLE flightconnection
-ADD CONSTRAINT fk_trayectoria_ticket FOREIGN KEY (id_ticket) REFERENCES tickets(id_ticket),
+ADD CONSTRAINT fk_trayectoria_trip FOREIGN KEY (id_trip) REFERENCES trip(id_trip),
 ADD CONSTRAINT fk_trayectoria_avion FOREIGN KEY (id_avion) REFERENCES planes(id_avion),
 ADD CONSTRAINT fk_trayectoria_aeropuerto FOREIGN KEY (id_aeropuerto) REFERENCES airport(id_aeropuerto) ON DELETE RESTRICT ON UPDATE CASCADE;
 
@@ -192,7 +192,7 @@ ADD CONSTRAINT fk_tripulacion_empleado FOREIGN KEY (id_empleado) REFERENCES empl
 ADD CONSTRAINT fk_tripulacion_trayectoria FOREIGN KEY (id_trayectoria) REFERENCES flightconnection(id_trayectoria);
 
 ALTER TABLE tripboooking
-ADD CONSTRAINT fk_tripbooking_ticket FOREIGN KEY (id_ticket) REFERENCES tickets(id_ticket);
+ADD CONSTRAINT fk_tripbooking_ticket FOREIGN KEY (id_trip) REFERENCES trip(id_trip);
 
 ALTER TABLE tripbookingdetails
 ADD CONSTRAINT fk_tripbookingdetails_tripbooking FOREIGN KEY (id_trip_booking) REFERENCES tripboooking(id_trip_booking),
