@@ -3,33 +3,33 @@ package com.proyectojava.cities.application;
 import java.util.List;
 import java.util.Optional;
 
-import com.proyectojava.cities.adapters.out.CitiesMySQLRepository;
 import com.proyectojava.cities.domain.models.Cities;
+import com.proyectojava.cities.infrastructure.CitiesRepository;
 
 public class CitiesService {
-    private final CitiesMySQLRepository citiesMySQLRepository;
+    private final CitiesRepository citiesRepository;
 
-    public CitiesService(CitiesMySQLRepository citiesMySQLRepository) {
-        this.citiesMySQLRepository = citiesMySQLRepository;
+    public CitiesService(CitiesRepository citiesRepository) {
+        this.citiesRepository = citiesRepository;
     }
 
     public void createCity(Cities cities){
-        citiesMySQLRepository.save(cities);
+        citiesRepository.save(cities);
     }
 
     public void updateCity(Cities cities){
-        citiesMySQLRepository.update(cities);
+        citiesRepository.update(cities);
     }
 
     public Optional<Cities> findCityById(String id_ciudad){
-        return citiesMySQLRepository.findById(id_ciudad);
+        return citiesRepository.findById(id_ciudad);
     }
 
     public void deleteCity(String id_ciudad){
-        citiesMySQLRepository.delete(id_ciudad);
+        citiesRepository.delete(id_ciudad);
     }
 
     public List<Cities>findAllCities(){
-        return citiesMySQLRepository.findAll();
+        return citiesRepository.findAll();
     }
 }

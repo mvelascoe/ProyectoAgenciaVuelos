@@ -119,6 +119,8 @@ CREATE TABLE airline(
 CREATE TABLE trip(
     id_trip INT NOT NULL AUTO_INCREMENT,
     precio DOUBLE,
+    lugar_ida VARCHAR(50),
+    lugar_llegada VARCHAR(50),
     PRIMARY KEY(id_trip)
 );
 
@@ -140,7 +142,7 @@ CREATE TABLE tripbookingdetails(
 CREATE TABLE flightfare(
     id_tarifa INT NOT NULL AUTO_INCREMENT,
     descripcion VARCHAR(20),
-    detalLes text,
+    detalles text,
     valor DOUBLE(7,3),
     PRIMARY KEY(id_tarifa)
 );

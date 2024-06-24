@@ -3,33 +3,33 @@ package com.proyectojava.airport.application;
 import java.util.List;
 import java.util.Optional;
 
-import com.proyectojava.airport.adapters.out.AirportMySQLRepository;
 import com.proyectojava.airport.domain.models.Airport;
+import com.proyectojava.airport.infrastructure.AirportRepository;
 
 public class AirportService {
-    private final AirportMySQLRepository airportMySQLRepository;
+    private final AirportRepository airportRepository;
 
-    public AirportService(AirportMySQLRepository airportMySQLRepository) {
-        this.airportMySQLRepository = airportMySQLRepository;
+    public AirportService(AirportRepository airportRepository) {
+        this.airportRepository = airportRepository;
     }
 
     public void createAirport(Airport airport){
-        airportMySQLRepository.save(airport);
+        airportRepository.save(airport);
     }
 
     public void updateAirport(Airport airport){
-        airportMySQLRepository.update(airport);
+        airportRepository.update(airport);
     }
 
     public Optional<Airport> findAirportById(String id_aeropuerto){
-        return airportMySQLRepository.findById(id_aeropuerto);
+        return airportRepository.findById(id_aeropuerto);
     }
 
     public void deleteAirport(String id_aeropuerto){
-        airportMySQLRepository.delete(id_aeropuerto);
+        airportRepository.delete(id_aeropuerto);
     }
 
     public List<Airport> findAllAirports(){
-        return airportMySQLRepository.findAll();
+        return airportRepository.findAll();
     }
 }

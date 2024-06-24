@@ -26,9 +26,11 @@ public class TripMySQLRepository implements TripRepository{
     @Override
     public void save(Trip trip) {
         try (Connection connection = DriverManager.getConnection(url, user, password)){
-            String query = "INSERT INTO trip (precio) VALUES (?)";
+            String query = "INSERT INTO trip (precio,lugar_ida,lugar_llegada) VALUES (?)";
             try (PreparedStatement statement = connection.prepareStatement(query)){
                 statement.setDouble(1, trip.getPrecio());
+                statement.setString(2, trip.getLugar_ida());
+                statement.setString(3, trip.getLugar_llegada());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -40,10 +42,12 @@ public class TripMySQLRepository implements TripRepository{
     @Override
     public void update(Trip trip) {
         try (Connection connection = DriverManager.getConnection(url, user, password)){
-            String query = "UPDATE trip SET precio = ? WHERE id_trip = ?";
+            String query = "UPDATE trip SET precio = ?,lugar_ida = ?,lugar_llegada = ? WHERE id_trip = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)){
                 statement.setDouble(1, trip.getPrecio());
-                statement.setInt(2, trip.getId_trip());
+                statement.setString(2, trip.getLugar_ida());
+                statement.setString(3, trip.getLugar_llegada());
+                statement.setInt(4, trip.getId_trip());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -54,14 +58,16 @@ public class TripMySQLRepository implements TripRepository{
     @Override
     public Optional<Trip> findById(int id_trip) {
         try (Connection connection = DriverManager.getConnection(url, user, password)){
-            String query = "SELECT id_trip, precio FROM trip WHERE id_trip = ?";
+            String query = "SELECT id_trip,precio,lugar_ida,lugar_llegada FROM trip WHERE id_trip = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)){
                 statement.setInt(1, id_trip);
                 try (ResultSet resultSet = statement.executeQuery()){
                     if (resultSet.next()){
                         Trip trip = new Trip(
                             resultSet.getInt("id_trip"),
-                            resultSet.getDouble("precio")
+                            resultSet.getDouble("precio"),
+                            resultSet.getString("lugar_ida"),
+                            resultSet.getString("lugar_llegada")
                         );
                         return Optional.of(trip);
                     }
@@ -98,7 +104,9 @@ public class TripMySQLRepository implements TripRepository{
                 while (resultSet.next()){
                     Trip trip = new Trip(
                         resultSet.getInt("id_trip"),
-                        resultSet.getDouble("precio")
+                        resultSet.getDouble("precio"),
+                        resultSet.getString("lugar_ida"),
+                        resultSet.getString("lugar_llegada")
                     );
                     trips.add(trip);
                 }
