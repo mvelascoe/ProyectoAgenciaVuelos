@@ -38,7 +38,7 @@ public class GateMySQLRepository implements GateRepository {
     }
 
     @Override
-    public void uptade(Gate gate) {
+    public void update(Gate gate) {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             String query = "UPDATE gates SET numero_puerta = ?, id_aeropuerto = ? WHERE id_puerta = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
