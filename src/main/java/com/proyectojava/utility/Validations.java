@@ -1,4 +1,4 @@
-package com.proyectojava.resourses;
+package com.proyectojava.utility;
 
 import java.util.Optional;
 import java.util.Scanner;
