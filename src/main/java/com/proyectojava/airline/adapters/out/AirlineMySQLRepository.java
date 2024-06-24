@@ -72,7 +72,7 @@ public class AirlineMySQLRepository implements AirlineRepository {
             String query = "DELETE FROM airline WHERE id_aerolinea = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setInt(1, id_aerolinea);
-                statement.executeQuery();
+                statement.executeUpdate();
             }
         } catch (SQLException e) {
             e.printStackTrace();

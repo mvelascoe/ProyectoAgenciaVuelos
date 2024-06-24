@@ -12,6 +12,11 @@ public class Airline {
         this.nombre_aerolinea = nombre_aerolinea;
     }
 
+    
+
+    public Airline(String nombre_aerolinea) {
+        this.nombre_aerolinea = nombre_aerolinea;
+    }
 
     //GETTERS AND SETTERS
     public int getId_aerolinea() {

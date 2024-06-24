@@ -14,6 +14,12 @@ public class Gate {
         this.id_aeropuerto = id_aeropuerto;
     }
 
+    
+    public Gate(int numero_puerta, String id_aeropuerto) {
+        this.numero_puerta = numero_puerta;
+        this.id_aeropuerto = id_aeropuerto;
+    }
+
     public int getId_puerta() {
         return id_puerta;
     }

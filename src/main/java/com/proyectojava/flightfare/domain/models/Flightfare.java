@@ -16,6 +16,13 @@ public class Flightfare {
         this.valor = valor;
     }
 
+    
+    public Flightfare(String descripcion, String detalles, double valor) {
+        this.descripcion = descripcion;
+        this.detalles = detalles;
+        this.valor = valor;
+    }
+
     //GETTERS AND SETTERS
     public int getId_tarifa() {
         return id_tarifa;
