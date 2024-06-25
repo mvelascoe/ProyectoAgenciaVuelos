@@ -69,6 +69,7 @@ public class AirportConsoleAdapter {
                 });
                     break;
                 case 6:
+                sc.close();
                 System.out.println("Volviendo al menu principal... Adios");
                     break;
                 default:
