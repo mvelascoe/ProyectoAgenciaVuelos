@@ -30,7 +30,7 @@ public class RolsConsoleAdapter {
                     rolsService.createRol(newRol);
                     break;
                 case 2:
-                    System.out.println("Ingrese el ID de la aerolinea: ");
+                    System.out.println("Ingrese el ID del rol: ");
                     int updateID = sc.nextInt();
 
                     System.out.println("Ingresa el nuevo nombre: ");

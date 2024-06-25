@@ -35,7 +35,7 @@ public class RolsMySQLRepository  implements RolsRepository{
     @Override
     public void update(Rols rols){
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "UPDATE rols SET nombre_rol,id_rol WHERE id_rol = ?";
+            String query = "UPDATE rols SET nombre_rol = ? WHERE id_rol = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setString(1,rols.getNombre_rol());
                 statement.setInt(2, rols.getId_rol());
