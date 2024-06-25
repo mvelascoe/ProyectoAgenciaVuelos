@@ -21,7 +21,7 @@ public class CitiesService {
         citiesRepository.update(cities);
     }
 
-    public Optional<Cities> findCityById(String id_ciudad){
+    public Optional<Cities> getCityById(String id_ciudad){
         return citiesRepository.findById(id_ciudad);
     }
 
@@ -29,7 +29,7 @@ public class CitiesService {
         citiesRepository.delete(id_ciudad);
     }
 
-    public List<Cities>findAllCities(){
+    public List<Cities>getAllCities(){
         return citiesRepository.findAll();
     }
 }

@@ -29,7 +29,7 @@ public class DocumenttypeService {
         documenttypeRepository.delete(id_documento);
     }
 
-    public List<Documenttype> findAllDocument(int id_documento){
+    public List<Documenttype> findAllDocument(){
         return documenttypeRepository.findAll();
     }
 }

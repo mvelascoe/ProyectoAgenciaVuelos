@@ -37,11 +37,11 @@ public class CitiesMySQLRepository implements CitiesRepository {
     @Override
     public void update(Cities cities) {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "UPDATE cities SET id_ciudad = ?,nombre_ciudad = ?,id_pais = ? WHERE id_ciudad = ?";
+            String query = "UPDATE cities SET nombre_ciudad = ?, id_pais = ? WHERE id_ciudad = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setString(1,cities.getId_ciudad());
-                statement.setString(2,cities.getNombre_ciudad());
-                statement.setString(3,cities.getId_pais());
+                statement.setString(1, cities.getNombre_ciudad());
+                statement.setString(2, cities.getId_pais());
+                statement.setString(3, cities.getId_ciudad());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -76,7 +76,7 @@ public class CitiesMySQLRepository implements CitiesRepository {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             String query = "DELETE FROM cities WHERE id_ciudad = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setString(1, "id_ciudad");
+                statement.setString(1, id_ciudad);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {

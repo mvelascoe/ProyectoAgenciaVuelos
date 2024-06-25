@@ -44,6 +44,12 @@ public class Cities {
         this.id_pais = id_pais;
     }
 
+
+    public void ifPresentOrElse(Object object, Object object2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'ifPresentOrElse'");
+    }
+
     
     
 }

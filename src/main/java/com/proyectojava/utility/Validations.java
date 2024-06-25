@@ -5,7 +5,8 @@ import java.util.Scanner;
 import java.util.function.Supplier;
 
 public class Validations {
-    private Scanner scanner;
+    private static Scanner scanner;
+    
 
     public Validations() {
         this.scanner = new Scanner(System.in);
@@ -82,5 +83,4 @@ public class Validations {
             }
         }
     }
-
 }

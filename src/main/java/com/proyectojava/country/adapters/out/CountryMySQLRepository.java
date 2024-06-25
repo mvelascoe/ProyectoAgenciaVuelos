@@ -23,8 +23,8 @@ public class CountryMySQLRepository implements CountryRepository{
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             String query = "INSERT INTO country (id_pais,nombre_pais) VALUES(?,?)";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setString(1,country.getId_pais());
-                statement.setString(2, country.getNombre_pais());
+                statement.setString(1, country.getNombre_pais());
+                statement.setString(2, country.getId_pais());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -35,10 +35,10 @@ public class CountryMySQLRepository implements CountryRepository{
     @Override
     public void update(Country country){
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "UPDATE country SET id_pais = ?,nombre_pais = ?WHERE id_pais = ?";
+            String query = "UPDATE country SET nombre_pais = ? WHERE id_pais = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setString(1, country.getId_pais());
-                statement.setString(2,country.getNombre_pais());
+                statement.setString(1, country.getNombre_pais()); 
+                statement.setString(2, country.getId_pais());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -72,7 +72,7 @@ public class CountryMySQLRepository implements CountryRepository{
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             String query = "DELETE FROM country WHERE id_pais = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setString(1, "id_pais");
+                statement.setString(1, id_pais);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -84,13 +84,13 @@ public class CountryMySQLRepository implements CountryRepository{
     public List<Country> findAll(){
         List<Country> paises = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "SELECT id_ciudad,nombre_ciudad,id_pais FROM country";
+            String query = "SELECT id_pais, nombre_pais FROM country";
             try (PreparedStatement statement = connection.prepareStatement(query);
                     ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     Country pais = new Country(
                             resultSet.getString("id_pais"),
-                            resultSet.getString("nombre_ciudad"));
+                            resultSet.getString("nombre_pais"));
                             paises.add(pais);
                 }
             }

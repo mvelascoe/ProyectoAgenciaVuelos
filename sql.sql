@@ -25,7 +25,7 @@ CREATE TABLE cities(
 );
 
 CREATE TABLE country(
-    id_pais VARCHAR(5) NOT NULL AUTO_INCREMENT,
+    id_pais VARCHAR(5) NOT NULL,
     nombre_pais VARCHAR(30)NOT NULL,
     PRIMARY KEY(id_pais)
 );

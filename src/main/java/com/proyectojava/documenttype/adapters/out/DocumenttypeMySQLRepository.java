@@ -36,10 +36,10 @@ public class DocumenttypeMySQLRepository implements DocumenttypeRepository {
     @Override
     public void update(Documenttype documenttype) {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "UPDATE documenttype SET id_documento = ?,nombre_documento = ? WHERE id_documento = ?";
+            String query = "UPDATE documenttype SET nombre_documento = ? WHERE id_documento = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setInt(1, documenttype.getId_documento());
-                statement.setString(2, documenttype.getNombre_documento());
+                statement.setString(1, documenttype.getNombre_documento());
+                statement.setInt(2, documenttype.getId_documento());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -73,7 +73,7 @@ public class DocumenttypeMySQLRepository implements DocumenttypeRepository {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             String query = "DELETE FROM documenttype WHERE id_documento = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setString(1, "id_documento");
+                statement.setInt(1, id_documento);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {

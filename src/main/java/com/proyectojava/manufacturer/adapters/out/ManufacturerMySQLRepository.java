@@ -35,7 +35,6 @@ public class ManufacturerMySQLRepository implements ManufacturerRepository{
         }
     }
 
-    @Override
     public void update(Manufacturer manufacturer) {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             String query = "UPDATE manufacturer SET nombre_manufactura = ? WHERE id_manufactura = ?";
