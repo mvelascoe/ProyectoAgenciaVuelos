@@ -25,9 +25,9 @@ public class TripMySQLRepository implements TripRepository{
 
     @Override
     public void save(Trip trip) {
-        try (Connection connection = DriverManager.getConnection(url, user, password)){
-            String query = "INSERT INTO trip (precio,lugar_ida,lugar_llegada) VALUES (?)";
-            try (PreparedStatement statement = connection.prepareStatement(query)){
+        try (Connection connection = DriverManager.getConnection(url, user, password)) {
+            String query = "INSERT INTO trip (precio, lugar_ida, lugar_llegada) VALUES (?, ?, ?)";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setDouble(1, trip.getPrecio());
                 statement.setString(2, trip.getLugar_ida());
                 statement.setString(3, trip.getLugar_llegada());
@@ -41,9 +41,9 @@ public class TripMySQLRepository implements TripRepository{
 
     @Override
     public void update(Trip trip) {
-        try (Connection connection = DriverManager.getConnection(url, user, password)){
-            String query = "UPDATE trip SET precio = ?,lugar_ida = ?,lugar_llegada = ? WHERE id_trip = ?";
-            try (PreparedStatement statement = connection.prepareStatement(query)){
+        try (Connection connection = DriverManager.getConnection(url, user, password)) {
+            String query = "UPDATE trip SET precio = ?, lugar_ida = ?, lugar_llegada = ? WHERE id_trip = ?";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setDouble(1, trip.getPrecio());
                 statement.setString(2, trip.getLugar_ida());
                 statement.setString(3, trip.getLugar_llegada());
@@ -94,13 +94,12 @@ public class TripMySQLRepository implements TripRepository{
 
     }
 
-    @Override
     public List<Trip> findAll() {
         List<Trip> trips = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, user, password)){
-            String query = "SELECT id_trip, precio FROM trip";
+            String query = "SELECT id_trip, precio, lugar_ida, lugar_llegada FROM trip";
             try (PreparedStatement statement = connection.prepareStatement(query);
-                 ResultSet resultSet = statement.executeQuery()){
+                ResultSet resultSet = statement.executeQuery()){
                 while (resultSet.next()){
                     Trip trip = new Trip(
                         resultSet.getInt("id_trip"),

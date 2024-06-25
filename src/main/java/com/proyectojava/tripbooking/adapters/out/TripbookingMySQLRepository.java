@@ -85,7 +85,7 @@ public class TripbookingMySQLRepository implements TripbookingRepository{
             String query = "DELETE FROM tripboooking WHERE id_trip_booking = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)){
                 statement.setInt(1, id_trip_booking);
-                statement.executeQuery();
+                statement.executeUpdate();
 
             }
         }catch (SQLException e){
@@ -104,7 +104,7 @@ public class TripbookingMySQLRepository implements TripbookingRepository{
                 while (resultSet.next()){
                     Tripbooking tripbooking = new Tripbooking(
                         resultSet.getInt("id_trip_booking"),
-                        resultSet.getDate("fecha_tecket"), 
+                        resultSet.getDate("fecha_ticket"), 
                         resultSet.getInt("id_trip")
                     );
                     tripbookings.add(tripbooking);

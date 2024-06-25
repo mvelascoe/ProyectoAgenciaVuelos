@@ -1,4 +1,4 @@
-CREATE DATABASE Vuelos_globales;
+mCREATE DATABASE Vuelos_globales;
 USE Vuelos_globales;
 
 CREATE TABLE flightconnection(
