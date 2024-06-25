@@ -100,7 +100,7 @@ public class PlaneMySQLRepository implements PlaneRepository{
 
     @Override
     public List<Plane> findAll() {
-         List<Plane> planes = new ArrayList<>();
+        List<Plane> planes = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             String query = "SELECT id_avion, matricula, capacidad, fecha_fabricacion, id_estado, id_modelo FROM planes";
             try (PreparedStatement statement = connection.prepareStatement(query);
