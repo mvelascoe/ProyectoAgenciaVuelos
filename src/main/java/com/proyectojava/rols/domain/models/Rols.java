@@ -1,14 +1,18 @@
-package com.proyectojava.tripulationroles.domain.models;
+package com.proyectojava.rols.domain.models;
 
-public class Tripulationroles {
+public class Rols {
     private int id_rol;
     private String nombre_rol;
-
-    public Tripulationroles() {
-    }
     
-    public Tripulationroles(int id_rol, String nombre_rol) {
+    public Rols() {
+    }
+
+    public Rols(int id_rol, String nombre_rol) {
         this.id_rol = id_rol;
+        this.nombre_rol = nombre_rol;
+    }
+
+    public Rols(String nombre_rol) {
         this.nombre_rol = nombre_rol;
     }
 
@@ -27,6 +31,5 @@ public class Tripulationroles {
     public void setNombre_rol(String nombre_rol) {
         this.nombre_rol = nombre_rol;
     }
-
     
 }
