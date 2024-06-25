@@ -64,7 +64,6 @@ public class AirlineConsoleAdapter {
                     break;
                 default:
                 System.out.println("Opcion invalida intentalo de nuevo");
-                sc.close();
                     break;
             }
         }

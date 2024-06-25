@@ -37,12 +37,12 @@ public class CustomerMySQLRepository implements CustomerRepository {
     @Override
     public void update(Customer costumer){
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "UPDATE costumer SET id_cliente = ?,nombre_cliente = ?,edad_cliente = ?,id_documento = ? WHERE id_cliente = ?";
+            String query = "UPDATE costumer SET nombre_cliente = ?,edad_cliente = ?,id_documento = ? WHERE id_cliente = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setString(1,costumer.getId_cliente());
-                statement.setString(2,costumer.getNombre_cliente());
-                statement.setInt(3,costumer.getEdad_cliente());
-                statement.setInt(4, costumer.getId_documento());
+                statement.setString(1,costumer.getNombre_cliente());
+                statement.setInt(2,costumer.getEdad_cliente());
+                statement.setInt(3, costumer.getId_documento());
+                statement.setString(4,costumer.getId_cliente());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {

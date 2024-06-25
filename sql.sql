@@ -70,6 +70,7 @@ CREATE TABLE revisions(
     id_revision INT AUTO_INCREMENT,
     fecha_revision DATE NOT NULL,
     id_avion INT,
+    detalle text,
     PRIMARY KEY(id_revision)
 );
 
@@ -81,11 +82,6 @@ CREATE TABLE revemployee(
     PRIMARY KEY(id_revi_empleado)
 );
 
-CREATE TABLE revdetailes(
-    id_revision_detalles INT AUTO_INCREMENT,
-    detalles text,
-    PRIMARY KEY(id_revision_detalles)
-);
 
 CREATE TABLE employee(
     id_empleado VARCHAR(20) NOT NULL,
@@ -180,8 +176,7 @@ ADD CONSTRAINT fk_revisiones_avion FOREIGN KEY (id_avion) REFERENCES planes(id_a
 
 ALTER TABLE revemployee
 ADD CONSTRAINT fk_rev_empleado_empleado FOREIGN KEY (id_empleado) REFERENCES employee(id_empleado),
-ADD CONSTRAINT fk_rev_empleado_revision FOREIGN KEY (id_revision) REFERENCES revisions(id_revision),
-ADD CONSTRAINT fk_rev_empleado_revision_detalles FOREIGN KEY (id_revision_detalles) REFERENCES revdetailes(id_revision_detalles);
+ADD CONSTRAINT fk_rev_empleado_revision FOREIGN KEY (id_revision) REFERENCES revisions(id_revision)
 
 
 ALTER TABLE employee

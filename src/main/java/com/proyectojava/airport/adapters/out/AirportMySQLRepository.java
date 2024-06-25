@@ -36,11 +36,12 @@ public class AirportMySQLRepository implements AirportRepository{
     @Override
     public void update(Airport airport) {
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "UPDATE airport SET id_aeropuerto = ?,nombre_aeropuerto = ?,id_ciudad = ? WHERE id_aeropuerto = ?";
+            String query = "UPDATE airport SET nombre_aeropuerto = ?,id_ciudad = ? WHERE id_aeropuerto = ?";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setString(1, "id_aeropuerto");
-                statement.setString(2, "nombre_aeropuerto");
-                statement.setString(3, "id_ciudad");
+                statement.setString(1, "nombre_aeropuerto");
+                statement.setString(2, "id_ciudad");
+                statement.setString(3, "id_aeropuerto");
+                
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
