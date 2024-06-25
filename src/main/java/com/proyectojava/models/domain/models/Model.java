@@ -36,8 +36,6 @@ public class Model {
 
     public void setId_manufactura(int id_manufactura) {
         this.id_manufactura = id_manufactura;
-    }
-
-    
+    } 
 
 }

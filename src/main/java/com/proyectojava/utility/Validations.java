@@ -1,5 +1,8 @@
 package com.proyectojava.utility;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.function.Supplier;
@@ -82,5 +85,38 @@ public class Validations {
                 return input;
             }
         }
+    }
+
+
+    public Date validarFecha(String mensaje) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        Date fecha = null;
+
+        while (fecha == null) {
+            System.out.print(mensaje);
+            String input = scanner.nextLine();
+            try {
+                java.util.Date utilDate = dateFormat.parse(input);
+                fecha = new Date(utilDate.getTime());
+            } catch (ParseException e) {
+                System.out.println("Fecha inválida. Formato correcto: YYYY-MM-DD.");
+            }
+        }
+        return fecha;
+    }
+
+    public double validarDouble(String mensaje) {
+        double dato;
+        while (true) {
+            System.out.println(mensaje);
+            try {
+                dato = Double.parseDouble(scanner.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.print("Debe ingresar un dato válido, ");
+            }
+        }
+        return dato;
     }
 }
