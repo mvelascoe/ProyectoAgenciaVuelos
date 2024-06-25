@@ -1,13 +1,16 @@
 package com.proyectojava.flightconnection.domain.models;
 
-public class Flightfare {
+public class FlightConnection {
     private int id_trayectoria;
     private String trayectoria_numero;
     private int id_trip;
     private int id_avion;
     private String id_aeropuerto;
 
-    public Flightfare(int id_trayectoria, String trayectoria_numero, int id_trip, int id_avion,
+    public FlightConnection() {
+    }
+
+    public FlightConnection(int id_trayectoria, String trayectoria_numero, int id_trip, int id_avion,
             String id_aeropuerto) {
         this.id_trayectoria = id_trayectoria;
         this.trayectoria_numero = trayectoria_numero;
@@ -16,8 +19,15 @@ public class Flightfare {
         this.id_aeropuerto = id_aeropuerto;
     }
 
-    //GETTERS AND SETTERS
+    
+    public FlightConnection(String trayectoria_numero, int id_trip, int id_avion, String id_aeropuerto) {
+        this.trayectoria_numero = trayectoria_numero;
+        this.id_trip = id_trip;
+        this.id_avion = id_avion;
+        this.id_aeropuerto = id_aeropuerto;
+    }
 
+    //GETTERS AND SETTERS
     public int getId_trayectoria() {
         return id_trayectoria;
     }

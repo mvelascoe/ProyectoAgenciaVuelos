@@ -1,6 +1,6 @@
 package com.proyectojava.employee.domain.models;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Employee {
     private String id_empleado;

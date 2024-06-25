@@ -3,7 +3,7 @@ package com.proyectojava.flightconnection.application;
 import java.util.List;
 import java.util.Optional;
 
-import com.proyectojava.flightconnection.domain.models.Flightfare;
+import com.proyectojava.flightconnection.domain.models.FlightConnection;
 import com.proyectojava.flightconnection.infrastructure.FlightConnectionRepository;
 
 public class FlightConnectionService {
@@ -13,23 +13,23 @@ public class FlightConnectionService {
         this.flightConnectionRepository = flightConnectionRepository;
     }
 
-    public void createFligthConnection(Flightfare flightConnection){
+    public void createConnection(FlightConnection flightConnection){
         flightConnectionRepository.save(flightConnection);
     }
 
-    public void updateFlightConnection(Flightfare flightConnection){
+    public void updateConnecttion(FlightConnection flightConnection){
         flightConnectionRepository.update(flightConnection);
     }
 
-    public Optional<Flightfare>findFligthConnectionById(int id_trayectoria){
+    public Optional<FlightConnection> findConnecttionById(int id_trayectoria){
         return flightConnectionRepository.findById(id_trayectoria);
     }
 
-    public void deleteFligthConnection(int id_trayectoria){
+    public void deleteConnecttion(int id_trayectoria){
         flightConnectionRepository.delete(id_trayectoria);
     }
 
-    public List<Flightfare> findAllFlightsConnection(){
+    public List<FlightConnection> findAllConnecttions(){
         return flightConnectionRepository.findAll();
     }
 }

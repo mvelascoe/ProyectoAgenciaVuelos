@@ -28,7 +28,7 @@ public class EmployeeMySQLRepository implements EmployeeRepository{
                 statement.setString(1,employee.getId_empleado());
                 statement.setString(2,employee.getNombre_empleado());
                 statement.setInt(3,employee.getId_rol());
-                statement.setDate(4,employee.getFecha_ingreso());
+                statement.setDate(4, new java.sql.Date(employee.getFecha_ingreso().getTime())); // Aquí se convierte a java.sql.Date
                 statement.setInt(5,employee.getId_aerolinea());
                 statement.setString(6,employee.getId_aeropuerto());
                 statement.executeUpdate();
@@ -46,7 +46,7 @@ public class EmployeeMySQLRepository implements EmployeeRepository{
                 statement.setString(1,employee.getId_empleado());
                 statement.setString(2,employee.getNombre_empleado());
                 statement.setInt(3,employee.getId_rol());
-                statement.setDate(4,employee.getFecha_ingreso());
+                statement.setDate(4, new java.sql.Date(employee.getFecha_ingreso().getTime())); // Aquí se convierte a java.sql.Date
                 statement.setInt(5,employee.getId_aerolinea());
                 statement.setString(6,employee.getId_aeropuerto());
                 statement.executeUpdate();
