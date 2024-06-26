@@ -202,7 +202,7 @@ ADD CONSTRAINT fk_cliente_documento FOREIGN KEY (id_documento) REFERENCES docume
 
 ALTER TABLE gates 
 ADD CONSTRAINT FK_gatesairport 
-FOREIGN KEY (id_aeropuerto) REFERENCES Vuelos_globales.airport(id_aeropuerto) ON DELETE RESTRICT ON UPDATE CASCADE;
+FOREIGN KEY (id_aeropuerto) REFERENCES airport(id_aeropuerto) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 ALTER TABLE models
 ADD CONSTRAINT FK_modelsmanufacturer

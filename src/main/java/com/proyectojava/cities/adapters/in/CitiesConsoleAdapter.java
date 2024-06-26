@@ -2,6 +2,7 @@ package com.proyectojava.cities.adapters.in;
 
 import com.proyectojava.cities.application.CitiesService;
 import com.proyectojava.cities.domain.models.Cities;
+import com.proyectojava.country.domain.models.Country;
 import com.proyectojava.utility.Validations;
 
 import java.util.Optional;
@@ -66,11 +67,22 @@ public class CitiesConsoleAdapter {
     private void createCity() {
         String createId = validations.caracteres("Ingrese el ID de la ciudad: ", 5);
         String createName = validations.campObligatorio("Ingrese el nombre de la ciudad: ");
+
+        // Obtener y validar el ID del país
         String createCountryId = validations.caracteres("Ingrese el ID del país: ", 5);
 
-        Cities newCity = new Cities(createId, createName, createCountryId);
-        citiesService.createCity(newCity);
-        System.out.println("Ciudad creada exitosamente.");
+        // Buscar el país por su ID
+        Optional<Country> optionalCountry = citiesService.findCountryById(createCountryId);
+
+        if (optionalCountry.isPresent()) {
+            // Si el país existe, crear la nueva ciudad
+            Cities newCity = new Cities(createId, createName, createCountryId);
+            citiesService.createCity(newCity);
+            System.out.println("Ciudad creada exitosamente.");
+        } else {
+            // Si el país no existe, mostrar un mensaje de error
+            System.out.println("Error: El país con ID " + createCountryId + " no existe.");
+        }
     }
 
     private void updateCity() {
@@ -88,9 +100,9 @@ public class CitiesConsoleAdapter {
 
         Optional<Cities> city = citiesService.getCityById(findId);
         city.ifPresentOrElse(
-                c -> System.out.println("ID: " + c.getId_ciudad() + ", Nombre: " + c.getNombre_ciudad() + ", ID País: " + c.getId_pais()),
-                () -> System.out.println("Ciudad no encontrada")
-        );
+                c -> System.out.println("ID: " + c.getId_ciudad() + ", Nombre: " + c.getNombre_ciudad() + ", ID País: "
+                        + c.getId_pais()),
+                () -> System.out.println("Ciudad no encontrada"));
     }
 
     private void deleteCity() {
@@ -101,15 +113,14 @@ public class CitiesConsoleAdapter {
 
     private void listAllCities() {
         citiesService.getAllCities().forEach(c -> {
-            System.out.println("ID: " + c.getId_ciudad() + ", Nombre: " + c.getNombre_ciudad() + ", ID País: " + c.getId_pais());
+            System.out.println(
+                    "ID: " + c.getId_ciudad() + ", Nombre: " + c.getNombre_ciudad() + ", ID País: " + c.getId_pais());
         });
     }
 
     private void exit() {
-        scanner.close();
+        
         System.out.println("Saliendo del programa...");
         System.exit(0);
     }
 }
-
-

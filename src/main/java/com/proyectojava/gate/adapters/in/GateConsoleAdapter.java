@@ -3,6 +3,7 @@ package com.proyectojava.gate.adapters.in;
 import java.util.Optional;
 import java.util.Scanner;
 
+import com.proyectojava.airport.domain.models.Airport;
 import com.proyectojava.gate.application.GateService;
 import com.proyectojava.gate.domain.models.Gate;
 
@@ -30,8 +31,15 @@ public class GateConsoleAdapter {
                     System.out.println("Ingresa el id del aeropuerto al que pertenece la puerta");
                     String numA = sc.next();
 
-                    Gate gate = new Gate(numP, numA);
+                    Optional<Airport> optionalAirport = gateService.findAirport(numA);
+                    if(optionalAirport.isPresent()){
+                        Gate gate = new Gate(numP, numA);
                     gateService.createGate(gate);
+                        System.out.println("\n\nPuerta de aerpuerto creada correctamente!!");
+                    }else{
+                        System.out.println("Aeropuerto con id " + numA + " no existe.");
+                    }
+                    
                     break;
                 case 2:
                     System.out.println("Ingresa el ID de la puerta a actualizar: ");
@@ -45,6 +53,7 @@ public class GateConsoleAdapter {
 
                     Gate upGate = new Gate(upID, upNu, upNA);
                     gateService.updateGate(upGate);
+                    System.out.println("\n\nLa informacion de puerta " + upID + " ha sido actualizada correctamente!!");
                     break;
                 case 3:
                     System.out.println("Ingresa el ID de la puerta a buscar: ");
@@ -60,6 +69,7 @@ public class GateConsoleAdapter {
                     System.out.println("Ingresa el id de la puerta a eliminar: ");
                     int deleteID = sc.nextInt();
                     gateService.deleteGate(deleteID);
+                    System.out.println("\n\nLa puerta ha sio eliminado correctamente!!");
                 break;
                 case 5: 
                     System.out.println("PUERTAS");

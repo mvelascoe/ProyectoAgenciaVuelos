@@ -23,8 +23,8 @@ public class CountryMySQLRepository implements CountryRepository{
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             String query = "INSERT INTO country (id_pais,nombre_pais) VALUES(?,?)";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setString(1, country.getNombre_pais());
-                statement.setString(2, country.getId_pais());
+                statement.setString(1, country.getId_pais());
+                statement.setString(2, country.getNombre_pais());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {

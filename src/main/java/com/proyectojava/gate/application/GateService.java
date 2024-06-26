@@ -3,15 +3,19 @@ package com.proyectojava.gate.application;
 import java.util.List;
 import java.util.Optional;
 
+import com.proyectojava.airport.domain.models.Airport;
+import com.proyectojava.airport.infrastructure.AirportRepository;
 import com.proyectojava.gate.domain.models.Gate;
 import com.proyectojava.gate.infrastructure.GateRepository;
 
 public class GateService {
  private final GateRepository gateRepository;
+ private final AirportRepository airportRepository;
 
-    public GateService(GateRepository gateRepository) {
-        this.gateRepository = gateRepository;
-    }
+    public GateService(GateRepository gateRepository, AirportRepository airportRepository) {
+    this.gateRepository = gateRepository;
+    this.airportRepository = airportRepository;
+}
 
     public void createGate(Gate gate) {
         gateRepository.save(gate);
@@ -32,4 +36,19 @@ public class GateService {
     public List<Gate> getAllGates() {
         return gateRepository.findAll();
     }
+
+    //METODOS PARA OBTENER LOS AEROPUERTOS
+
+    public List<Airport> findAllAirports(){
+        return airportRepository.findAll();
+    }
+
+    public Optional<Airport> findAirport(String id_aeropuerto){
+        return airportRepository.findById(id_aeropuerto);
+    }
+
+    public void updateAirport(Airport airport){
+        airportRepository.update(airport);
+    }
+    
 }

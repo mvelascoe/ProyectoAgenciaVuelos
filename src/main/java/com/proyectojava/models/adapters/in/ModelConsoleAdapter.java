@@ -1,5 +1,6 @@
 package com.proyectojava.models.adapters.in;
 
+import com.proyectojava.manufacturer.domain.models.Manufacturer;
 import com.proyectojava.models.application.ModelService;
 import com.proyectojava.models.domain.models.Model;
 import com.proyectojava.utility.Validations;
@@ -66,9 +67,16 @@ public class ModelConsoleAdapter {
     private void createModel() {
         String createName = validations.campObligatorio("Ingrese el nombre del modelo: ");
         int createManufacturaId = validations.validarInt("Ingrese el ID de la manufactura: ");
-        Model newModel = new Model(0, createName, createManufacturaId);
+
+        Optional<Manufacturer> optionalManufacturer = modelService.findManufacurer(createManufacturaId);
+        if(optionalManufacturer.isPresent()){
+            Model newModel = new Model(0, createName, createManufacturaId);
         modelService.createModel(newModel);
         System.out.println("Modelo creado exitosamente.");
+        }else{
+            System.out.println("Error: La manufactura con id " + createManufacturaId + " no existe.");
+        }
+        
     }
 
     private void updateModel() {
