@@ -24,8 +24,8 @@ public class GeneralConsoleAdapter {
 
     // Conexion con la base de datos
     String url = "jdbc:mysql://localhost:3306/Vuelos_globales";
-    String user = "root";
-    String password = "MVE11feb94";
+    String user = "campus2023";
+    String password = "campus2023";
 
     CountryMySQLRepository countryRepository = new CountryMySQLRepository(url, user, password);
     CitiesMySQLRepository citiesRepository = new CitiesMySQLRepository(url, user, password);
