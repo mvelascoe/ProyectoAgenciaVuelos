@@ -101,9 +101,7 @@ public class ManufacturerConsoleAdapter {
     }
 
     private void exit() {
-        scanner.close();
-        System.out.println("Saliendo del programa...");
-        System.exit(0);
+        System.out.println("Volviendo al menu principal");
     }
 }
 

@@ -3,6 +3,7 @@ package com.proyectojava.employee.adapters.in;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -11,6 +12,7 @@ import com.proyectojava.airport.domain.models.Airport;
 import com.proyectojava.employee.application.EmployeeService;
 import com.proyectojava.employee.domain.models.Employee;
 import com.proyectojava.rols.domain.models.Rols;
+import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
 
 public class EmployeeConsoleAdapter {
     private final EmployeeService employeeService;
@@ -21,7 +23,7 @@ public class EmployeeConsoleAdapter {
 
     public void startEmployee() throws ParseException {
         Scanner sc = new Scanner(System.in);
-
+        GeneralConsoleAdapter MP = new GeneralConsoleAdapter();
         while (true) {
             System.out.println(
                     "1. Crear Empleado\n2. Actualizar informacion de Empleado\n3. Buscar Empleado\n4. Eliminar Empleado\n5. Listar todas las Empleados\n6. Volver\n\n");
@@ -34,6 +36,16 @@ public class EmployeeConsoleAdapter {
 
                     System.out.println("Ingresa el nombre del empleado: ");
                     String nombre = sc.next();
+
+                    List<Rols> roles = employeeService.rolsAll();
+
+                    System.out.println("-------------------------------------------------");
+                    System.out.printf("%-15s %-40s%n", "ID_rol", "Nombre ");
+                    System.out.println("--------------------------------------------------");
+
+                    for (Rols rol : roles) {
+                        System.out.printf("%-10s %30s%n", rol.getId_rol(), rol.getNombre_rol());
+                    }
 
                     System.out.println("Ingresa el id de rol del empleado: ");
                     int rol_empleado = sc.nextInt();
@@ -52,11 +64,30 @@ public class EmployeeConsoleAdapter {
                             }
                         }
 
+                        List<Airline> aerolineas = employeeService.AllAirlines();
+                        System.out.println("-------------------------------------------------");
+                        System.out.printf("%-15s %-40s%n", "ID_Aerolinea", "Nombre ");
+                        System.out.println("--------------------------------------------------");
+
+                        for (Airline airline : aerolineas) {
+                            System.out.printf("%-15s %-40s%n", airline.getId_aerolinea(),
+                                    airline.getNombre_aerolinea());
+                        }
+
                         System.out.println("Ingresa el id de la aerolinea en la que trabaja el empleado: ");
                         int id_aerolinea = sc.nextInt();
 
                         Optional<Airline> optionalAirline = employeeService.findAirline(id_aerolinea);
                         if (optionalAirline.isPresent()) {
+
+                            List<Airport> airports = employeeService.AllAirports();
+                            System.out.println("-------------------------------------------------");
+                            System.out.printf("%-15s %-40s%n", "ID_Aeropuerto", "Nombre ");
+                            System.out.println("--------------------------------------------------");
+
+                            for (Airport air : airports) {
+                                System.out.printf("%-15s %-40s%n", air.getId_aeropuerto(), air.getNombre_aeropuerto());
+                            }
 
                             System.out.println("Ingresa el ID del aeropuerto donde trabaja el empleado: ");
                             String id_aeropuerto = sc.next();
@@ -67,12 +98,13 @@ public class EmployeeConsoleAdapter {
                                         id_aerolinea, id_aeropuerto);
                                 employeeService.createEmployee(employee);
 
-                                System.out.println("\n\nEmpleado creado con exito!!");
+                                System.out.println("\n**************************************");
+                                System.out.println("*    Empleado creado exitosamente     *");
+                                System.out.println("**************************************\n");
                             }
-                        }else{
+                        } else {
                             System.out.println("Error: Hay datos que no coinciden...");
                         }
-
 
                     }
 
@@ -109,7 +141,9 @@ public class EmployeeConsoleAdapter {
                             up_id_aerolinea, up_id_aeropuerto);
                     employeeService.updateEmployee(employee2);
 
-                    System.out.println("\n\nEmpleado actualizado con exito!!");
+                    System.out.println("\n*************************************");
+                    System.out.println("* Empleado actualizado correctamente *");
+                    System.out.println("*************************************\n");
                     break;
                 case 3:
                     System.out.println("Ingrese el id del empleado a buscar: ");
@@ -128,10 +162,18 @@ public class EmployeeConsoleAdapter {
                     String deleteId = sc.next();
                     employeeService.deleteEmployee(deleteId);
 
-                    System.out.println("\n\nEmpleado eliminado con exito!!");
+                    System.out.println("\n**********************************");
+                    System.out.println("* Empleado eliminado exitosamente *");
+                    System.out.println("**********************************\n");
                     break;
                 case 5:
-                    System.out.println("EMPLEADOS");
+                    System.out.println("#######  ##   ##  ######   ####     #######    ###    #####     #####    #####   ");
+                    System.out.println(" ##   #  ### ###   ##  ##   ##       ##   #   ## ##    ## ##   ### ###  ##   ##  ");
+                    System.out.println(" ##      #######   ##  ##   ##       ##      ##   ##   ##  ##  ##   ##  ##       ");
+                    System.out.println(" ####    ## # ##   #####    ##       ####    ##   ##   ##  ##  ##   ##   #####   ");
+                    System.out.println(" ##      ##   ##   ##       ##       ##      #######   ##  ##  ##   ##       ##  ");
+                    System.out.println(" ##   #  ##   ##   ##       ##  ##   ##   #  ##   ##   ## ##   ### ###  ##   ##  ");
+                    System.out.println("#######  ### ###  ####     #######  #######  ##   ##  #####     #####    #####   ");
                     employeeService.findAllEmployees().forEach(el -> {
                         System.out.println("Id: " + el.getId_empleado() + "\nNombre: " + el.getNombre_empleado()
                                 + "\nId rol: " + el.getId_rol() + "\nFecha de ingreso: " + el.getFecha_ingreso()
@@ -141,10 +183,10 @@ public class EmployeeConsoleAdapter {
                     break;
                 case 6:
                     System.out.println("Volviendo al menu principal... Adios");
+                    MP.tripulations(sc);
                     break;
                 default:
                     System.out.println("Opcion invalida. Intentalo de nuevo");
-                    sc.close();
                     break;
             }
         }

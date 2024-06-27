@@ -1,9 +1,11 @@
 package com.proyectojava.country.adapters.in;
 
+import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
 import com.proyectojava.country.application.CountryService;
 import com.proyectojava.country.domain.models.Country;
 import com.proyectojava.utility.Validations;
 
+import java.text.ParseException;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -18,9 +20,9 @@ public class CountryConsoleAdapter {
         this.validations = new Validations();
     }
 
-    public void start() {
-        boolean bandera = true;
-        while (bandera) {
+    public void start() throws ParseException {
+        GeneralConsoleAdapter MP = new GeneralConsoleAdapter();
+        while (true) {
             menuPais();
             int choice = validations.validarInt("Seleccione una opción: ");
 
@@ -46,8 +48,8 @@ public class CountryConsoleAdapter {
                     break;
 
                 case 6:
-                    bandera = false;
                     exit();
+                    MP.cityAndCountrys(scanner);
                     break;
 
                 default:
@@ -70,9 +72,9 @@ public class CountryConsoleAdapter {
         String createName = validations.campObligatorio("Ingrese el nombre del país: ");
         Country newCountry = new Country(createId, createName);
         countryService.createCountry(newCountry);
-        System.out.println("*****************************");
+        System.out.println("\n*****************************");
         System.out.println("* País creado exitosamente. *");
-        System.out.println("*****************************");
+        System.out.println("*****************************\n");
     }
 
     private void updateCountry() {
@@ -80,9 +82,9 @@ public class CountryConsoleAdapter {
         String updateName = validations.campObligatorio("Ingrese el nuevo nombre: ");
         Country updatedCountry = new Country(updateId, updateName);
         countryService.updateCountry(updatedCountry);
-        System.out.println("**********************************");
+        System.out.println("\n**********************************");
         System.out.println("* País actualizado exitosamente. *");
-        System.out.println("**********************************");
+        System.out.println("**********************************\n");
     }
 
     private void findCountryById() {
@@ -91,19 +93,25 @@ public class CountryConsoleAdapter {
         Optional<Country> country = countryService.findCityById(findId);
         country.ifPresentOrElse(
                 c -> System.out.println("ID: " + c.getId_pais() + ", Nombre: " + c.getNombre_pais()),
-                () -> System.out.println("País no encontrado")
-        );
+                () -> System.out.println("País no encontrado"));
     }
 
     private void deleteCountry() {
         String deleteId = validations.caracteres("Ingrese el ID del país a eliminar: ", 5);
         countryService.deleteCity(deleteId);
-        System.out.println("********************************");
+        System.out.println("\n********************************");
         System.out.println("* País eliminado exitosamente. *");
-        System.out.println("********************************");
+        System.out.println("********************************\n");
     }
 
     private void listAllCountries() {
+        System.out.println("######     ###     ######   #####   #######   #####   ");
+        System.out.println(" ##  ##   ## ##      ##    ##   ##   ##   #  ##   ##  ");
+        System.out.println(" ##  ##  ##   ##     ##    ##        ##      ##       ");
+        System.out.println(" #####   ##   ##     ##     #####    ####     #####   ");
+        System.out.println(" ##      #######     ##         ##   ##           ##  ");
+        System.out.println(" ##      ##   ##     ##    ##   ##   ##   #  ##   ##  ");
+        System.out.println("####     ##   ##   ######   #####   #######   #####   ");
         countryService.findAllCountrys().forEach(c -> {
             System.out.println("ID: " + c.getId_pais() + ", Nombre: " + c.getNombre_pais());
         });
@@ -111,6 +119,5 @@ public class CountryConsoleAdapter {
 
     private void exit() {
         System.out.println("Volviendo al menu anterior");
-        
     }
 }

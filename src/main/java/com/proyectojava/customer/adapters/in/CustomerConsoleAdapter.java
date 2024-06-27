@@ -1,5 +1,6 @@
 package com.proyectojava.customer.adapters.in;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -7,7 +8,7 @@ import java.util.Scanner;
 import com.proyectojava.customer.application.CustomerService;
 import com.proyectojava.customer.domain.models.Customer;
 import com.proyectojava.documenttype.domain.models.Documenttype;
-
+import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
 public class CustomerConsoleAdapter {
     private final CustomerService customerService;
 
@@ -15,9 +16,9 @@ public class CustomerConsoleAdapter {
         this.customerService = customerService;
     }
 
-    public void startCustomer() {
+    public void startCustomer() throws ParseException {
         Scanner sc = new Scanner(System.in);
-
+        GeneralConsoleAdapter MP = new GeneralConsoleAdapter(); 
         while (true) {
             System.out.println(
                     "\n\n1. Crear Cliente\n2. Actualizar informacion de Cliente\n3. Buscar Cliente\n4. Eliminar Cliente\n5. Listar todas las Clientes\n6. Volver\n\n");
@@ -35,9 +36,6 @@ public class CustomerConsoleAdapter {
 
                     System.out.println("Ingresa la edad del cliente: ");
                     int edad = sc.nextInt();
-
-                   
-                    
                     List<Documenttype> documents = customerService.findAllDocument();
 
                     System.out.println("-------------------------------------------------");
@@ -54,9 +52,9 @@ public class CustomerConsoleAdapter {
                     if (optionalDocument.isPresent()) {
                         Customer custom = new Customer(id, name, edad, document);
                         customerService.createCustomer(custom);
-                        System.out.println("**************************************");
+                        System.out.println("\n**************************************");
                         System.out.println("*    Cliente creado exitosamente     *");
-                        System.out.println("**************************************");
+                        System.out.println("**************************************\n");
                     } else {
                         System.out.println("Error: El documento " + document + " no existe.");
                     }
@@ -78,9 +76,9 @@ public class CustomerConsoleAdapter {
                     Customer custom1 = new Customer(upID, upname, upEdad, upDocument);
                     customerService.updateCustomer(custom1);
 
-                    System.out.println("*************************************");
+                    System.out.println("\n*************************************");
                     System.out.println("* Cliente actualizado correctamente *");
-                    System.out.println("*************************************");
+                    System.out.println("*************************************\n");
 
                     break;
                 case 3:
@@ -98,9 +96,9 @@ public class CustomerConsoleAdapter {
                     String deleteId = sc.next();
 
                     customerService.deleteCustomer(deleteId);
-                    System.out.println("**********************************");
+                    System.out.println("\n**********************************");
                     System.out.println("* Cliente eliminado exitosamente *");
-                    System.out.println("**********************************");
+                    System.out.println("**********************************\n");
                     
                     break;
                 case 5:
@@ -118,10 +116,10 @@ public class CustomerConsoleAdapter {
                     break;
                 case 6:
                     System.out.println("Volviendo al menu principal... Adios");
+                    MP.showMainMenu();
                     break;
                 default:
                     System.out.println("Opcion invalida. Intentalo de nuevo");
-                    sc.close();
                     break;
             }
         }

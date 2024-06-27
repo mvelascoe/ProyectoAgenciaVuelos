@@ -42,7 +42,6 @@ import com.proyectojava.statusA.adapters.in.StatusConsoleAdapter;
 import com.proyectojava.statusA.adapters.out.StatusMySQLRepository;
 import com.proyectojava.statusA.application.StatusService;
 
-
 public class GeneralConsoleAdapter {
 
     // Conexion con la base de datos
@@ -55,18 +54,18 @@ public class GeneralConsoleAdapter {
     PlaneMySQLRepository planeMySQLRepository = new PlaneMySQLRepository(url, user, password);
     AirportMySQLRepository airportMySQLRepository = new AirportMySQLRepository(url, user, password);
     DocumenttypeMySQLRepository documenttypeMySQLRepository = new DocumenttypeMySQLRepository(url, user, password);
-    ModelMySQLRepository modelMySQLRepository = new ModelMySQLRepository(url,user,password);
+    ModelMySQLRepository modelMySQLRepository = new ModelMySQLRepository(url, user, password);
     AirlineMySQLRepository airlineMySQLRepository = new AirlineMySQLRepository(url, user, password);
-    ManufacturerMySQLRepository manufacturerMySQLRepository = new ManufacturerMySQLRepository(url,user,password);
+    ManufacturerMySQLRepository manufacturerMySQLRepository = new ManufacturerMySQLRepository(url, user, password);
     StatusMySQLRepository statusMySQLRepository = new StatusMySQLRepository(url, user, password);
-    CustomerMySQLRepository customerMySQLRepository = new CustomerMySQLRepository(url,user,password);
+    CustomerMySQLRepository customerMySQLRepository = new CustomerMySQLRepository(url, user, password);
     RolsMySQLRepository rolsMySQLRepository = new RolsMySQLRepository(url, user, password);
     EmployeeMySQLRepository employeeMySQLRepository = new EmployeeMySQLRepository(url, user, password);
 
-
     CountryService countryService = new CountryService(countryRepository);
     CitiesService citiesService = new CitiesService(citiesRepository, countryRepository);
-    PlaneService planeService = new PlaneService(planeMySQLRepository, statusMySQLRepository, modelMySQLRepository, airlineMySQLRepository);
+    PlaneService planeService = new PlaneService(planeMySQLRepository, statusMySQLRepository, modelMySQLRepository,
+            airlineMySQLRepository);
     AirportService airportService = new AirportService(airportMySQLRepository, citiesRepository);
     DocumenttypeService documenttypeService = new DocumenttypeService(documenttypeMySQLRepository);
     ModelService modelService = new ModelService(modelMySQLRepository, manufacturerMySQLRepository);
@@ -75,7 +74,8 @@ public class GeneralConsoleAdapter {
     StatusService statusService = new StatusService(statusMySQLRepository);
     CustomerService customerService = new CustomerService(customerMySQLRepository, documenttypeMySQLRepository);
     RolsService rolsService = new RolsService(rolsMySQLRepository);
-    EmployeeService employeeService = new EmployeeService(employeeMySQLRepository);
+    EmployeeService employeeService = new EmployeeService(employeeMySQLRepository, rolsMySQLRepository,
+            airlineMySQLRepository, airportMySQLRepository);
 
     // Inicialización de los adaptadores de consola
 
@@ -90,8 +90,11 @@ public class GeneralConsoleAdapter {
     StatusConsoleAdapter statusConsoleAdapter = new StatusConsoleAdapter(statusService);
     CustomerConsoleAdapter customerConsoleAdapter = new CustomerConsoleAdapter(customerService);
     RolsConsoleAdapter rolsConsoleAdapter = new RolsConsoleAdapter(rolsService);
-    EmployeeConsoleAdapter employeeConsoleAdapter  = new EmployeeConsoleAdapter(employeeService);
+    EmployeeConsoleAdapter employeeConsoleAdapter = new EmployeeConsoleAdapter(employeeService);
 
+
+    
+    
     // Menu Principal, Seleccion de usuario
     private Map<Integer, String> rolePasswords;
 
@@ -110,10 +113,11 @@ public class GeneralConsoleAdapter {
         Scanner scanner = new Scanner(System.in);
         int mainChoice;
 
+        System.out.println("");
+        System.out.println("------------- Bienvenido ------------------");
+        System.out.println("           VUELOS GLOBALES                 \n\n");
+
         do {
-            System.out.println("");
-            System.out.println("------------- Bienvenido ------------------");
-            System.out.println("           VUELOS GLOBALES                 ");
             System.out.println("Seleccione su rol:");
             System.out.println("1. Administrador del sistema");
             System.out.println("2. Agente de ventas");
@@ -161,21 +165,19 @@ public class GeneralConsoleAdapter {
         return rolePasswords.get(role).equals(password);
     }
 
-
     // Seccion del administrador
 
     private void showAdminMenu(Scanner scanner) throws ParseException {
         int choice;
         do {
-            System.out.println("Administrador del sistema:");
+            System.out.println("\n\nADMINISTRADOR DEL SISTEMA\n");
             System.out.println("1. Gestionar Paises y Ciudades");
             System.out.println("2. Gestionar Aviones");
             System.out.println("3. Gestionar Aeropuertos");
             System.out.println("4. Gestionar Tripulación");
             System.out.println("5. Gestionar Tipo de documento");
             System.out.println("6.Asignar Aeronave al proyecto");
-            System.out.println("6. Volver al menú principal");
-            
+            System.out.println("7. Volver al menú principal");
 
             choice = scanner.nextInt();
 
@@ -205,21 +207,27 @@ public class GeneralConsoleAdapter {
                     System.out.println("GESTIONAR TIPO DE DOCUMENTO");
                     documenttypeConsoleAdapter.start();
 
+                case 6:
+
+                    break;
+                case 7:
+                    System.out.println("Volviendo al menu principal...");
+                    showMainMenu();
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, inténtelo de nuevo.");
             }
-        } while (choice != 5);
+        } while (choice != 7);
     }
 
-    //Registro de Paises y ciudades
-    private void cityAndCountrys(Scanner scanner) {
+    // Registro de Paises y ciudades
+    public void cityAndCountrys(Scanner scanner) throws ParseException {
         int choice;
         do {
             System.out.println("REGISTRO DE PAISES Y CIUDADES");
             System.out.println("1. Gestionar Paises");
             System.out.println("2. Gestionar Ciudades");
-            System.out.println("Volver al menu anterior");
+            System.out.println("3. Volver al menu anterior");
 
             choice = scanner.nextInt();
 
@@ -229,43 +237,48 @@ public class GeneralConsoleAdapter {
                     break;
                 case 2:
                     citiesConsoleAdapter.start();
+                case 3:
+                showAdminMenu(scanner);
+                    break;
                 default:
+                System.out.println("Solo numeros validos...");
                     break;
             }
         } while (choice != 2);
     }
 
-
-
-    //gestion de tripulacion
-     private void tripulations(Scanner scanner) throws ParseException{
+    // gestion de tripulacion
+    public void tripulations(Scanner scanner) throws ParseException {
         int choice;
-        do{
+        do {
             System.out.println("GESTIONAR TRIPULACION");
             System.out.println("1. Gestion de roles");
             System.out.println("2. Gestion de Empleado");
-            System.out.println();
+            System.out.println("3. Volver el menu principal");
 
             choice = scanner.nextInt();
 
             switch (choice) {
-                case 1: 
+                case 1:
                     rolsConsoleAdapter.startRols();
                     break;
                 case 2:
                     employeeConsoleAdapter.startEmployee();
-            
-                default:
+                    break;
+                case 3:
+                showAdminMenu(scanner);
+                    break;
+                default:    
+                System.out.println("Solo numeros validos...");
                     break;
             }
-        }while (choice !=2);
+        } while (choice != 2);
 
     }
 
+    // Seccion del Agente de Ventas
 
-    //Seccion del Agente de Ventas
-
-    private void showSalesAgentMenu(Scanner scanner) {
+    private void showSalesAgentMenu(Scanner scanner) throws ParseException {
         int choice;
         do {
             System.out.println("Agente de ventas:");
@@ -293,6 +306,7 @@ public class GeneralConsoleAdapter {
                     break;
                 case 5:
                     System.out.println("Volviendo al menú principal.");
+                    showMainMenu();
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, inténtelo de nuevo.");
@@ -300,11 +314,9 @@ public class GeneralConsoleAdapter {
         } while (choice != 5);
     }
 
+    // Seccion del cliente
 
-
-    //Seccion del cliente
-
-    private void showClientMenu(Scanner scanner) {
+    private void showClientMenu(Scanner scanner) throws ParseException {
         int choice;
         do {
             System.out.println("Cliente:");
@@ -331,6 +343,7 @@ public class GeneralConsoleAdapter {
                     break;
                 case 5:
                     System.out.println("Volviendo al menú principal.");
+                    showMainMenu();
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, inténtelo de nuevo.");
@@ -338,10 +351,9 @@ public class GeneralConsoleAdapter {
         } while (choice != 5);
     }
 
+    // Seccion del servicio de Mantenimiento
 
-    //Seccion del servicio de Mantenimiento
-
-    private void showMaintenanceTechMenu(Scanner scanner) {
+    private void showMaintenanceTechMenu(Scanner scanner) throws ParseException {
         int choice;
         do {
             System.out.println("Técnico de mantenimiento:");
@@ -368,6 +380,7 @@ public class GeneralConsoleAdapter {
                     break;
                 case 5:
                     System.out.println("Volviendo al menú principal.");
+                    showMainMenu();
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, inténtelo de nuevo.");
