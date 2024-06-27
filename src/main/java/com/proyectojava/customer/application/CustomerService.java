@@ -42,7 +42,7 @@ public class CustomerService {
         return documenttypeRepository.findById(id_documento);
     }
 
-    public List<Documenttype> allDocuments(){
+    public List<Documenttype> findAllDocument(){
         return documenttypeRepository.findAll();
     }
 

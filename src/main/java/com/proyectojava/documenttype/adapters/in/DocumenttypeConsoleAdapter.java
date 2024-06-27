@@ -19,7 +19,9 @@ public class DocumenttypeConsoleAdapter {
     }
 
     public void start() {
-        while (true) {
+        boolean bandera = true;
+        while (bandera) {
+
             menuDocumenttype();
             int choice = validations.validarInt("Seleccione una opción: ");
 
@@ -46,6 +48,7 @@ public class DocumenttypeConsoleAdapter {
 
                 case 6:
                     exit();
+                    bandera = false;
                     break;
 
                 default:
@@ -68,7 +71,11 @@ public class DocumenttypeConsoleAdapter {
         String createName = validations.campObligatorio("Ingrese el nombre del tipo de documento: ");
         Documenttype newDocumenttype = new Documenttype(createId, createName);
         documenttypeService.createDocument(newDocumenttype);
-        System.out.println("Tipo de documento creado exitosamente.");
+
+        System.out.println("******************************************");
+        System.out.println("* Tipo de documento creado exitosamente. *");
+        System.out.println("******************************************");
+
     }
 
     private void updateDocument() {
@@ -76,7 +83,11 @@ public class DocumenttypeConsoleAdapter {
         String updateName = validations.campObligatorio("Ingrese el nuevo nombre: ");
         Documenttype updatedDocumenttype = new Documenttype(updateId, updateName);
         documenttypeService.updateDocument(updatedDocumenttype);
-        System.out.println("Tipo de documento actualizado exitosamente.");
+
+        System.out.println("***********************************************");
+        System.out.println("* Tipo de documento actualizado exitosamente. *");
+        System.out.println("***********************************************");
+
     }
 
     private void findDocumentById() {
@@ -85,26 +96,39 @@ public class DocumenttypeConsoleAdapter {
         Optional<Documenttype> documenttype = documenttypeService.findDocumentById(findId);
         documenttype.ifPresentOrElse(
                 d -> System.out.println("ID: " + d.getId_documento() + ", Nombre: " + d.getNombre_documento()),
-                () -> System.out.println("Tipo de documento no encontrado")
-        );
+                () -> System.out.println("Tipo de documento no encontrado"));
     }
 
     private void deleteDocument() {
         int deleteId = validations.validarInt("Ingrese el ID del tipo de documento a eliminar: ");
         documenttypeService.deleteDocument(deleteId);
-        System.out.println("Tipo de documento eliminado exitosamente.");
+        System.out.println("*********************************************");
+        System.out.println("* Tipo de documento eliminado exitosamente. *");
+        System.out.println("********************************************");
+
     }
 
     private void listAllDocuments() {
+        System.out.println(
+                " # #####  ######  ######    #####            #####     #####     ####   ##   ##  ##   ##  #######  ##   ##   # #####  #####");
+        System.out.println(
+                "## ## ##    ##     ##  ##  ### ###            ## ##   ### ###   ##  ##  ##   ##  ### ###   ##   #  ###  ##  ## ## ## ### ###");
+        System.out.println(
+                "   ##       ##     ##  ##  ##   ##            ##  ##  ##   ##  ##       ##   ##  #######   ##      #### ##     ##    ##   ##  ");
+        System.out.println(
+                "   ##       ##     #####   ##   ##            ##  ##  ##   ##  ##       ##   ##  ## # ##   ####    #######     ##    ##   ##  ");
+        System.out.println(
+                "   ##       ##     ##      ##   ##            ##  ##  ##   ##  ##       ##   ##  ##   ##   ##      ## ####     ##    ##   ##  ");
+        System.out.println(
+                "   ##       ##     ##      ### ###            ## ##   ### ###   ##  ##  ##   ##  ##   ##   ##   #  ##  ###     ##    ### ###  ");
+        System.out.println(
+                "  ####    ######  ####      #####            #####     #####     ####    #####   ### ###  #######  ##   ##    ####    ##### ");
         documenttypeService.findAllDocument().forEach(d -> {
             System.out.println("ID: " + d.getId_documento() + ", Nombre: " + d.getNombre_documento());
         });
     }
 
     private void exit() {
-        scanner.close();
-        System.out.println("Saliendo del programa...");
-        System.exit(0);
+        System.out.println("Volviendo al menu anterior...");
     }
 }
-
