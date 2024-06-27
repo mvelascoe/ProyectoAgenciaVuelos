@@ -121,7 +121,7 @@ public class CitiesConsoleAdapter {
     }
 
     private void exit() {
-        
+        scanner.close();
         System.out.println("Volviendo al menu anterior");
         
     }

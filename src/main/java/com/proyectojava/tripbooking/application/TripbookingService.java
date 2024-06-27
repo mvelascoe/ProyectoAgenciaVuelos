@@ -3,14 +3,18 @@ package com.proyectojava.tripbooking.application;
 import java.util.List;
 import java.util.Optional;
 
+import com.proyectojava.trip.domain.models.Trip;
+import com.proyectojava.trip.infrastructure.TripRepository;
 import com.proyectojava.tripbooking.domain.models.Tripbooking;
 import com.proyectojava.tripbooking.infrastructure.TripbookingRepository;
 
 public class TripbookingService {
     private final TripbookingRepository tripbookingRepository;
+    private final TripRepository tripRepository;
 
-    public TripbookingService(TripbookingRepository tripbookingRepository) {
+    public TripbookingService(TripbookingRepository tripbookingRepository, TripRepository tripRepository) {
         this.tripbookingRepository = tripbookingRepository;
+        this.tripRepository = tripRepository;
     }
 
     public void createTripbooking(Tripbooking tripbooking) {
@@ -32,5 +36,15 @@ public class TripbookingService {
     public List<Tripbooking> getAllTripbooking() {
         return tripbookingRepository.findAll();
     }
+
+    //TRAER METODOS DEL TRIP
+    public Optional<Trip>findTrip(int id_trip){
+        return tripRepository.findById(id_trip);
+    }
+
+    public List<Trip> AllTrips(){
+        return tripRepository.findAll();
+    }
+    
 } 
 
