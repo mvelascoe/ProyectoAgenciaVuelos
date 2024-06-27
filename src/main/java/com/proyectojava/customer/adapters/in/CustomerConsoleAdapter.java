@@ -1,5 +1,6 @@
 package com.proyectojava.customer.adapters.in;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -35,18 +36,31 @@ public class CustomerConsoleAdapter {
                     System.out.println("Ingresa la edad del cliente: ");
                     int edad = sc.nextInt();
 
-                    System.out.println("Ingresa el id del documento: ");
+                   
+                    
+                    List<Documenttype> documents = customerService.findAllDocument();
+
+                    System.out.println("-------------------------------------------------");
+                    System.out.printf("%-15s %-40s%n", "ID_documento", "Nombre_documento ");
+                    System.out.println("--------------------------------------------------");
+                    
+                    for (Documenttype doc : documents) {
+                        System.out.printf("%-10s %-30s%n", doc.getId_documento(), doc.getNombre_documento());
+                    }
+                    System.out.println("\nIngresa el id del documento: ");
                     int document = sc.nextInt();
 
                     Optional<Documenttype> optionalDocument = customerService.findDocument(document);
-                    if(optionalDocument.isPresent()){
+                    if (optionalDocument.isPresent()) {
                         Customer custom = new Customer(id, name, edad, document);
-                    customerService.createCustomer(custom);
-                    System.out.println("\n\n Cliente creado exitosamente!!");
-                    }else{
-                        System.out.println("Error: El documento "+ document + " no existe.");
+                        customerService.createCustomer(custom);
+                        System.out.println("**************************************");
+                        System.out.println("*    Cliente creado exitosamente     *");
+                        System.out.println("**************************************");
+                    } else {
+                        System.out.println("Error: El documento " + document + " no existe.");
                     }
-                    
+
                     break;
                 case 2:
                     System.out.println("Ingresa el id del cliente a actualizar: ");
@@ -64,7 +78,10 @@ public class CustomerConsoleAdapter {
                     Customer custom1 = new Customer(upID, upname, upEdad, upDocument);
                     customerService.updateCustomer(custom1);
 
-                    System.out.println("\n\n Cliente actualizado correctamente!!");
+                    System.out.println("*************************************");
+                    System.out.println("* Cliente actualizado correctamente *");
+                    System.out.println("*************************************");
+
                     break;
                 case 3:
                     System.out.println("Ingresa el id del cliente a buscar: ");
@@ -81,12 +98,22 @@ public class CustomerConsoleAdapter {
                     String deleteId = sc.next();
 
                     customerService.deleteCustomer(deleteId);
-                    System.out.println("\n\n Cliente eliminado correctamente!!");
+                    System.out.println("**********************************");
+                    System.out.println("* Cliente eliminado exitosamente *");
+                    System.out.println("**********************************");
+                    
                     break;
                 case 5:
-                    System.out.println("CLIENTES");
+                    System.out.println(" #######   ##      #######  #######  ##  ###  #######  #######  #######");
+                    System.out.println("##  ###   ##        ###    ##       ### ###    ###    ##       ##");
+                    System.out.println("##  ###   ##        ###    ##       #######    ###    ##       ####### ");
+                    System.out.println("##       ###        ###    #######  ## ####    ###    #######       ##");
+                    System.out.println("##   ##  ###        ###    ###      ##  ###    ###    ###      ###  ## ");
+                    System.out.println("##   ##  ###        ###    # #      ##  ###    ###    # #      ###  ## ");
+                    System.out.println("#######  ######   #######  #######  ##  ###    ###    #######  ####### ");
                     customerService.findAllCustomer().forEach(lc -> {
-                        System.out.println("Id: " + lc.getId_cliente() + ", Nombre: " + lc.getNombre_cliente() + ", Edad: " + lc.getEdad_cliente() + ", ID_documento: "  + lc.getId_documento());
+                        System.out.println("Id: " + lc.getId_cliente() + ", Nombre: " + lc.getNombre_cliente()
+                                + ", Edad: " + lc.getEdad_cliente() + ", ID_documento: " + lc.getId_documento());
                     });
                     break;
                 case 6:

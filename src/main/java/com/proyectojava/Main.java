@@ -1,5 +1,6 @@
 package com.proyectojava;
 
+import java.text.ParseException;
 import java.util.Scanner;
 
 import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
@@ -47,7 +48,7 @@ import com.proyectojava.tripbookingdetails.adapters.out.TripBookingDetailsMySQLR
 import com.proyectojava.tripbookingdetails.aplication.TripBookingDetailsService;*/
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 
          GeneralConsoleAdapter adapter = new GeneralConsoleAdapter();
          adapter.showMainMenu();
@@ -62,7 +63,7 @@ public class Main {
         ModelMySQLRepository modelMySQLRepository = new ModelMySQLRepository(url,user,password);
         ManufacturerMySQLRepository manufacturerMySQLRepository = new ManufacturerMySQLRepository(url,user,password);
         GateMySQLRepository gateMySQLRepository = new GateMySQLRepository(url, user,password);
-        CustomerMySQLRepository customerMySQLRepository = new CustomerMySQLRepository(url,user,password);
+        
         DocumenttypeMySQLRepository documenttypeMySQLRepository = new DocumenttypeMySQLRepository(url,user,password);
         TripbookingMySQLRepository tripbookingMySQLRepository = new TripbookingMySQLRepository(url,user,password);
         FlightfareMySQLRepository flightfareMySQLRepository = new FlightfareMySQLRepository(url,user,password);
@@ -78,7 +79,7 @@ public class Main {
         ModelService modelService = new ModelService(modelMySQLRepository, manufacturerMySQLRepository);
         ManufacturerService manufacturerService = new ManufacturerService(manufacturerMySQLRepository);
         GateService gateService = new GateService(gateMySQLRepository, airportMySQLRepository);
-        CustomerService customerService = new CustomerService(customerMySQLRepository, documenttypeMySQLRepository);
+        
         DocumenttypeService documenttypeService = new DocumenttypeService(documenttypeMySQLRepository);
         TripbookingService tripbookingService2 = new TripbookingService(tripbookingMySQLRepository,tripbookingMySQLrepository);
         FlightfareService flightfareService = new FlightfareService(flightfareMySQLRepository);

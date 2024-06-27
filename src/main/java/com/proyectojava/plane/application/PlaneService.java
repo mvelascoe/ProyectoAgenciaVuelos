@@ -74,6 +74,10 @@ public class PlaneService {
         return modelRepository.findAll();
     }
 
+    public void createModel(Model model) {
+        modelRepository.save(model);
+    }
+
     // Metodos airline
 
     public void updateAirline(Airline airline) {
@@ -88,4 +92,5 @@ public class PlaneService {
         return airlineRepository.findAll();
     }
 
+    
 }
