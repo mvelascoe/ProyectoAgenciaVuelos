@@ -1,5 +1,6 @@
 package com.proyectojava.tripbooking.adapters.in;
 
+import com.proyectojava.trip.domain.models.Trip;
 import com.proyectojava.tripbooking.application.TripbookingService;
 import com.proyectojava.tripbooking.domain.models.Tripbooking;
 import com.proyectojava.utility.Validations;
@@ -70,9 +71,15 @@ public class TripbookingConsoleAdapter {
         Date fechaTicket = validations.validarFecha("Ingrese la fecha del ticket (YYYY-MM-DD):");
         int idTrip = validations.validarInt("Ingrese el ID del viaje:");
 
-        Tripbooking nuevaReserva = new Tripbooking(0, fechaTicket, idTrip);
+        Optional<Trip>optionalTrip = tripbookingService.findTrip(idTrip);
+        if(optionalTrip.isPresent()){
+            Tripbooking nuevaReserva = new Tripbooking(0, fechaTicket, idTrip);
         tripbookingService.createTripbooking(nuevaReserva);
         System.out.println("Reserva de viaje creada exitosamente.");
+        }else{
+            System.out.println("No se encontro la reserva del viaje con id "+ idTrip);
+        }
+        
     }
 
     private void updateTripbooking() {

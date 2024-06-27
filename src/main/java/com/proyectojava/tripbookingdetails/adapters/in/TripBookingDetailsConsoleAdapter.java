@@ -66,14 +66,32 @@ public class TripBookingDetailsConsoleAdapter {
                     System.out.println("Ingresa el nuevo id de la tarifa: ");
                     int tarifa = sc.nextInt();
 
+                    TripBokkingDetails detail1 = new TripBokkingDetails(detalle,bookin,cliente,tarifa);
+                    tripBookingDetailsService.updateTripBookingDetail(detail1);
+                    System.out.println("\n\nEl detalle ha sido actualizado");
+
                     break;
                 case 3:
+                    System.out.println("Ingresa el id del detalle a modificar:");
+                    int findId = sc.nextInt();
+
+                    Optional<TripBokkingDetails> busca = tripBookingDetailsService.findDetailById(findId);
+                    busca.ifPresentOrElse(
+                        d -> System.out.println("Id: " + d.getId_trip_booking_details() + ", Id_Booking: " + d.getId_trip_booking() + ", Id_cliente: " + d.getId_cliente() + ", Id_tarifa: " + d.getId_tarifa()),
+                        () -> System.out.println("No se encontro un detalle con el id "+ findId));
 
                     break;
                 case 4:
-
+                    System.out.println("Ingresa el ID del detalle a eliminar: ");
+                    int deleteId = sc.nextInt();
+                    tripBookingDetailsService.deleteDetail(deleteId);
+                    System.out.println("\n\nEl detalle ha sido eliminado correctamente");
                     break;
                 case 5:
+                    System.out.println("DETALLES");
+                    tripBookingDetailsService.findAllDetails().forEach(dl ->{
+                        System.out.println("Id: " + dl.getId_trip_booking_details() + ", Id_Booking: " + dl.getId_trip_booking() + ", Id_cliente: " + dl.getId_cliente() + ", Id_tarifa: " + dl.getId_tarifa());
+                    });
 
                     break;
                 case 6:

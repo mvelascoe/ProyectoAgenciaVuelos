@@ -1,4 +1,4 @@
-mCREATE DATABASE Vuelos_globales;
+CREATE DATABASE Vuelos_globales;
 USE Vuelos_globales;
 
 CREATE TABLE flightconnection(
@@ -176,7 +176,7 @@ ADD CONSTRAINT fk_revisiones_avion FOREIGN KEY (id_avion) REFERENCES planes(id_a
 
 ALTER TABLE revemployee
 ADD CONSTRAINT fk_rev_empleado_empleado FOREIGN KEY (id_empleado) REFERENCES employee(id_empleado),
-ADD CONSTRAINT fk_rev_empleado_revision FOREIGN KEY (id_revision) REFERENCES revisions(id_revision)
+ADD CONSTRAINT fk_rev_empleado_revision FOREIGN KEY (id_revision) REFERENCES revisions(id_revision);
 
 
 ALTER TABLE employee
