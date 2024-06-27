@@ -20,7 +20,8 @@ public class CitiesConsoleAdapter {
     }
 
     public void start() {
-        while (true) {
+        boolean bandera = true;
+        while (bandera) {
             displayMenu();
             int choice = validations.validarInt("Seleccione una opción: ");
 
@@ -46,6 +47,7 @@ public class CitiesConsoleAdapter {
                     break;
 
                 case 6:
+                    bandera = false;
                     exit();
                     break;
 
@@ -120,7 +122,7 @@ public class CitiesConsoleAdapter {
 
     private void exit() {
         
-        System.out.println("Saliendo del programa...");
-        System.exit(0);
+        System.out.println("Volviendo al menu anterior");
+        
     }
 }

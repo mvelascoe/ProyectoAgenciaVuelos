@@ -23,6 +23,7 @@ import com.proyectojava.flightfare.application.FlightfareService;
 import com.proyectojava.gate.adapters.in.GateConsoleAdapter;
 import com.proyectojava.gate.adapters.out.GateMySQLRepository;
 import com.proyectojava.gate.application.GateService;
+//import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
 import com.proyectojava.manufacturer.adapters.in.ManufacturerConsoleAdapter;
 import com.proyectojava.manufacturer.adapters.out.ManufacturerMySQLRepository;
 import com.proyectojava.manufacturer.application.ManufacturerService;
@@ -38,6 +39,11 @@ import com.proyectojava.tripbookingdetails.aplication.TripBookingDetailsService;
 
 public class Main {
     public static void main(String[] args) {
+
+        //GeneralConsoleAdapter adapter = new GeneralConsoleAdapter();
+        //adapter.showMainMenu();
+
+
         CountryMySQLRepository countryRepository = new CountryMySQLRepository(
                 "jdbc:mysql://localhost:3306/Vuelos_globales", "campus2023", "campus2023");
         CitiesMySQLRepository citiesRepository = new CitiesMySQLRepository(

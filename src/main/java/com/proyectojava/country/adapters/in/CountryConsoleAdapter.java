@@ -19,7 +19,8 @@ public class CountryConsoleAdapter {
     }
 
     public void start() {
-        while (true) {
+        boolean bandera = true;
+        while (bandera) {
             menuPais();
             int choice = validations.validarInt("Seleccione una opción: ");
 
@@ -45,6 +46,7 @@ public class CountryConsoleAdapter {
                     break;
 
                 case 6:
+                    bandera = false;
                     exit();
                     break;
 
@@ -103,7 +105,7 @@ public class CountryConsoleAdapter {
 
     private void exit() {
         scanner.close();
-        System.out.println("Saliendo del programa...");
-        System.exit(0);
+        System.out.println("Volviendo al menu anterior");
+        
     }
 }
