@@ -4,33 +4,50 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import com.proyectojava.airport.adapters.in.AirportConsoleAdapter;
+import com.proyectojava.airport.adapters.out.AirportMySQLRepository;
+import com.proyectojava.airport.application.AirportService;
 import com.proyectojava.cities.adapters.in.CitiesConsoleAdapter;
 import com.proyectojava.cities.adapters.out.CitiesMySQLRepository;
 import com.proyectojava.cities.application.CitiesService;
 import com.proyectojava.country.adapters.in.CountryConsoleAdapter;
 import com.proyectojava.country.adapters.out.CountryMySQLRepository;
 import com.proyectojava.country.application.CountryService;
+import com.proyectojava.documenttype.adapters.in.DocumenttypeConsoleAdapter;
+import com.proyectojava.documenttype.adapters.out.DocumenttypeMySQLRepository;
+import com.proyectojava.documenttype.application.DocumenttypeService;
+import com.proyectojava.plane.adapters.in.PlaneConsoleAdapter;
+import com.proyectojava.plane.adapters.out.PlaneMySQLRepository;
+import com.proyectojava.plane.application.PlaneService;
 
 public class GeneralConsoleAdapter {
 
     // Conexion con la base de datos
     String url = "jdbc:mysql://localhost:3306/Vuelos_globales";
     String user = "root";
-    String password = "MVE11feb";
+    String password = "MVE11feb94";
 
     CountryMySQLRepository countryRepository = new CountryMySQLRepository(url, user, password);
     CitiesMySQLRepository citiesRepository = new CitiesMySQLRepository(url, user, password);
+    PlaneMySQLRepository planeMySQLRepository = new PlaneMySQLRepository(url, user, password);
+    AirportMySQLRepository airportMySQLRepository = new AirportMySQLRepository(url, user, password);
+    DocumenttypeMySQLRepository documenttypeMySQLRepository = new DocumenttypeMySQLRepository(url, user, password);
 
     CountryService countryService = new CountryService(countryRepository);
     CitiesService citiesService = new CitiesService(citiesRepository, countryRepository);
+   // PlaneService planeService = new PlaneService(planeMySQLRepository);
+    AirportService airportService = new AirportService(airportMySQLRepository, citiesRepository);
+    DocumenttypeService documenttypeService = new DocumenttypeService(documenttypeMySQLRepository);
 
     // Inicialización de los adaptadores de consola
+
     CitiesConsoleAdapter citiesConsoleAdapter = new CitiesConsoleAdapter(citiesService);
     CountryConsoleAdapter countryConsoleAdapter = new CountryConsoleAdapter(countryService);
-
+ //   PlaneConsoleAdapter planeConsoleAdapter = new PlaneConsoleAdapter(planeService);
+    AirportConsoleAdapter airportConsoleAdapter = new AirportConsoleAdapter(airportService);
+    DocumenttypeConsoleAdapter documenttypeConsoleAdapter = new DocumenttypeConsoleAdapter(documenttypeService);
 
     // Menu Principal, Seleccion de usuario
-
     private Map<Integer, String> rolePasswords;
 
     public GeneralConsoleAdapter() {
@@ -109,8 +126,8 @@ public class GeneralConsoleAdapter {
             System.out.println("1. Gestionar Paises y Ciudades");
             System.out.println("2. Gestionar Aviones");
             System.out.println("3. Gestionar Aeropuertos");
-            System.out.println("4. Opción 3");
-            System.out.println("5. Opción 4");
+            System.out.println("4. Gestionar Tripulación");
+            System.out.println("5. Gestionar Tipo de documento");
             System.out.println("6. Volver al menú principal");
 
             choice = scanner.nextInt();
@@ -120,18 +137,26 @@ public class GeneralConsoleAdapter {
                     System.out.println("GESTIONAR PAISES Y CIUDADES");
                     cityAndCountrys(scanner);
                     break;
+
                 case 2:
                     System.out.println("GESTIONAR AVIONES");
+//                    planeConsoleAdapter.start();
 
                     break;
                 case 3:
                     System.out.println("GESTIONAR AEROPUERTOS");
+                    airportConsoleAdapter.startAirports();
+
                     break;
                 case 4:
-                    System.out.println("Administrador - Opción 4 seleccionada.");
+                    System.out.println("GESTIONAR TRIPULACION");
+
                     break;
+
                 case 5:
-                    System.out.println("Volviendo al menú principal.");
+                    System.out.println("GESTIONAR TIPO DE DOCUMENTO");
+                    documenttypeConsoleAdapter.start();
+
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, inténtelo de nuevo.");
@@ -273,4 +298,3 @@ public class GeneralConsoleAdapter {
         } while (choice != 5);
     }
 }
-

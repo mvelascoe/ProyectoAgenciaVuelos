@@ -1,11 +1,13 @@
 package com.proyectojava.airport.adapters.in;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
 import com.proyectojava.airport.application.AirportService;
 import com.proyectojava.airport.domain.models.Airport;
 import com.proyectojava.cities.domain.models.Cities;
+import com.proyectojava.country.domain.models.Country;
 
 public class AirportConsoleAdapter {
     private final AirportService airportService;
@@ -16,7 +18,8 @@ public class AirportConsoleAdapter {
 
     public void startAirports() {
         Scanner sc = new Scanner(System.in);
-        while (true) {
+        boolean bandera = true;
+        while (bandera) {
             System.out.println(
                     "1. Crear Aeropuerto\n2. Actualizar informacion de Aeropuerto\n3. Buscar Aeropuerto\n4. Eliminar Aeropuerto\n5. Listar todos los Aeropuertos\n6. Volver\n\n");
             System.out.println("Ingresa una opcion");
@@ -29,6 +32,19 @@ public class AirportConsoleAdapter {
                     sc.nextLine();
                     System.out.println("Ingresa el nombre del Aeropuerto: ");
                     String name = sc.nextLine();
+
+                      // Lista los países
+                    List<Cities> city = airportService.allCities();
+
+                    // Imprime la cabecera de la tabla
+                    System.out.println("---------------------------------------");
+                    System.out.printf("%-10s %-30s%n", "ID", "Nombre");
+                    System.out.println("---------------------------------------");
+            
+                    // Imprime cada país en una fila de la tabla
+                    for (Cities cities : city) {
+                        System.out.printf("%-10s %-30s%n", cities.getId_ciudad(), cities.getNombre_ciudad());
+                    }
 
                     System.out.println("Ingresa el ID de la ciudad: ");
                     String id_ciudad = sc.next();
@@ -79,7 +95,7 @@ public class AirportConsoleAdapter {
                     });
                     break;
                 case 6:
-                   sc.close();
+                    bandera = false;
                     System.out.println("Volviendo al menu principal... Adios");
                     break;
                 default:

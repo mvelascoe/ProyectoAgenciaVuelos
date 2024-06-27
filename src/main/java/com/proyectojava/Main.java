@@ -2,6 +2,11 @@ package com.proyectojava;
 
 import java.util.Scanner;
 
+import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
+
+/*import com.proyectojava.airline.adapters.in.AirlineConsoleAdapter;
+import com.proyectojava.airline.adapters.out.AirlineMySQLRepository;
+import com.proyectojava.airline.application.AirlineService;
 import com.proyectojava.airport.adapters.in.AirportConsoleAdapter;
 import com.proyectojava.airport.adapters.out.AirportMySQLRepository;
 import com.proyectojava.airport.application.AirportService;
@@ -23,13 +28,14 @@ import com.proyectojava.flightfare.application.FlightfareService;
 import com.proyectojava.gate.adapters.in.GateConsoleAdapter;
 import com.proyectojava.gate.adapters.out.GateMySQLRepository;
 import com.proyectojava.gate.application.GateService;
-//import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
+
 import com.proyectojava.manufacturer.adapters.in.ManufacturerConsoleAdapter;
 import com.proyectojava.manufacturer.adapters.out.ManufacturerMySQLRepository;
 import com.proyectojava.manufacturer.application.ManufacturerService;
 import com.proyectojava.models.adapters.in.ModelConsoleAdapter;
 import com.proyectojava.models.adapters.out.ModelMySQLRepository;
 import com.proyectojava.models.application.ModelService;
+import com.proyectojava.plane.adapters.out.PlaneMySQLRepository;
 import com.proyectojava.trip.adapters.in.TripConsoleAdapter;
 import com.proyectojava.trip.adapters.out.TripMySQLRepository;
 import com.proyectojava.trip.application.TripService;
@@ -38,40 +44,33 @@ import com.proyectojava.tripbooking.adapters.out.TripbookingMySQLRepository;
 import com.proyectojava.tripbooking.application.TripbookingService;
 import com.proyectojava.tripbookingdetails.adapters.in.TripBookingDetailsConsoleAdapter;
 import com.proyectojava.tripbookingdetails.adapters.out.TripBookingDetailsMySQLRepository;
-import com.proyectojava.tripbookingdetails.aplication.TripBookingDetailsService;
+import com.proyectojava.tripbookingdetails.aplication.TripBookingDetailsService;*/
 
 public class Main {
     public static void main(String[] args) {
 
-        // GeneralConsoleAdapter adapter = new GeneralConsoleAdapter();
-        // adapter.showMainMenu();
+         GeneralConsoleAdapter adapter = new GeneralConsoleAdapter();
+         adapter.showMainMenu();
 
-        CountryMySQLRepository countryRepository = new CountryMySQLRepository(
-                "jdbc:mysql://localhost:3306/Vuelos_globales", "campus2023", "campus2023");
-        CitiesMySQLRepository citiesRepository = new CitiesMySQLRepository(
-                "jdbc:mysql://localhost:3306/Vuelos_globales", "campus2023", "campus2023");
-        AirportMySQLRepository airportMySQLRepository = new AirportMySQLRepository(
-                "jdbc:mysql://localhost:3306/Vuelos_globales", "campus2023", "campus2023");
-        ModelMySQLRepository modelMySQLRepository = new ModelMySQLRepository(
-                "jdbc:mysql://localhost:3306/Vuelos_globales", "campus2023", "campus2023");
+        /*    String url = "jdbc:mysql://localhost:3306/Vuelos_globales";
+            String user = "campus2023";
+            String password = "campus2023";
 
-        ManufacturerMySQLRepository manufacturerMySQLRepository = new ManufacturerMySQLRepository(
-                "jdbc:mysql://localhost:3306/Vuelos_globales", "campus2023", "campus2023");
-        GateMySQLRepository gateMySQLRepository = new GateMySQLRepository("jdbc:mysql://localhost:3306/Vuelos_globales",
-                "campus2023", "campus2023");
-        CustomerMySQLRepository customerMySQLRepository = new CustomerMySQLRepository(
-                "jdbc:mysql://localhost:3306/Vuelos_globales", "campus2023", "campus2023");
-        DocumenttypeMySQLRepository documenttypeMySQLRepository = new DocumenttypeMySQLRepository(
-                "jdbc:mysql://localhost:3306/Vuelos_globales", "campus2023", "campus2023");
-        TripbookingMySQLRepository tripbookingMySQLRepository = new TripbookingMySQLRepository(
-                "jdbc:mysql://localhost:3306/Vuelos_globales", "campus2023", "campus2023");
-        FlightfareMySQLRepository flightfareMySQLRepository = new FlightfareMySQLRepository(
-                "jdbc:mysql://localhost:3306/Vuelos_globales", "campus2023", "campus2023");
-        TripBookingDetailsMySQLRepository tripBookingDetailsMySQLRepository = new TripBookingDetailsMySQLRepository(
-                "jdbc:mysql://localhost:3306/Vuelos_globales", "campus2023", "campus2023");
-        TripMySQLRepository tripbookingMySQLrepository = new TripMySQLRepository(
-                "jdbc:mysql://localhost:3306/Vuelos_globales",
-                "campus2023", "campus2023");
+        CountryMySQLRepository countryRepository = new CountryMySQLRepository(url,user,password);
+        CitiesMySQLRepository citiesRepository = new CitiesMySQLRepository(url,user,password);
+        AirportMySQLRepository airportMySQLRepository = new AirportMySQLRepository(url,user,password);
+        ModelMySQLRepository modelMySQLRepository = new ModelMySQLRepository(url,user,password);
+        ManufacturerMySQLRepository manufacturerMySQLRepository = new ManufacturerMySQLRepository(url,user,password);
+        GateMySQLRepository gateMySQLRepository = new GateMySQLRepository(url, user,password);
+        CustomerMySQLRepository customerMySQLRepository = new CustomerMySQLRepository(url,user,password);
+        DocumenttypeMySQLRepository documenttypeMySQLRepository = new DocumenttypeMySQLRepository(url,user,password);
+        TripbookingMySQLRepository tripbookingMySQLRepository = new TripbookingMySQLRepository(url,user,password);
+        FlightfareMySQLRepository flightfareMySQLRepository = new FlightfareMySQLRepository(url,user,password);
+        TripBookingDetailsMySQLRepository tripBookingDetailsMySQLRepository = new TripBookingDetailsMySQLRepository(url,user,password);
+        TripMySQLRepository tripbookingMySQLrepository = new TripMySQLRepository(url,user,password);
+        AirlineMySQLRepository airlineMySQLRepository = new AirlineMySQLRepository(url, user, password);
+        PlaneMySQLRepository planeMySQLRepository = new PlaneMySQLRepository(url, user, password);
+
 
         CountryService countryService = new CountryService(countryRepository);
         CitiesService citiesService = new CitiesService(citiesRepository, countryRepository);
@@ -81,11 +80,14 @@ public class Main {
         GateService gateService = new GateService(gateMySQLRepository, airportMySQLRepository);
         CustomerService customerService = new CustomerService(customerMySQLRepository, documenttypeMySQLRepository);
         DocumenttypeService documenttypeService = new DocumenttypeService(documenttypeMySQLRepository);
-        TripbookingService tripbookingService2 = new TripbookingService(tripbookingMySQLRepository,
-                tripbookingMySQLrepository);
+        TripbookingService tripbookingService2 = new TripbookingService(tripbookingMySQLRepository,tripbookingMySQLrepository);
         FlightfareService flightfareService = new FlightfareService(flightfareMySQLRepository);
         TripBookingDetailsService tripBookingDetailsService = new TripBookingDetailsService(tripBookingDetailsMySQLRepository, tripbookingMySQLRepository, customerMySQLRepository,flightfareMySQLRepository);
         TripService tripService = new TripService(tripbookingMySQLrepository);
+        AirlineService airlineService = new AirlineService(airlineMySQLRepository);
+  //    PlaneService planeService = new PlaneService(planeMySQLRepository, null, modelMySQLRepository);
+
+        
 
         // Inicialización de los adaptadores de consola
         CitiesConsoleAdapter citiesConsoleAdapter = new CitiesConsoleAdapter(citiesService);
@@ -100,6 +102,8 @@ public class Main {
         FlightfareConsoleAdapter flightfareConsoleAdapter = new FlightfareConsoleAdapter(flightfareService);
         TripBookingDetailsConsoleAdapter tripBookingDetailsConsoleAdapter = new TripBookingDetailsConsoleAdapter(tripBookingDetailsService);
         TripConsoleAdapter tripConsoleAdapter = new TripConsoleAdapter(tripService);
+        AirlineConsoleAdapter airlineConsoleAdapter = new AirlineConsoleAdapter(airlineService);
+        //   PlaneConsoleAdapter planeConsoleAdapter = new PlaneConsoleAdapter(planeService);
 
         // Iniciar la aplicación desde el adaptador de consola de ciudades
         System.out.println("------------- Bienvenido ------------------");
@@ -151,12 +155,19 @@ public class Main {
                 case 13:
                     tripbookingConsoleAdapter.start();
                     break;
+                case 14:
+                    airlineConsoleAdapter.startAirline();
+                    break;
+                case 15:
+                 //   planeConsoleAdapter.start(); pendiente arreglar
+
+
                 default:
                     System.out.println("Opción no válida. Saliendo del programa.");
                     break;
             }
 
-        } while (choice != 12);
+        } while (choice != 16);*/
 
     }
 

@@ -70,7 +70,9 @@ public class CountryConsoleAdapter {
         String createName = validations.campObligatorio("Ingrese el nombre del país: ");
         Country newCountry = new Country(createId, createName);
         countryService.createCountry(newCountry);
-        System.out.println("País creado exitosamente.");
+        System.out.println("*****************************");
+        System.out.println("* País creado exitosamente. *");
+        System.out.println("*****************************");
     }
 
     private void updateCountry() {
@@ -78,7 +80,9 @@ public class CountryConsoleAdapter {
         String updateName = validations.campObligatorio("Ingrese el nuevo nombre: ");
         Country updatedCountry = new Country(updateId, updateName);
         countryService.updateCountry(updatedCountry);
-        System.out.println("País actualizado exitosamente.");
+        System.out.println("**********************************");
+        System.out.println("* País actualizado exitosamente. *");
+        System.out.println("**********************************");
     }
 
     private void findCountryById() {
@@ -94,7 +98,9 @@ public class CountryConsoleAdapter {
     private void deleteCountry() {
         String deleteId = validations.caracteres("Ingrese el ID del país a eliminar: ", 5);
         countryService.deleteCity(deleteId);
-        System.out.println("País eliminado exitosamente.");
+        System.out.println("********************************");
+        System.out.println("* País eliminado exitosamente. *");
+        System.out.println("********************************");
     }
 
     private void listAllCountries() {
@@ -104,7 +110,6 @@ public class CountryConsoleAdapter {
     }
 
     private void exit() {
-        scanner.close();
         System.out.println("Volviendo al menu anterior");
         
     }

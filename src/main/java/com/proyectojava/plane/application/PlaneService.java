@@ -3,6 +3,8 @@ package com.proyectojava.plane.application;
 import java.util.List;
 import java.util.Optional;
 
+import com.proyectojava.airline.domain.models.Airline;
+import com.proyectojava.airline.infrastructure.AirlineRepository;
 import com.proyectojava.models.domain.models.Model;
 import com.proyectojava.models.infrastructure.ModelRepository;
 import com.proyectojava.plane.domain.models.Plane;
@@ -14,12 +16,14 @@ public class PlaneService {
     private final PlaneRepository planeRepository;
     private final StatusRepository statusRepository;
     private final ModelRepository modelRepository;
+    private final AirlineRepository airlineRepository;
 
     public PlaneService(PlaneRepository planeRepository, StatusRepository statusRepository,
-            ModelRepository modelRepository) {
+            ModelRepository modelRepository, AirlineRepository airlineRepository) {
         this.planeRepository = planeRepository;
         this.modelRepository = modelRepository;
         this.statusRepository = statusRepository;
+        this.airlineRepository = airlineRepository;
     }
 
     public void createPlane(Plane plane) {
@@ -56,9 +60,8 @@ public class PlaneService {
         return statusRepository.findAll();
     }
 
-    //Metodos de model
+    // Metodos de model
 
-    
     public void updateModel(Model model) {
         modelRepository.update(model);
     }
@@ -70,4 +73,19 @@ public class PlaneService {
     public List<Model> getAllModels() {
         return modelRepository.findAll();
     }
+
+    // Metodos airline
+
+    public void updateAirline(Airline airline) {
+        airlineRepository.update(airline);
+    }
+
+    public Optional<Airline> getAirlineById(int id_aerolinea) {
+        return airlineRepository.findById(id_aerolinea);
+    }
+
+    public List<Airline> getAllAirlines() {
+        return airlineRepository.findAll();
+    }
+
 }
