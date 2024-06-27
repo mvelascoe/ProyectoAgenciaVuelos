@@ -4,7 +4,9 @@ import com.proyectojava.cities.application.CitiesService;
 import com.proyectojava.cities.domain.models.Cities;
 import com.proyectojava.country.domain.models.Country;
 import com.proyectojava.utility.Validations;
+import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -20,9 +22,9 @@ public class CitiesConsoleAdapter {
         this.validations = new Validations();
     }
 
-    public void start() {
-        boolean bandera = true;
-        while (bandera) {
+    public void start() throws ParseException {
+        GeneralConsoleAdapter MP = new GeneralConsoleAdapter();
+        while (true) {
             displayMenu();
             int choice = validations.validarInt("Seleccione una opción: ");
 
@@ -48,8 +50,8 @@ public class CitiesConsoleAdapter {
                     break;
 
                 case 6:
-                    bandera = false;
                     exit();
+                    MP.cityAndCountrys(scanner);
                     break;
 
                 default:
@@ -71,19 +73,18 @@ public class CitiesConsoleAdapter {
         String createId = validations.caracteres("Ingrese el ID de la ciudad: ", 5);
         String createName = validations.campObligatorio("Ingrese el nombre de la ciudad: ");
 
-         // Lista los países
-         List<Country> countries = citiesService.findAllCountrys();
-         
+        // Lista los países
+        List<Country> countries = citiesService.findAllCountrys();
 
-         // Imprime la cabecera de la tabla
-         System.out.println("---------------------------------------");
-         System.out.printf("%-10s %-30s%n", "ID", "Nombre");
-         System.out.println("---------------------------------------");
- 
-         // Imprime cada país en una fila de la tabla
-         for (Country country : countries) {
-             System.out.printf("%-10s %-30s%n", country.getId_pais(), country.getNombre_pais());
-         }
+        // Imprime la cabecera de la tabla
+        System.out.println("---------------------------------------");
+        System.out.printf("%-10s %-30s%n", "ID", "Nombre");
+        System.out.println("---------------------------------------");
+
+        // Imprime cada país en una fila de la tabla
+        for (Country country : countries) {
+            System.out.printf("%-10s %-30s%n", country.getId_pais(), country.getNombre_pais());
+        }
 
         // Obtener y validar el ID del país
         String createCountryId = validations.caracteres("Ingrese el ID del país: ", 5);
@@ -95,9 +96,9 @@ public class CitiesConsoleAdapter {
             // Si el país existe, crear la nueva ciudad
             Cities newCity = new Cities(createId, createName, createCountryId);
             citiesService.createCity(newCity);
-            System.out.println("*******************************");
+            System.out.println("\n*******************************");
             System.out.println("* Ciudad creada exitosamente. *");
-            System.out.println("*******************************");
+            System.out.println("*******************************\n");
         } else {
             // Si el país no existe, mostrar un mensaje de error
             System.out.println("Error: El país con ID " + createCountryId + " no existe.");
@@ -111,9 +112,9 @@ public class CitiesConsoleAdapter {
 
         Cities updatedCity = new Cities(updateId, updateName, updateCountryId);
         citiesService.updateCity(updatedCity);
-        System.out.println("************************************");
+        System.out.println("\n************************************");
         System.out.println("* Ciudad actualizada exitosamente. *");
-        System.out.println("************************************");
+        System.out.println("************************************\n");
     }
 
     private void findCityById() {
@@ -129,12 +130,20 @@ public class CitiesConsoleAdapter {
     private void deleteCity() {
         String deleteId = validations.caracteres("Ingrese el ID de la ciudad a eliminar: ", 5);
         citiesService.deleteCity(deleteId);
-        System.out.println("**********************************");
+        System.out.println("\n**********************************");
         System.out.println("* Ciudad eliminada exitosamente. *");
-        System.out.println("**********************************");
+        System.out.println("**********************************\n");
     }
 
     private void listAllCities() {
+        System.out.println("  ####    ######  ##   ##  #####      ###    #####    #######   ##### ");
+        System.out.println(" ##  ##     ##    ##   ##   ## ##    ## ##    ## ##    ##   #  ##   ##  ");
+        System.out.println("##          ##    ##   ##   ##  ##  ##   ##   ##  ##   ##      ##       ");
+        System.out.println("##          ##    ##   ##   ##  ##  ##   ##   ##  ##   ####     #####   ");
+        System.out.println("##          ##    ##   ##   ##  ##  #######   ##  ##   ##           ##  ");
+        System.out.println(" ##  ##     ##    ##   ##   ## ##   ##   ##   ## ##    ##   #  ##   ##  ");
+        System.out.println("  ####    ######   #####   #####    ##   ##  #####    #######   #####   ");
+
         citiesService.getAllCities().forEach(c -> {
             System.out.println(
                     "ID: " + c.getId_ciudad() + ", Nombre: " + c.getNombre_ciudad() + ", ID País: " + c.getId_pais());
@@ -143,6 +152,6 @@ public class CitiesConsoleAdapter {
 
     private void exit() {
         System.out.println("Volviendo al menu anterior");
-        
+
     }
 }

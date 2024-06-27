@@ -1,5 +1,7 @@
 package com.proyectojava.airport.adapters.in;
+import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -7,7 +9,6 @@ import java.util.Scanner;
 import com.proyectojava.airport.application.AirportService;
 import com.proyectojava.airport.domain.models.Airport;
 import com.proyectojava.cities.domain.models.Cities;
-import com.proyectojava.country.domain.models.Country;
 
 public class AirportConsoleAdapter {
     private final AirportService airportService;
@@ -16,10 +17,10 @@ public class AirportConsoleAdapter {
         this.airportService = airportService;
     }
 
-    public void startAirports() {
+    public void startAirports() throws ParseException {
+        GeneralConsoleAdapter MP = new GeneralConsoleAdapter();
         Scanner sc = new Scanner(System.in);
-        boolean bandera = true;
-        while (bandera) {
+        while (true) {
             System.out.println(
                     "1. Crear Aeropuerto\n2. Actualizar informacion de Aeropuerto\n3. Buscar Aeropuerto\n4. Eliminar Aeropuerto\n5. Listar todos los Aeropuertos\n6. Volver\n\n");
             System.out.println("Ingresa una opcion");
@@ -33,14 +34,15 @@ public class AirportConsoleAdapter {
                     System.out.println("Ingresa el nombre del Aeropuerto: ");
                     String name = sc.nextLine();
 
-                      // Lista los países
+                    // Lista los países
                     List<Cities> city = airportService.allCities();
 
                     // Imprime la cabecera de la tabla
+                    listAirport();
                     System.out.println("---------------------------------------");
                     System.out.printf("%-10s %-30s%n", "ID", "Nombre");
                     System.out.println("---------------------------------------");
-            
+
                     // Imprime cada país en una fila de la tabla
                     for (Cities cities : city) {
                         System.out.printf("%-10s %-30s%n", cities.getId_ciudad(), cities.getNombre_ciudad());
@@ -53,7 +55,9 @@ public class AirportConsoleAdapter {
                     if (optionalCities.isPresent()) {
                         Airport airport = new Airport(id, name, id_ciudad);
                         airportService.createAirport(airport);
-                        System.out.println("\n\nAeropuerto creado correctamente!!");
+                        System.out.println("\n**************************************");
+                        System.out.println("*    Aeropuerto creado exitosamente   *");
+                        System.out.println("**************************************\n");
                     } else {
                         System.out.println("Error: La ciudad " + id_ciudad + " no existe.");
                     }
@@ -71,6 +75,10 @@ public class AirportConsoleAdapter {
 
                     Airport airport2 = new Airport(id_update, name_update, idc_update);
                     airportService.updateAirport(airport2);
+
+                    System.out.println("\n**************************************");
+                    System.out.println("*  Aeropuerto actualizado exitosamente *");
+                    System.out.println("**************************************\n");
                     break;
                 case 3:
                     System.out.println("Ingresa el ID del Aeropuerto a buscar: ");
@@ -86,22 +94,36 @@ public class AirportConsoleAdapter {
                     System.out.println("Ingresa el ID de el Aeropuerto a eliminar");
                     String deleteID = sc.next();
                     airportService.deleteAirport(deleteID);
+
+                    System.out.println("\n**************************************");
+                    System.out.println("*  Aeropuerto eliminado exitosamente  *");
+                    System.out.println("**************************************\n");
                     break;
                 case 5:
-                    System.out.println("AEROPUERTOS");
+                listAirport();
                     airportService.findAllAirports().forEach(la -> {
                         System.out.println("ID: " + la.getId_aeropuerto() + ", Nombre: " + la.getNombre_aeropuerto()
                                 + ", Id_ciudad: " + la.getId_ciudad());
                     });
                     break;
                 case 6:
-                    bandera = false;
                     System.out.println("Volviendo al menu principal... Adios");
+                    MP.showMainMenu();
                     break;
                 default:
                     System.out.println("Opcion invalida. Intentalo de nuevo");
                     break;
             }
         }
+    }
+
+    public void listAirport(){
+        System.out.println("  ###    #######  ######    #####   ######   ##   ##  #######  ######    # #####  #####    #####   ");
+        System.out.println(" ## ##    ##   #   ##  ##  ### ###   ##  ##  ##   ##   ##   #   ##  ##  ## ## ## ### ###  ##   ##  ");
+        System.out.println("##   ##   ##       ##  ##  ##   ##   ##  ##  ##   ##   ##       ##  ##     ##    ##   ##  ##       ");
+        System.out.println("##   ##   ####     #####   ##   ##   #####   ##   ##   ####     #####      ##    ##   ##   #####   ");
+        System.out.println("#######   ##       ## ##   ##   ##   ##      ##   ##   ##       ## ##      ##    ##   ##       ##  ");
+        System.out.println("##   ##   ##   #   ## ##   ### ###   ##      ##   ##   ##   #   ## ##      ##    ### ###  ##   ##  ");
+        System.out.println("##   ##  #######  #### ##   #####   ####      #####   #######  #### ##    ####    #####    #####   ");
     }
 }

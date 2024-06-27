@@ -3,7 +3,9 @@ package com.proyectojava.documenttype.adapters.in;
 import com.proyectojava.documenttype.application.DocumenttypeService;
 import com.proyectojava.documenttype.domain.models.Documenttype;
 import com.proyectojava.utility.Validations;
+import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
 
+import java.text.ParseException;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -18,9 +20,9 @@ public class DocumenttypeConsoleAdapter {
         this.validations = new Validations();
     }
 
-    public void start() {
-        boolean bandera = true;
-        while (bandera) {
+    public void start() throws ParseException {
+        GeneralConsoleAdapter MP = new GeneralConsoleAdapter();
+        while (true) {
 
             menuDocumenttype();
             int choice = validations.validarInt("Seleccione una opción: ");
@@ -48,7 +50,7 @@ public class DocumenttypeConsoleAdapter {
 
                 case 6:
                     exit();
-                    bandera = false;
+                    MP.showMainMenu();
                     break;
 
                 default:
@@ -72,9 +74,9 @@ public class DocumenttypeConsoleAdapter {
         Documenttype newDocumenttype = new Documenttype(createId, createName);
         documenttypeService.createDocument(newDocumenttype);
 
-        System.out.println("******************************************");
+        System.out.println("\n******************************************");
         System.out.println("* Tipo de documento creado exitosamente. *");
-        System.out.println("******************************************");
+        System.out.println("******************************************\n");
 
     }
 
@@ -84,9 +86,9 @@ public class DocumenttypeConsoleAdapter {
         Documenttype updatedDocumenttype = new Documenttype(updateId, updateName);
         documenttypeService.updateDocument(updatedDocumenttype);
 
-        System.out.println("***********************************************");
+        System.out.println("\n***********************************************");
         System.out.println("* Tipo de documento actualizado exitosamente. *");
-        System.out.println("***********************************************");
+        System.out.println("***********************************************\n");
 
     }
 
@@ -102,9 +104,9 @@ public class DocumenttypeConsoleAdapter {
     private void deleteDocument() {
         int deleteId = validations.validarInt("Ingrese el ID del tipo de documento a eliminar: ");
         documenttypeService.deleteDocument(deleteId);
-        System.out.println("*********************************************");
+        System.out.println("\n*********************************************");
         System.out.println("* Tipo de documento eliminado exitosamente. *");
-        System.out.println("********************************************");
+        System.out.println("********************************************\n");
 
     }
 
@@ -130,5 +132,6 @@ public class DocumenttypeConsoleAdapter {
 
     private void exit() {
         System.out.println("Volviendo al menu anterior...");
+        
     }
 }
