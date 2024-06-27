@@ -73,6 +73,7 @@ public class CitiesConsoleAdapter {
 
          // Lista los países
          List<Country> countries = citiesService.findAllCountrys();
+         
 
          // Imprime la cabecera de la tabla
          System.out.println("---------------------------------------");
