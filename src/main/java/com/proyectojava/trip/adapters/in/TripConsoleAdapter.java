@@ -3,7 +3,9 @@ package com.proyectojava.trip.adapters.in;
 import com.proyectojava.trip.application.TripService;
 import com.proyectojava.trip.domain.models.Trip;
 import com.proyectojava.utility.Validations;
+import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
 
+import java.text.ParseException;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -18,7 +20,8 @@ public class TripConsoleAdapter {
         this.validations = new Validations();
     }
 
-    public void start() {
+    public void start() throws ParseException {
+        GeneralConsoleAdapter MP = new GeneralConsoleAdapter();
         while (true) {
             menuTrips();
             int choice = validations.validarInt("Seleccione una opción: ");
@@ -46,6 +49,7 @@ public class TripConsoleAdapter {
 
                 case 6:
                     exit();
+                    MP.showMainMenu();
                     break;
 
                 default:
@@ -69,7 +73,9 @@ public class TripConsoleAdapter {
         String lugarLlegada = validations.caracteres("Ingrese el lugar de llegada: ", 50);
         Trip newTrip = new Trip(0, precio, lugarIda, lugarLlegada);
         tripService.createTrip(newTrip);
-        System.out.println("Viaje creado exitosamente.");
+        System.out.println("\n*******************************");
+        System.out.println("* Viaje creado exitosamente. *");
+        System.out.println("*******************************\n");
     }
 
     private void updateTrip() {
@@ -79,33 +85,44 @@ public class TripConsoleAdapter {
         String lugarLlegada = validations.caracteres("Ingrese el nuevo lugar de llegada: ", 50);
         Trip updatedTrip = new Trip(idTrip, precio, lugarIda, lugarLlegada);
         tripService.updateTrip(updatedTrip);
-        System.out.println("Viaje actualizado exitosamente.");
+        System.out.println("\n************************************");
+        System.out.println("* Viaje actualizado exitosamente. *");
+        System.out.println("************************************\n");
     }
 
     private void findTripById() {
         int idTrip = validations.validarInt("Ingrese el ID del viaje a buscar: ");
         Optional<Trip> trip = tripService.getTripById(idTrip);
         trip.ifPresentOrElse(
-                t -> System.out.println("ID: " + t.getId_trip() + ", Precio: " + t.getPrecio() + ", Lugar de Ida: " + t.getLugar_ida() + ", Lugar de Llegada: " + t.getLugar_llegada()),
-                () -> System.out.println("Viaje no encontrado")
-        );
+                t -> System.out.println("ID: " + t.getId_trip() + ", Precio: " + t.getPrecio() + ", Lugar de Ida: "
+                        + t.getLugar_ida() + ", Lugar de Llegada: " + t.getLugar_llegada()),
+                () -> System.out.println("Viaje con id " + idTrip + "no encontrado"));
     }
 
     private void deleteTrip() {
         int idTrip = validations.validarInt("Ingrese el ID del viaje a eliminar: ");
         tripService.deleteTrip(idTrip);
-        System.out.println("Viaje eliminado exitosamente.");
+        System.out.println("\n*******************************");
+        System.out.println("* Viaje eliminado exitosamente. *");
+        System.out.println("*********************************\n");
     }
 
     private void listAllTrips() {
+        System.out.println("##   ##   ######    ###         ##  #######   #####   ");
+        System.out.println("##   ##     ##     ## ##        ##   ##   #  ##   ##  ");
+        System.out.println("##   ##     ##    ##   ##       ##   ##      ##       ");
+        System.out.println(" ## ##      ##    ##   ##       ##   ####     #####   ");
+        System.out.println(" ## ##      ##    #######  ##   ##   ##           ##  ");
+        System.out.println("  ###       ##    ##   ##   ## ##    ##   #  ##   ##  ");
+        System.out.println("  ###     ######  ##   ##    ###    #######   #####   ");
+
         tripService.getAllTripes().forEach(t -> {
-            System.out.println("ID: " + t.getId_trip() + ", Precio: " + t.getPrecio() + ", Lugar de Ida: " + t.getLugar_ida() + ", Lugar de Llegada: " + t.getLugar_llegada());
+            System.out.println("ID: " + t.getId_trip() + ", Precio: " + t.getPrecio() + ", Lugar de Ida: "
+                    + t.getLugar_ida() + ", Lugar de Llegada: " + t.getLugar_llegada());
         });
     }
 
     private void exit() {
-        scanner.close();
-        System.out.println("Saliendo del programa...");
-        System.exit(0);
+        System.out.println("Volviendo al menu principal...");
     }
 }

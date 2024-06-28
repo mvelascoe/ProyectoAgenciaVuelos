@@ -152,7 +152,6 @@ public class FlightConnectionConsoleAdapter {
                     break;
                 default:
                     System.out.println("Opcion invalida. Intentalo de nuevo");
-                    sc.close();
                     break;
             }
         }

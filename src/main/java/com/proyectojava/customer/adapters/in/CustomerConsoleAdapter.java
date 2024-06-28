@@ -116,7 +116,7 @@ public class CustomerConsoleAdapter {
                     break;
                 case 6:
                     System.out.println("Volviendo al menu principal... Adios");
-                    MP.showMainMenu();
+                    MP.showSalesAgentMenu(sc);
                     break;
                 default:
                     System.out.println("Opcion invalida. Intentalo de nuevo");

@@ -3,7 +3,9 @@ package com.proyectojava.manufacturer.adapters.in;
 import com.proyectojava.manufacturer.application.ManufacturerService;
 import com.proyectojava.manufacturer.domain.models.Manufacturer;
 import com.proyectojava.utility.Validations;
+import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
 
+import java.text.ParseException;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -18,7 +20,8 @@ public class ManufacturerConsoleAdapter {
         this.validations = new Validations();
     }
 
-    public void start() {
+    public void start() throws ParseException {
+        GeneralConsoleAdapter MP = new GeneralConsoleAdapter();
         while (true) {
             menuManufactura();
             int choice = validations.validarInt("Seleccione una opción: ");
@@ -46,6 +49,7 @@ public class ManufacturerConsoleAdapter {
 
                 case 6:
                     exit();
+                    MP.showMainMenu();
                     break;
 
                 default:
@@ -67,7 +71,9 @@ public class ManufacturerConsoleAdapter {
         String createName = validations.campObligatorio("Ingrese el nombre de la manufactura: ");
         Manufacturer newManufacturer = new Manufacturer(0, createName); // ID será autogenerado
         manufacturerService.createManufacturer(newManufacturer);
-        System.out.println("Manufactura creada exitosamente.");
+        System.out.println("\n*********************************");
+        System.out.println("* Manufactura creada exitosamente. *");
+        System.out.println("*********************************\n");
     }
 
     private void updateManufacturer() {
@@ -75,7 +81,9 @@ public class ManufacturerConsoleAdapter {
         String updateName = validations.campObligatorio("Ingrese el nuevo nombre: ");
         Manufacturer updatedManufacturer = new Manufacturer(updateId, updateName);
         manufacturerService.updateManufacturer(updatedManufacturer);
-        System.out.println("Manufactura actualizada exitosamente.");
+        System.out.println("\n**************************************");
+        System.out.println("* Manufactura actualizada exitosamente. *");
+        System.out.println("****************************************\n");
     }
 
     private void findManufacturerById() {
@@ -84,17 +92,26 @@ public class ManufacturerConsoleAdapter {
         Optional<Manufacturer> manufacturer = manufacturerService.getManufacturerById(findId);
         manufacturer.ifPresentOrElse(
                 m -> System.out.println("ID: " + m.getId_manufactura() + ", Nombre: " + m.getNombre_manufactura()),
-                () -> System.out.println("Manufactura no encontrada")
-        );
+                () -> System.out.println("Manufactura con id " + findId + " no encontrada"));
     }
 
     private void deleteManufacturer() {
         int deleteId = validations.validarInt("Ingrese el ID de la manufactura a eliminar: ");
         manufacturerService.deleteManufacturer(deleteId);
+        System.out.println("\n*********************************");
         System.out.println("Manufactura eliminada exitosamente.");
+        System.out.println("*********************************\n");
     }
 
     private void listAllManufacturers() {
+        System.out.println("##   ##    ###    ##   ##  ##   ##   #######   ###      ####    # ##### ##   ##  ######     ###     #####   ");
+        System.out.println("### ###   ## ##   ###  ##  ##   ##    ##   #  ## ##    ##  ##  ## ## ## ##   ##   ##  ##   ## ##   ##   ##  ");
+        System.out.println("#######  ##   ##  #### ##  ##   ##    ##     ##   ##  ##          ##    ##   ##   ##  ##  ##   ##  ##       ");
+        System.out.println("## # ##  ##   ##  #######  ##   ##    ####   ##   ##  ##          ##    ##   ##   #####   ##   ##   #####   ");
+        System.out.println("##   ##  #######  ## ####  ##   ##    ##     #######  ##          ##    ##   ##   ## ##   #######       ##  ");
+        System.out.println("##   ##  ##   ##  ##  ###  ##   ##    ##     ##   ##   ##  ##     ##    ##   ##   ## ##   ##   ##  ##   ##  ");
+        System.out.println("### ###  ##   ##  ##   ##   #####    ####    ##   ##    ####     ####    #####   #### ##  ##   ##   #####   ");
+
         manufacturerService.getAllManufacturers().forEach(m -> {
             System.out.println("ID: " + m.getId_manufactura() + ", Nombre: " + m.getNombre_manufactura());
         });
@@ -104,4 +121,3 @@ public class ManufacturerConsoleAdapter {
         System.out.println("Volviendo al menu principal");
     }
 }
-
