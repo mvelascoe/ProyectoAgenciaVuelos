@@ -11,4 +11,5 @@ public interface PlaneRepository {
     Optional<Plane>findById(int id_avion);
     void delete(int id_avion);
     List<Plane>findAll();
+    Optional<Plane>findMatricula(String matricula);
 }

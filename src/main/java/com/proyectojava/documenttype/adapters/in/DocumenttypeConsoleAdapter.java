@@ -6,6 +6,7 @@ import com.proyectojava.utility.Validations;
 import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
 
 import java.text.ParseException;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -50,7 +51,7 @@ public class DocumenttypeConsoleAdapter {
 
                 case 6:
                     exit();
-                    MP.showMainMenu();
+                    MP.showAdminMenu(scanner);
                     break;
 
                 default:
@@ -92,7 +93,7 @@ public class DocumenttypeConsoleAdapter {
 
     }
 
-    private void findDocumentById() {
+    public void findDocumentById() {
         int findId = validations.validarInt("Ingrese el ID del tipo de documento a buscar: ");
 
         Optional<Documenttype> documenttype = documenttypeService.findDocumentById(findId);
@@ -132,6 +133,18 @@ public class DocumenttypeConsoleAdapter {
 
     private void exit() {
         System.out.println("Volviendo al menu anterior...");
-        
+
+    }
+
+    public void idDocuments() {
+        List<Documenttype> idDocuments = documenttypeService.findAllDocument();
+
+        System.out.println("----------------------------------");
+        System.out.printf("%-15s ", "ID_documento");
+        System.out.println("---------------------------------");
+
+        for (Documenttype doc : idDocuments) {
+            System.out.printf("%-10s %-30s%n", doc.getId_documento());
+        }
     }
 }

@@ -52,7 +52,7 @@ public class PlaneConsoleAdapter {
 
                 case 6:
                     exit();
-                    MP.showMainMenu();
+                    MP.showAdminMenu(scanner);
                     break;
 
                 default:
@@ -172,4 +172,6 @@ public class PlaneConsoleAdapter {
     private void exit() {
         System.out.println("Volviendo al menu principal...");
     }
+
+    
 }

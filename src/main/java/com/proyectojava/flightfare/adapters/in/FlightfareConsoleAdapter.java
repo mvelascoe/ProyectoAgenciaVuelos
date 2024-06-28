@@ -1,6 +1,7 @@
 package com.proyectojava.flightfare.adapters.in;
 
 import java.text.ParseException;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
@@ -63,15 +64,7 @@ public class FlightfareConsoleAdapter {
                     System.out.println("**************************************\n");
                     break;
                 case 3:
-                    System.out.println("Ingresa el ID de la tarifa a buscar: ");
-                    int idT = sc.nextInt();
-
-                    Optional<Flightfare> flightfare = flightfareService.findFligthFareById(idT);
-                    flightfare.ifPresentOrElse(
-                            ff -> System.out
-                                    .println("ID: " + ff.getId_tarifa() + ", Descripcion: " + ff.getDescripcion()
-                                            + ", Detalles: " + ff.getDetalles() + ", Valor: " + ff.getValor()),
-                            () -> System.out.println("No se encontraron tarifas"));
+                    consultaTarifa();
                     break;
                 case 4:
                     System.out.println("Ingresa el ID de la tarifa a eliminar: ");
@@ -98,13 +91,37 @@ public class FlightfareConsoleAdapter {
                     break;
                 case 6:
                     System.out.println("Volviendo al menu principal... Adios");
-                    MP.showMainMenu();
+                    MP.showClientMenu(sc);
                     break;
                 default:
                     System.out.println("Opcion invalida. Intentalo de nuevo");
-                    sc.close();
                     break;
             }
+        }
+    }
+
+    public void consultaTarifa() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingresa el ID de la tarifa a buscar: ");
+        int idT = sc.nextInt();
+
+        Optional<Flightfare> flightfare = flightfareService.findFligthFareById(idT);
+        flightfare.ifPresentOrElse(
+                ff -> System.out
+                        .println("ID: " + ff.getId_tarifa() + ", Descripcion: " + ff.getDescripcion()
+                                + ", Detalles: " + ff.getDetalles() + ", Valor: " + ff.getValor()),
+                () -> System.out.println("No se encontraron tarifas"));
+    }
+
+    public void listIDFare(){
+        List<Flightfare> idFares = flightfareService.findAllFlightfares();
+
+        System.out.println("----------------------");
+        System.out.printf("%-10s", "ID");
+        System.out.println("-----------------------");
+
+        for(Flightfare id : idFares){
+            System.out.printf("%-10s",id.getId_tarifa() );
         }
     }
 }
