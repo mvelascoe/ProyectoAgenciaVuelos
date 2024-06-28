@@ -6,6 +6,7 @@ import com.proyectojava.revisions.domain.models.Revisions;
 import com.proyectojava.utility.Validations;
 import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
 import java.sql.Date;
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
@@ -142,5 +143,16 @@ public class RevisionsConsoleAdapter {
 
     private void exit() {
         System.out.println("Volviendo al menu principal...");
+    }
+
+    public void reviMatricula(){
+        String matriculaID = validations.caracteres("Ingresa la matricula", 10);         
+        Optional<Plane> optionalPlane = revisionsService.findM(matriculaID);
+        if(optionalPlane.isPresent()){
+            Plane avion = optionalPlane.get();
+            System.out.println(MessageFormat.format("Id_avion: {0}\nCapacidad: {1}\nFecha fabricacion: {2}\nEstado: {3}\nModelo: {4}", avion.getId_avion(),avion.getCapacidad(),avion.getFecha_fabricacion(),avion.getId_estado(),avion.getId_modelo()));
+
+            
+        }
     }
 }

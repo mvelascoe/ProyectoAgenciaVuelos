@@ -26,6 +26,9 @@ import com.proyectojava.documenttype.application.DocumenttypeService;
 import com.proyectojava.employee.adapters.in.EmployeeConsoleAdapter;
 import com.proyectojava.employee.adapters.out.EmployeeMySQLRepository;
 import com.proyectojava.employee.application.EmployeeService;
+import com.proyectojava.flightfare.adapters.in.FlightfareConsoleAdapter;
+import com.proyectojava.flightfare.adapters.out.FlightfareMySQLRepository;
+import com.proyectojava.flightfare.application.FlightfareService;
 import com.proyectojava.manufacturer.adapters.in.ManufacturerConsoleAdapter;
 import com.proyectojava.manufacturer.adapters.out.ManufacturerMySQLRepository;
 import com.proyectojava.manufacturer.application.ManufacturerService;
@@ -35,6 +38,9 @@ import com.proyectojava.models.application.ModelService;
 import com.proyectojava.plane.adapters.in.PlaneConsoleAdapter;
 import com.proyectojava.plane.adapters.out.PlaneMySQLRepository;
 import com.proyectojava.plane.application.PlaneService;
+import com.proyectojava.revisions.adapters.in.RevisionsConsoleAdapter;
+import com.proyectojava.revisions.adapters.out.RevisionsMySQLRepository;
+import com.proyectojava.revisions.application.RevisionsService;
 import com.proyectojava.rols.adapters.in.RolsConsoleAdapter;
 import com.proyectojava.rols.adapters.out.RolsMySQLRepository;
 import com.proyectojava.rols.application.RolsService;
@@ -69,7 +75,8 @@ public class GeneralConsoleAdapter {
     EmployeeMySQLRepository employeeMySQLRepository = new EmployeeMySQLRepository(url, user, password);
     TripMySQLRepository tripMySQLRepository = new TripMySQLRepository(url, user, password);
     TripbookingMySQLRepository tripbookingMySQLRepository = new TripbookingMySQLRepository(url, user, password);
-    
+    FlightfareMySQLRepository flightfareMySQLRepository = new FlightfareMySQLRepository(url, user, password);
+    RevisionsMySQLRepository revisionsMySQLRepository = new RevisionsMySQLRepository(url, user, password);
 
     CountryService countryService = new CountryService(countryRepository);
     CitiesService citiesService = new CitiesService(citiesRepository, countryRepository);
@@ -87,6 +94,8 @@ public class GeneralConsoleAdapter {
             airlineMySQLRepository, airportMySQLRepository);
     TripService tripService = new TripService(tripMySQLRepository);
     TripbookingService tripbookingService = new TripbookingService(tripbookingMySQLRepository, tripMySQLRepository);
+    FlightfareService flightfareService = new FlightfareService(flightfareMySQLRepository);
+    RevisionsService revisionsService = new RevisionsService(revisionsMySQLRepository, planeMySQLRepository);
 
     // Inicialización de los adaptadores de consola
 
@@ -104,10 +113,9 @@ public class GeneralConsoleAdapter {
     EmployeeConsoleAdapter employeeConsoleAdapter = new EmployeeConsoleAdapter(employeeService);
     TripConsoleAdapter tripConsoleAdapter = new TripConsoleAdapter(tripService);
     TripbookingConsoleAdapter tripbookingConsoleAdapter = new TripbookingConsoleAdapter(tripbookingService);
+    FlightfareConsoleAdapter flightfareConsoleAdapter = new FlightfareConsoleAdapter(flightfareService);
+    RevisionsConsoleAdapter revisionsConsoleAdapter = new RevisionsConsoleAdapter(revisionsService);
 
-
-    
-    
     // Menu Principal, Seleccion de usuario
     private Map<Integer, String> rolePasswords;
 
@@ -180,20 +188,21 @@ public class GeneralConsoleAdapter {
         int choice;
         do {
             System.out.println("\n\nADMINISTRADOR DEL SISTEMA\n");
-            System.out.println("1. Gestionar Paises y Ciudades");
-            System.out.println("2. Gestionar Aviones");
-            System.out.println("3. Gestionar Aeropuertos");
+            System.out.println("1. Gestionar Paises y Ciudades");// INSERTARE PAISES Y CIUDADES
+            System.out.println("2. Gestionar Aviones");/// HECHOS
+            System.out.println("3. Gestionar Aeropuertos");/// HECHOS
             System.out.println("4. Gestionar Tripulación");
-            System.out.println("5. Gestionar Tipo de documento");
+            System.out.println("5. Gestionar Tipo de documento");// HECHOS
             System.out.println("6.Asignar Aeronave al proyecto");
-            System.out.println("7. Consultar informacion de vuelo");
-            System.out.println("8. Volver al menú principal");
+            System.out.println("7. Consultar informacion de vuelo");// INSERTARE VUELOS
+            System.out.println("8. Gestionar tarifas de vuelo");/// HECHOS
+            System.out.println("9. Volver al menú principal");
 
             choice = scanner.nextInt();
 
             switch (choice) {
                 case 1:
-                    System.out.println("GESTIONAR PAISES Y CIUDADES");
+                    System.out.println("GESTIONAR PAISES Y CIUDADES");// Voy a insertar datos para paises y ciudades
                     cityAndCountrys(scanner);
                     break;
 
@@ -210,20 +219,24 @@ public class GeneralConsoleAdapter {
                 case 4:
                     System.out.println("GESTIONAR TRIPULACION");
                     tripulations(scanner);
-
                     break;
-
                 case 5:
                     System.out.println("GESTIONAR TIPO DE DOCUMENTO");
                     documenttypeConsoleAdapter.start();
 
                 case 6:
-
+                    // CONFIO EN TI MARITZA
                     break;
                 case 7:
-                tripbookingConsoleAdapter.listAllTripbookings();
+                    System.out.println("INFO DE VUELOS");
+                    tripConsoleAdapter.listIdTrip();
+                    tripConsoleAdapter.findTripById();
                     break;
                 case 8:
+                    System.out.println("GESTIONA TARIFAS DE VUELO");
+                    flightfareConsoleAdapter.startFlightFare();
+                    break;
+                case 9:
                     System.out.println("Volviendo al menu principal...");
                     showMainMenu();
                     break;
@@ -251,10 +264,10 @@ public class GeneralConsoleAdapter {
                 case 2:
                     citiesConsoleAdapter.start();
                 case 3:
-                showAdminMenu(scanner);
+                    showAdminMenu(scanner);
                     break;
                 default:
-                System.out.println("Solo numeros validos...");
+                    System.out.println("Solo numeros validos...");
                     break;
             }
         } while (choice != 2);
@@ -268,7 +281,7 @@ public class GeneralConsoleAdapter {
             System.out.println("1. Gestion de roles");
             System.out.println("2. Gestion de Empleado");
             System.out.println("3. Asignar trayecto");
-            System.out.println("3. Volver el menu principal");
+            System.out.println("4. Volver el menu principal");
 
             choice = scanner.nextInt();
 
@@ -280,10 +293,13 @@ public class GeneralConsoleAdapter {
                     employeeConsoleAdapter.startEmployee();
                     break;
                 case 3:
-                showAdminMenu(scanner);
+                    // CONFIO EN TI MARITZA
                     break;
-                default:    
-                System.out.println("Solo numeros validos...");
+                case 4:
+                    showAdminMenu(scanner);
+                    break;
+                default:
+                    System.out.println("Solo numeros validos...");
                     break;
             }
         } while (choice != 2);
@@ -296,11 +312,12 @@ public class GeneralConsoleAdapter {
         int choice;
         do {
             System.out.println("Agente de ventas:");
-            System.out.println("1. Gestionar clientes");
-            System.out.println("2. Gestionar reservas de vuelo");
-            System.out.println("3. Opción 3");
-            System.out.println("4. Opción 4");
-            System.out.println("5. Volver al menú principal");
+            System.out.println("1. Gestionar clientes");/// HECHOS
+            System.out.println("2. Gestionar reservas de vuelo");/// HECHOS
+            System.out.println("3. Consulta tarifa de vuelo");/// HECHOS
+            System.out.println("4. Consulta informacion de vuelo");/// HECHOS
+            System.out.println("5. Consulta tipo de documento");/// HECHOS
+            System.out.println("6. Volver al menú principal");
 
             choice = scanner.nextInt();
 
@@ -314,12 +331,20 @@ public class GeneralConsoleAdapter {
                     tripbookingConsoleAdapter.start();
                     break;
                 case 3:
-                    System.out.println("Agente de ventas - Opción 3 seleccionada.");
+                    System.out.println("Agente de ventas - Consulta tarifa de vuelo seleccionada.");
+                    flightfareConsoleAdapter.listIDFare();
+                    flightfareConsoleAdapter.consultaTarifa();
                     break;
                 case 4:
-                    System.out.println("Agente de ventas - Opción 4 seleccionada.");
+                    System.out.println("Agente de ventas - Consulta informacion de vuelo seleccionada.");
+                    tripConsoleAdapter.listIdTrip();
+                    tripConsoleAdapter.findTripById();
                     break;
                 case 5:
+                    System.out.println("Consulta tipo de documento");
+                    documenttypeConsoleAdapter.idDocuments();
+                    documenttypeConsoleAdapter.findDocumentById();
+                case 6:
                     System.out.println("Volviendo al menú principal.");
                     showMainMenu();
                     break;
@@ -331,13 +356,13 @@ public class GeneralConsoleAdapter {
 
     // Seccion del cliente
 
-    private void showClientMenu(Scanner scanner) throws ParseException {
+    public void showClientMenu(Scanner scanner) throws ParseException {
         int choice;
         do {
             System.out.println("Cliente:");
-            System.out.println("1. Opción 1");
+            System.out.println("1.  Gestion de reserva de vuelo");
             System.out.println("2. Opción 2");
-            System.out.println("3. Opción 3");
+            System.out.println("3. Consulta tarifa de vuelo");
             System.out.println("4. Opción 4");
             System.out.println("5. Volver al menú principal");
 
@@ -345,13 +370,13 @@ public class GeneralConsoleAdapter {
 
             switch (choice) {
                 case 1:
-                    System.out.println("Cliente - Opción 1 seleccionada.");
+                    System.out.println("Cliente - reserva de vuelo");
+                    flightfareConsoleAdapter.startFlightFare();
                     break;
                 case 2:
-                    System.out.println("Cliente - Opción 2 seleccionada.");
                     break;
                 case 3:
-                    System.out.println("Cliente - Opción 3 seleccionada.");
+                    System.out.println("Cliente -.");
                     break;
                 case 4:
                     System.out.println("Cliente - Opción 4 seleccionada.");
@@ -372,34 +397,26 @@ public class GeneralConsoleAdapter {
         int choice;
         do {
             System.out.println("Técnico de mantenimiento:");
-            System.out.println("1. Opción 1");
-            System.out.println("2. Opción 2");
-            System.out.println("3. Opción 3");
-            System.out.println("4. Opción 4");
-            System.out.println("5. Volver al menú principal");
+            System.out.println("1. Gestion revisiones");
+            System.out.println("2. Consulta revision por matricula");
+            System.out.println("3.  Volver al menú principal");
 
             choice = scanner.nextInt();
 
             switch (choice) {
                 case 1:
-                    System.out.println("Técnico de mantenimiento - Opción 1 seleccionada.");
+                    revisionsConsoleAdapter.start();
                     break;
                 case 2:
-                    System.out.println("Técnico de mantenimiento - Opción 2 seleccionada.");
+                    revisionsConsoleAdapter.reviMatricula();
                     break;
                 case 3:
-                    System.out.println("Técnico de mantenimiento - Opción 3 seleccionada.");
-                    break;
-                case 4:
-                    System.out.println("Técnico de mantenimiento - Opción 4 seleccionada.");
-                    break;
-                case 5:
                     System.out.println("Volviendo al menú principal.");
                     showMainMenu();
                     break;
                 default:
                     System.out.println("Opción no válida. Por favor, inténtelo de nuevo.");
             }
-        } while (choice != 5);
+        } while (choice != 3);
     }
 }

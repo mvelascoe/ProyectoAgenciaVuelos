@@ -210,3 +210,48 @@ FOREIGN KEY(id_manufactura) REFERENCES manufacturer(id_manufactura);
 
 ALTER TABLE airport ADD CONSTRAINT fk_aeropuerto_ciudad FOREIGN KEY (id_ciudad) REFERENCES cities(id_ciudad) ON DELETE RESTRICT ON UPDATE CASCADE;
 
+INSERT INTO country (id_pais,nombre_pais) VALUES 
+("P001","Estados Unidos"),
+("P002","Canadá"),
+("P003","Brasil"),
+("P004","Reino Unido"),
+("P005","Francia"),
+("P006","Alemania"),
+("P007","Japón"),
+("P008","Australia"),
+("P009","México"),
+("P010","India");
+
+INSERT INTO cities (id_ciudad,nombre_ciudad,id_pais) VALUES
+("C001","Nueva York","P001"),
+("C002","Los Ángeles","P001"),
+("C003","Toronto","P002"),
+("C004","Montreal","P002"),
+("C005","São Paulo","P003"),
+("C006","Río de Janeiro","P003"),
+("C007","Londres","P004"),
+("C008","Manchester","P004"),
+("C009","París","P005"),
+("C010","Marsella","P005"),
+("C011","Berlín","P006"),
+("C012","Múnich","P006"),
+("C013","Tokio","P007"),
+("C014","Osaka","P007"),
+("C015","Sídney","P008"),
+("C016","Melbourne","P008"),
+("C017","Ciudad de México", "P009"),
+("C018","Guadalajara","P009"),
+("C019","Mumbai","P010"),
+("C020","Nueva Delhi","P010");
+
+INSERT INTO vuelos (id_trip, precio, lugar_ida, lugar_llegada) VALUES
+(1, 250.00, 'Nueva York', 'Los Ángeles'),
+(2, 300.00, 'Toronto', 'Montreal'),
+(3, 150.00, 'São Paulo', 'Río de Janeiro'),
+(4, 400.00, 'Londres', 'Manchester'),
+(5, 200.00, 'París', 'Marsella'),
+(6, 500.00, 'Berlín', 'Múnich'),
+(7, 600.00, 'Tokio', 'Osaka'),
+(8, 350.00, 'Sídney', 'Melbourne'),
+(9, 180.00, 'Ciudad de México', 'Guadalajara'),
+(10, 280.00, 'Mumbai', 'Nueva Delhi');

@@ -108,7 +108,7 @@ public class AirportConsoleAdapter {
                     break;
                 case 6:
                     System.out.println("Volviendo al menu principal... Adios");
-                    MP.showMainMenu();
+                    MP.showAdminMenu(sc);
                     break;
                 default:
                     System.out.println("Opcion invalida. Intentalo de nuevo");

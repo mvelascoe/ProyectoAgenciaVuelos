@@ -46,4 +46,8 @@ public class RevisionsService {
     public List<Plane> allPlane(){
         return planeRepository.findAll();
     }
+
+    public Optional<Plane> findM(String matricula){
+        return planeRepository.findMatricula(matricula);
+    }
 }

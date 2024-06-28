@@ -46,6 +46,9 @@ public class PlaneService {
         return planeRepository.findAll();
     }
 
+    public Optional<Plane> matricula(String matricula){
+        return planeRepository.findMatricula(matricula);
+    }
     // Metodos para traer de Status
 
     public void updateStatus(Status status) {

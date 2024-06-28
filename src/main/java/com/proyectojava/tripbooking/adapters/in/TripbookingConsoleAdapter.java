@@ -145,7 +145,7 @@ public class TripbookingConsoleAdapter {
         System.out.println(" #####    ####     #####    ####     #####    ## ##   ##   ##   #####   ");
         System.out.println(" ## ##    ##           ##   ##       ## ##    ## ##   #######       ##  ");
         System.out.println(" ## ##    ##   #  ##   ##   ##   #   ## ##     ###    ##   ##  ##   ##  ");
-        System.out.println("#### ##  #######   #####   #######  #### ##    ###    ##   ##   #####   ");
+        System.out.println("#### ##  #######   #####   #######  #### ##    ###    ##   ##   #####   \n\n");
 
         List<Tripbooking> reservas = tripbookingService.getAllTripbooking();
         if (reservas.isEmpty()) {

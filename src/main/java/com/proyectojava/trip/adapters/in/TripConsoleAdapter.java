@@ -3,9 +3,11 @@ package com.proyectojava.trip.adapters.in;
 import com.proyectojava.trip.application.TripService;
 import com.proyectojava.trip.domain.models.Trip;
 import com.proyectojava.utility.Validations;
+import com.proyectojava.flightfare.domain.models.Flightfare;
 import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
 
 import java.text.ParseException;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -90,7 +92,7 @@ public class TripConsoleAdapter {
         System.out.println("************************************\n");
     }
 
-    private void findTripById() {
+    public void findTripById() {
         int idTrip = validations.validarInt("Ingrese el ID del viaje a buscar: ");
         Optional<Trip> trip = tripService.getTripById(idTrip);
         trip.ifPresentOrElse(
@@ -107,7 +109,7 @@ public class TripConsoleAdapter {
         System.out.println("*********************************\n");
     }
 
-    private void listAllTrips() {
+    public void listAllTrips() {
         System.out.println("##   ##   ######    ###         ##  #######   #####   ");
         System.out.println("##   ##     ##     ## ##        ##   ##   #  ##   ##  ");
         System.out.println("##   ##     ##    ##   ##       ##   ##      ##       ");
@@ -124,5 +126,17 @@ public class TripConsoleAdapter {
 
     private void exit() {
         System.out.println("Volviendo al menu principal...");
+    }
+
+    public void listIdTrip(){
+        List<Trip> idTrip = tripService.getAllTripes(); 
+
+        System.out.println("----------------------");
+        System.out.printf("%-10s", "ID");
+        System.out.println("-----------------------");
+
+        for(Trip id : idTrip){
+            System.out.printf("%-10s",id.getId_trip() );
+        }
     }
 }

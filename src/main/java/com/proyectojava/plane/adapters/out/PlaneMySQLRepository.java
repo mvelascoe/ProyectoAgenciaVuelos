@@ -123,4 +123,29 @@ public class PlaneMySQLRepository implements PlaneRepository{
         return planes;
     }
 
+    @Override
+    public Optional<Plane> findMatricula(String matricula){
+        try (Connection connection = DriverManager.getConnection(matricula, matricula, matricula)){
+            String query = "SELECT id_avion, matricula, capacidad, fecha_fabricacion, id_estado, id_modelo FROM planes WHERE matricula = ?";
+            try(PreparedStatement statement = connection.prepareStatement(query)){
+                statement.setString(1, matricula);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        Plane plane = new Plane(
+                            resultSet.getInt("id_avion"),
+                            resultSet.getString("matricula"),
+                            resultSet.getInt("capacidad"),
+                            resultSet.getDate("fecha_fabricacion"),
+                            resultSet.getInt("id_estado"),
+                            resultSet.getInt("id_modelo")
+                        );
+                        return Optional.of(plane);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
 }
