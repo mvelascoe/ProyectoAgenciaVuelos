@@ -41,6 +41,12 @@ import com.proyectojava.rols.application.RolsService;
 import com.proyectojava.statusA.adapters.in.StatusConsoleAdapter;
 import com.proyectojava.statusA.adapters.out.StatusMySQLRepository;
 import com.proyectojava.statusA.application.StatusService;
+import com.proyectojava.trip.adapters.in.TripConsoleAdapter;
+import com.proyectojava.trip.adapters.out.TripMySQLRepository;
+import com.proyectojava.trip.application.TripService;
+import com.proyectojava.tripbooking.adapters.in.TripbookingConsoleAdapter;
+import com.proyectojava.tripbooking.adapters.out.TripbookingMySQLRepository;
+import com.proyectojava.tripbooking.application.TripbookingService;
 
 public class GeneralConsoleAdapter {
 
@@ -61,6 +67,9 @@ public class GeneralConsoleAdapter {
     CustomerMySQLRepository customerMySQLRepository = new CustomerMySQLRepository(url, user, password);
     RolsMySQLRepository rolsMySQLRepository = new RolsMySQLRepository(url, user, password);
     EmployeeMySQLRepository employeeMySQLRepository = new EmployeeMySQLRepository(url, user, password);
+    TripMySQLRepository tripMySQLRepository = new TripMySQLRepository(url, user, password);
+    TripbookingMySQLRepository tripbookingMySQLRepository = new TripbookingMySQLRepository(url, user, password);
+    
 
     CountryService countryService = new CountryService(countryRepository);
     CitiesService citiesService = new CitiesService(citiesRepository, countryRepository);
@@ -76,6 +85,8 @@ public class GeneralConsoleAdapter {
     RolsService rolsService = new RolsService(rolsMySQLRepository);
     EmployeeService employeeService = new EmployeeService(employeeMySQLRepository, rolsMySQLRepository,
             airlineMySQLRepository, airportMySQLRepository);
+    TripService tripService = new TripService(tripMySQLRepository);
+    TripbookingService tripbookingService = new TripbookingService(tripbookingMySQLRepository, tripMySQLRepository);
 
     // Inicialización de los adaptadores de consola
 
@@ -91,6 +102,8 @@ public class GeneralConsoleAdapter {
     CustomerConsoleAdapter customerConsoleAdapter = new CustomerConsoleAdapter(customerService);
     RolsConsoleAdapter rolsConsoleAdapter = new RolsConsoleAdapter(rolsService);
     EmployeeConsoleAdapter employeeConsoleAdapter = new EmployeeConsoleAdapter(employeeService);
+    TripConsoleAdapter tripConsoleAdapter = new TripConsoleAdapter(tripService);
+    TripbookingConsoleAdapter tripbookingConsoleAdapter = new TripbookingConsoleAdapter(tripbookingService);
 
 
     
@@ -113,12 +126,8 @@ public class GeneralConsoleAdapter {
         Scanner scanner = new Scanner(System.in);
         int mainChoice;
 
-        System.out.println("");
-        System.out.println("------------- Bienvenido ------------------");
-        System.out.println("           VUELOS GLOBALES                 \n\n");
-
         do {
-            System.out.println("Seleccione su rol:");
+            System.out.println("\n\n\nSeleccione su rol:");
             System.out.println("1. Administrador del sistema");
             System.out.println("2. Agente de ventas");
             System.out.println("3. Cliente");
@@ -167,7 +176,7 @@ public class GeneralConsoleAdapter {
 
     // Seccion del administrador
 
-    private void showAdminMenu(Scanner scanner) throws ParseException {
+    public void showAdminMenu(Scanner scanner) throws ParseException {
         int choice;
         do {
             System.out.println("\n\nADMINISTRADOR DEL SISTEMA\n");
@@ -177,7 +186,8 @@ public class GeneralConsoleAdapter {
             System.out.println("4. Gestionar Tripulación");
             System.out.println("5. Gestionar Tipo de documento");
             System.out.println("6.Asignar Aeronave al proyecto");
-            System.out.println("7. Volver al menú principal");
+            System.out.println("7. Consultar informacion de vuelo");
+            System.out.println("8. Volver al menú principal");
 
             choice = scanner.nextInt();
 
@@ -211,6 +221,9 @@ public class GeneralConsoleAdapter {
 
                     break;
                 case 7:
+                tripbookingConsoleAdapter.listAllTripbookings();
+                    break;
+                case 8:
                     System.out.println("Volviendo al menu principal...");
                     showMainMenu();
                     break;
@@ -254,6 +267,7 @@ public class GeneralConsoleAdapter {
             System.out.println("GESTIONAR TRIPULACION");
             System.out.println("1. Gestion de roles");
             System.out.println("2. Gestion de Empleado");
+            System.out.println("3. Asignar trayecto");
             System.out.println("3. Volver el menu principal");
 
             choice = scanner.nextInt();
@@ -278,12 +292,12 @@ public class GeneralConsoleAdapter {
 
     // Seccion del Agente de Ventas
 
-    private void showSalesAgentMenu(Scanner scanner) throws ParseException {
+    public void showSalesAgentMenu(Scanner scanner) throws ParseException {
         int choice;
         do {
             System.out.println("Agente de ventas:");
-            System.out.println("1. Registrar cliente");
-            System.out.println("2. Opción 2");
+            System.out.println("1. Gestionar clientes");
+            System.out.println("2. Gestionar reservas de vuelo");
             System.out.println("3. Opción 3");
             System.out.println("4. Opción 4");
             System.out.println("5. Volver al menú principal");
@@ -296,7 +310,8 @@ public class GeneralConsoleAdapter {
                     customerConsoleAdapter.startCustomer();
                     break;
                 case 2:
-                    System.out.println("Agente de ventas - Opción 2 seleccionada.");
+                    System.out.println("Agente de ventas - Reservas de vuelo seleccionada.");
+                    tripbookingConsoleAdapter.start();
                     break;
                 case 3:
                     System.out.println("Agente de ventas - Opción 3 seleccionada.");

@@ -4,10 +4,13 @@ import com.proyectojava.trip.domain.models.Trip;
 import com.proyectojava.tripbooking.application.TripbookingService;
 import com.proyectojava.tripbooking.domain.models.Tripbooking;
 import com.proyectojava.utility.Validations;
+import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
 
 import java.sql.Date;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
 
 public class TripbookingConsoleAdapter {
     private final TripbookingService tripbookingService;
@@ -18,11 +21,13 @@ public class TripbookingConsoleAdapter {
         this.validations = new Validations();
     }
 
-    public void start() {
+    public void start() throws ParseException {
+        GeneralConsoleAdapter MP = new GeneralConsoleAdapter();
         System.out.println("Bienvenido al sistema de gestión de reservas de viajes.");
 
         while (true) {
             menuTripB();
+            Scanner sc = new Scanner(System.in);
             int choice = validations.validarInt("Seleccione una opción: ");
 
             switch (choice) {
@@ -48,6 +53,7 @@ public class TripbookingConsoleAdapter {
 
                 case 6:
                     exit();
+                    MP.showSalesAgentMenu(sc);
                     return; // Salir del método start() al elegir salir
 
                 default:
@@ -62,24 +68,36 @@ public class TripbookingConsoleAdapter {
         System.out.println("3. Buscar reserva de viaje por ID");
         System.out.println("4. Eliminar reserva de viaje");
         System.out.println("5. Listar todas las reservas de viaje");
-        System.out.println("6. Salir");
+        System.out.println("6. Volver");
     }
 
     private void createTripbooking() {
         System.out.println("\nCreación de reserva de viaje:");
 
         Date fechaTicket = validations.validarFecha("Ingrese la fecha del ticket (YYYY-MM-DD):");
+
+        List<Trip> viajes = tripbookingService.AllTrips();
+        System.out.println("\n***************************");
+        System.out.printf("%-10s ", "Id");
+        System.out.println("******************************\n");
+
+        for (Trip via : viajes) {
+            System.out.printf("%-10s ", via.getId_trip());
+        }
+
         int idTrip = validations.validarInt("Ingrese el ID del viaje:");
 
-        Optional<Trip>optionalTrip = tripbookingService.findTrip(idTrip);
-        if(optionalTrip.isPresent()){
+        Optional<Trip> optionalTrip = tripbookingService.findTrip(idTrip);
+        if (optionalTrip.isPresent()) {
             Tripbooking nuevaReserva = new Tripbooking(0, fechaTicket, idTrip);
-        tripbookingService.createTripbooking(nuevaReserva);
-        System.out.println("Reserva de viaje creada exitosamente.");
-        }else{
-            System.out.println("No se encontro la reserva del viaje con id "+ idTrip);
+            tripbookingService.createTripbooking(nuevaReserva);
+            System.out.println("\n************************************");
+            System.out.println("Reserva de viaje creada exitosamente.");
+            System.out.println("*************************************\n");
+        } else {
+            System.out.println("No se encontro la reserva del viaje con id " + idTrip);
         }
-        
+
     }
 
     private void updateTripbooking() {
@@ -91,7 +109,9 @@ public class TripbookingConsoleAdapter {
 
         Tripbooking reservaActualizada = new Tripbooking(idReserva, fechaTicket, idTrip);
         tripbookingService.updateTripbooking(reservaActualizada);
+        System.out.println("\n****************************************");
         System.out.println("Reserva de viaje actualizada exitosamente.");
+        System.out.println("*****************************************\n");
     }
 
     private void findTripbookingById() {
@@ -100,13 +120,12 @@ public class TripbookingConsoleAdapter {
         int idReserva = validations.validarInt("Ingrese el ID de la reserva a buscar:");
         Optional<Tripbooking> optionalReserva = tripbookingService.getTripbookingById(idReserva);
         optionalReserva.ifPresentOrElse(
-            reserva -> {
-                System.out.println("ID de reserva: " + reserva.getId_trip_booking());
-                System.out.println("Fecha del ticket: " + reserva.getFecha_ticket());
-                System.out.println("ID del viaje: " + reserva.getId_trip());
-            },
-            () -> System.out.println("No se encontró la reserva con ID: " + idReserva)
-        );
+                reserva -> {
+                    System.out.println("ID de reserva: " + reserva.getId_trip_booking());
+                    System.out.println("Fecha del ticket: " + reserva.getFecha_ticket());
+                    System.out.println("ID del viaje: " + reserva.getId_trip());
+                },
+                () -> System.out.println("No se encontró la reserva con ID: " + idReserva));
     }
 
     private void deleteTripbooking() {
@@ -114,11 +133,20 @@ public class TripbookingConsoleAdapter {
 
         int idReserva = validations.validarInt("Ingrese el ID de la reserva a eliminar:");
         tripbookingService.deleteTripbooking(idReserva);
+        System.out.println("\n****************************************");
         System.out.println("Reserva de viaje eliminada exitosamente.");
+        System.out.println("*****************************************\n");
     }
 
-    private void listAllTripbookings() {
-        System.out.println("\nListado de todas las reservas de viaje:");
+    public void listAllTripbookings() {
+        System.out.println("######   #######   #####   #######  ######   ##   ##    ###     #####   ");
+        System.out.println(" ##  ##   ##   #  ##   ##   ##   #   ##  ##  ##   ##   ## ##   ##   ##  ");
+        System.out.println(" ##  ##   ##      ##        ##       ##  ##  ##   ##  ##   ##  ##       ");
+        System.out.println(" #####    ####     #####    ####     #####    ## ##   ##   ##   #####   ");
+        System.out.println(" ## ##    ##           ##   ##       ## ##    ## ##   #######       ##  ");
+        System.out.println(" ## ##    ##   #  ##   ##   ##   #   ## ##     ###    ##   ##  ##   ##  ");
+        System.out.println("#### ##  #######   #####   #######  #### ##    ###    ##   ##   #####   ");
+
         List<Tripbooking> reservas = tripbookingService.getAllTripbooking();
         if (reservas.isEmpty()) {
             System.out.println("No hay reservas de viaje registradas.");
@@ -127,14 +155,12 @@ public class TripbookingConsoleAdapter {
                 System.out.println("ID de reserva: " + reserva.getId_trip_booking());
                 System.out.println("Fecha del ticket: " + reserva.getFecha_ticket());
                 System.out.println("ID del viaje: " + reserva.getId_trip());
-                System.out.println("-----------------------");
             });
         }
     }
 
     private void exit() {
-        System.out.println("Saliendo del programa...");
-        System.exit(0);
+        System.out.println("Volviendo al menu principal...");
+
     }
 }
-
