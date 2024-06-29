@@ -166,6 +166,15 @@ CREATE TABLE flight_booking_details (
     FOREIGN KEY (id_cliente) REFERENCES costumer(id_cliente)
 );
 
+CREATE TABLE trayecto_empleado (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    trayecto_id INT NOT NULL,
+    empleado_id VARCHAR(20) NOT NULL,
+    FOREIGN KEY (trayecto_id) REFERENCES flightconnection(id_trayectoria),
+    FOREIGN KEY (empleado_id) REFERENCES employee(id_empleado)
+);
+
+
 
 ALTER TABLE flightconnection
 ADD CONSTRAINT fk_trayectoria_trip FOREIGN KEY (id_trip) REFERENCES trip(id_trip),
@@ -218,82 +227,123 @@ FOREIGN KEY(id_manufactura) REFERENCES manufacturer(id_manufactura);
 
 ALTER TABLE airport ADD CONSTRAINT fk_aeropuerto_ciudad FOREIGN KEY (id_ciudad) REFERENCES cities(id_ciudad) ON DELETE RESTRICT ON UPDATE CASCADE;
 
-INSERT INTO country (id_pais,nombre_pais) VALUES 
-("P001","Estados Unidos"),
-("P002","Canadá"),
-("P003","Brasil"),
-("P004","Reino Unido"),
-("P005","Francia"),
-("P006","Alemania"),
-("P007","Japón"),
-("P008","Australia"),
-("P009","México"),
-("P010","India");
-
-INSERT INTO cities (id_ciudad,nombre_ciudad,id_pais) VALUES
-("C001","Nueva York","P001"),
-("C002","Los Ángeles","P001"),
-("C003","Toronto","P002"),
-("C004","Montreal","P002"),
-("C005","São Paulo","P003"),
-("C006","Río de Janeiro","P003"),
-("C007","Londres","P004"),
-("C008","Manchester","P004"),
-("C009","París","P005"),
-("C010","Marsella","P005"),
-("C011","Berlín","P006"),
-("C012","Múnich","P006"),
-("C013","Tokio","P007"),
-("C014","Osaka","P007"),
-("C015","Sídney","P008"),
-("C016","Melbourne","P008"),
-("C017","Ciudad de México", "P009"),
-("C018","Guadalajara","P009"),
-("C019","Mumbai","P010"),
-("C020","Nueva Delhi","P010");
-
-INSERT INTO trip (id_trip, precio, lugar_ida, lugar_llegada) VALUES
-(1, 250.00, 'Nueva York', 'Los Ángeles'),
-(2, 300.00, 'Toronto', 'Montreal'),
-(3, 150.00, 'São Paulo', 'Río de Janeiro'),
-(4, 400.00, 'Londres', 'Manchester'),
-(5, 200.00, 'París', 'Marsella'),
-(6, 500.00, 'Berlín', 'Múnich'),
-(7, 600.00, 'Tokio', 'Osaka'),
-(8, 350.00, 'Sídney', 'Melbourne'),
-(9, 180.00, 'Ciudad de México', 'Guadalajara'),
-(10, 280.00, 'Mumbai', 'Nueva Delhi');
-
-INSERT INTO statusA (id_estado, nombre_estado)
-VALUES
-    (1, 'Activo'),
-    (2, 'En mantenimiento'),
-    (3, 'En reparación'),
-    (4, 'Fuera de servicio');
-
-INSERT INTO manufacturer (id_manufactura, nombre_manufactura)
-VALUES
-    (1, 'Boeing'),
-    (2, 'Airbus'),
-    (3, 'Embraer'),
-    (4, 'Bombardier');
+INSERT INTO country (id_pais, nombre_pais) VALUES ('USA', 'United States');
+INSERT INTO country (id_pais, nombre_pais) VALUES ('MEX', 'Mexico');
+INSERT INTO country (id_pais, nombre_pais) VALUES ('CAN', 'Canada');
+INSERT INTO country (id_pais, nombre_pais) VALUES ('ARG', 'Argentina');
+INSERT INTO country (id_pais, nombre_pais) VALUES ('BRA', 'Brazil');
 
 
-INSERT INTO models (id_modelo, nombre_modelo, id_manufactura)
-VALUES
-    (101, 'Boeing 737', 1),
-    (102, 'Airbus A320', 2),
-    (103, 'Embraer E190', 3),
-    (104, 'Bombardier CRJ900', 4);
+INSERT INTO cities (id_ciudad, nombre_ciudad, id_pais) VALUES ('NYC', 'New York', 'USA');
+INSERT INTO cities (id_ciudad, nombre_ciudad, id_pais) VALUES ('MEX', 'Mexico City', 'MEX');
+INSERT INTO cities (id_ciudad, nombre_ciudad, id_pais) VALUES ('TOR', 'Toronto', 'CAN');
+INSERT INTO cities (id_ciudad, nombre_ciudad, id_pais) VALUES ('BUE', 'Buenos Aires', 'ARG');
+INSERT INTO cities (id_ciudad, nombre_ciudad, id_pais) VALUES ('RIO', 'Rio de Janeiro', 'BRA');
 
-INSERT INTO planes (id_avion,matricula, capacidad, fecha_fabricacion, id_estado, id_modelo)
-VALUES
-    (901,'ABC123', 180, '2015-10-15', 1, 101),
-    (902,'DEF456', 220, '2018-04-25', 2, 102),
-    (903,'GHI789', 100, '2017-12-03', 3, 103),
-    (905,'JKL012', 150, '2016-08-20', 4, 104);
 
-INSERT INTO revisions (fecha_revision, id_avion, detalle) VALUES 
-    ('2023-01-10', 901, 'Revisión de mantenimiento programada'),
-    ('2023-03-15', 901, 'Inspección de seguridad realizada'),
-    ('2023-05-20', 905, 'Actualización de componentes internos');
+INSERT INTO airport (id_aeropuerto, nombre_aeropuerto, id_ciudad) VALUES ('JFK', 'John F. Kennedy International Airport', 'NYC');
+INSERT INTO airport (id_aeropuerto, nombre_aeropuerto, id_ciudad) VALUES ('MEX', 'Mexico City International Airport', 'MEX');
+INSERT INTO airport (id_aeropuerto, nombre_aeropuerto, id_ciudad) VALUES ('YYZ', 'Toronto Pearson International Airport', 'TOR');
+INSERT INTO airport (id_aeropuerto, nombre_aeropuerto, id_ciudad) VALUES ('EZE', 'Ezeiza International Airport', 'BUE');
+INSERT INTO airport (id_aeropuerto, nombre_aeropuerto, id_ciudad) VALUES ('GIG', 'Galeão International Airport', 'RIO');
+
+
+INSERT INTO statusA (id_estado, nombre_estado) VALUES (1, 'Operational');
+INSERT INTO statusA (id_estado, nombre_estado) VALUES (2, 'Maintenance');
+INSERT INTO statusA (id_estado, nombre_estado) VALUES (3, 'Grounded');
+INSERT INTO statusA (id_estado, nombre_estado) VALUES (4, 'Retired');
+INSERT INTO statusA (id_estado, nombre_estado) VALUES (5, 'Reserved');
+
+
+INSERT INTO manufacturer (id_manufactura, nombre_manufactura) VALUES (1, 'Boeing');
+INSERT INTO manufacturer (id_manufactura, nombre_manufactura) VALUES (2, 'Airbus');
+INSERT INTO manufacturer (id_manufactura, nombre_manufactura) VALUES (3, 'Embraer');
+INSERT INTO manufacturer (id_manufactura, nombre_manufactura) VALUES (4, 'Bombardier');
+INSERT INTO manufacturer (id_manufactura, nombre_manufactura) VALUES (5, 'Cessna');
+
+
+INSERT INTO models (id_modelo, nombre_modelo, id_manufactura) VALUES (1, '737', 1);
+INSERT INTO models (id_modelo, nombre_modelo, id_manufactura) VALUES (2, 'A320', 2);
+INSERT INTO models (id_modelo, nombre_modelo, id_manufactura) VALUES (3, 'E190', 3);
+INSERT INTO models (id_modelo, nombre_modelo, id_manufactura) VALUES (4, 'CRJ700', 4);
+INSERT INTO models (id_modelo, nombre_modelo, id_manufactura) VALUES (5, 'Citation X', 5);
+
+
+INSERT INTO planes (id_avion, matricula, capacidad, fecha_fabricacion, id_estado, id_modelo) VALUES (1, 'N12345', 180, '2010-01-01', 1, 1);
+INSERT INTO planes (id_avion, matricula, capacidad, fecha_fabricacion, id_estado, id_modelo) VALUES (2, 'N67890', 200, '2012-05-15', 1, 2);
+INSERT INTO planes (id_avion, matricula, capacidad, fecha_fabricacion, id_estado, id_modelo) VALUES (3, 'N54321', 100, '2015-09-30', 1, 3);
+INSERT INTO planes (id_avion, matricula, capacidad, fecha_fabricacion, id_estado, id_modelo) VALUES (4, 'N98765', 150, '2018-02-20', 1, 4);
+INSERT INTO planes (id_avion, matricula, capacidad, fecha_fabricacion, id_estado, id_modelo) VALUES (5, 'N11223', 12, '2020-07-10', 1, 5);
+
+
+INSERT INTO airline (id_aerolinea, nombre_aerolinea) VALUES (1, 'American Airlines');
+INSERT INTO airline (id_aerolinea, nombre_aerolinea) VALUES (2, 'Delta Airlines');
+INSERT INTO airline (id_aerolinea, nombre_aerolinea) VALUES (3, 'United Airlines');
+INSERT INTO airline (id_aerolinea, nombre_aerolinea) VALUES (4, 'Air Canada');
+INSERT INTO airline (id_aerolinea, nombre_aerolinea) VALUES (5, 'LATAM');
+
+
+INSERT INTO rols (id_rol, nombre_rol) VALUES (1, 'Pilot');
+INSERT INTO rols (id_rol, nombre_rol) VALUES (2, 'Co-Pilot');
+INSERT INTO rols (id_rol, nombre_rol) VALUES (3, 'Flight Attendant');
+INSERT INTO rols (id_rol, nombre_rol) VALUES (4, 'Ground Staff');
+INSERT INTO rols (id_rol, nombre_rol) VALUES (5, 'Maintenance Technician');
+
+
+INSERT INTO employee (id_empleado, nombre_empleado, id_rol, fecha_ingreso, id_aerolinea, id_aeropuerto) VALUES ('EMP001', 'John Doe', 1, '2015-06-01', 1, 'JFK');
+INSERT INTO employee (id_empleado, nombre_empleado, id_rol, fecha_ingreso, id_aerolinea, id_aeropuerto) VALUES ('EMP002', 'Jane Smith', 2, '2016-07-15', 2, 'MEX');
+INSERT INTO employee (id_empleado, nombre_empleado, id_rol, fecha_ingreso, id_aerolinea, id_aeropuerto) VALUES ('EMP003', 'Emily Johnson', 3, '2018-08-20', 3, 'YYZ');
+INSERT INTO employee (id_empleado, nombre_empleado, id_rol, fecha_ingreso, id_aerolinea, id_aeropuerto) VALUES ('EMP004', 'Michael Brown', 4, '2019-09-30', 4, 'EZE');
+INSERT INTO employee (id_empleado, nombre_empleado, id_rol, fecha_ingreso, id_aerolinea, id_aeropuerto) VALUES ('EMP005', 'Sarah Davis', 5, '2020-10-10', 5, 'GIG');
+
+
+INSERT INTO trip (id_trip, precio, lugar_ida, lugar_llegada) VALUES (1, 500.00, 'New York', 'Mexico City');
+INSERT INTO trip (id_trip, precio, lugar_ida, lugar_llegada) VALUES (2, 700.00, 'Toronto', 'Rio de Janeiro');
+INSERT INTO trip (id_trip, precio, lugar_ida, lugar_llegada) VALUES (3, 450.00, 'Buenos Aires', 'New York');
+INSERT INTO trip (id_trip, precio, lugar_ida, lugar_llegada) VALUES (4, 600.00, 'Mexico City', 'Toronto');
+INSERT INTO trip (id_trip, precio, lugar_ida, lugar_llegada) VALUES (5, 800.00, 'Rio de Janeiro', 'Buenos Aires');
+
+
+INSERT INTO flightconnection (id_trayectoria, trayectoria_numero, id_trip, id_avion, id_aeropuerto) VALUES (1, 'FC1001', 1, 1, 'JFK');
+INSERT INTO flightconnection (id_trayectoria, trayectoria_numero, id_trip, id_avion, id_aeropuerto) VALUES (2, 'FC1002', 2, 2, 'YYZ');
+INSERT INTO flightconnection (id_trayectoria, trayectoria_numero, id_trip, id_avion, id_aeropuerto) VALUES (3, 'FC1003', 3, 3, 'EZE');
+INSERT INTO flightconnection (id_trayectoria, trayectoria_numero, id_trip, id_avion, id_aeropuerto) VALUES (4, 'FC1004', 4, 4, 'MEX');
+INSERT INTO flightconnection (id_trayectoria, trayectoria_numero, id_trip, id_avion, id_aeropuerto) VALUES (5, 'FC1005', 5, 5, 'GIG');
+
+
+INSERT INTO documenttype (id_documento, nombre_documento) VALUES (1, 'Passport');
+INSERT INTO documenttype (id_documento, nombre_documento) VALUES (2, 'Driver License');
+INSERT INTO documenttype (id_documento, nombre_documento) VALUES (3, 'National ID');
+INSERT INTO documenttype (id_documento, nombre_documento) VALUES (4, 'Visa');
+INSERT INTO documenttype (id_documento, nombre_documento) VALUES (5, 'Residence Permit');
+
+
+INSERT INTO costumer (id_cliente, nombre_cliente, edad_cliente, id_documento) VALUES ('CUST001', 'Alice Johnson', 28, 1);
+INSERT INTO costumer (id_cliente, nombre_cliente, edad_cliente, id_documento) VALUES ('CUST002', 'Bob Smith', 35, 2);
+INSERT INTO costumer (id_cliente, nombre_cliente, edad_cliente, id_documento) VALUES ('CUST003', 'Carol Williams', 42, 3);
+INSERT INTO costumer (id_cliente, nombre_cliente, edad_cliente, id_documento) VALUES ('CUST004', 'David Brown', 30, 4);
+INSERT INTO costumer (id_cliente, nombre_cliente, edad_cliente, id_documento) VALUES ('CUST005', 'Eve Davis', 25, 5);
+
+
+INSERT INTO tripboooking (id_trip_booking, fecha_ticket, id_trip) VALUES (1, '2023-01-15', 1);
+INSERT INTO tripboooking (id_trip_booking, fecha_ticket, id_trip) VALUES (2, '2023-02-20', 2);
+INSERT INTO tripboooking (id_trip_booking, fecha_ticket, id_trip) VALUES (3, '2023-03-25', 3);
+INSERT INTO tripboooking (id_trip_booking, fecha_ticket, id_trip) VALUES (4, '2023-04-30', 4);
+INSERT INTO tripboooking (id_trip_booking, fecha_ticket, id_trip) VALUES (5, '2023-05-05', 5);
+
+
+INSERT INTO flightfare (id_tarifa, descripcion, detalles, valor) VALUES (1, 'Economy', 'Standard economy class', 200.000);
+INSERT INTO flightfare (id_tarifa, descripcion, detalles, valor) VALUES (2, 'Premium Economy', 'Premium economy class', 350.000);
+INSERT INTO flightfare (id_tarifa, descripcion, detalles, valor) VALUES (3, 'Business', 'Business class', 500.000);
+INSERT INTO flightfare (id_tarifa, descripcion, detalles, valor) VALUES (4, 'First', 'First class', 800.000);
+INSERT INTO flightfare (id_tarifa, descripcion, detalles, valor) VALUES (5, 'Basic Economy', 'Basic economy class', 150.000);
+
+
+INSERT INTO tripbookingdetails (id_trip_booking_details, id_trip_booking, id_cliente, id_tarifa) VALUES (1, 1, 'CUST001', 1);
+INSERT INTO tripbookingdetails (id_trip_booking_details, id_trip_booking, id_cliente, id_tarifa) VALUES (2, 2, 'CUST002', 2);
+INSERT INTO tripbookingdetails (id_trip_booking_details, id_trip_booking, id_cliente, id_tarifa) VALUES (3, 3, 'CUST003', 3);
+INSERT INTO tripbookingdetails (id_trip_booking_details, id_trip_booking, id_cliente, id_tarifa) VALUES (4, 4, 'CUST004', 4);
+INSERT INTO tripbookingdetails (id_trip_booking_details, id_trip_booking, id_cliente, id_tarifa) VALUES (5, 5, 'CUST005', 5);
+
+
+
