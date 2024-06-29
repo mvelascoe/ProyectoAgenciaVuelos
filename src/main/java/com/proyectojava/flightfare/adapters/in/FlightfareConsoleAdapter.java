@@ -91,7 +91,7 @@ public class FlightfareConsoleAdapter {
                     break;
                 case 6:
                     System.out.println("Volviendo al menu principal... Adios");
-                    MP.showClientMenu(sc);
+                    MP.showAdminMenu(sc);
                     break;
                 default:
                     System.out.println("Opcion invalida. Intentalo de nuevo");

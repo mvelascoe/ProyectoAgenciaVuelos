@@ -50,7 +50,7 @@ public class TripConsoleAdapter {
 
                 case 6:
                     exit();
-                    MP.showMainMenu();
+                    MP.showAdminMenu(scanner);
                     break;
 
                 default:

@@ -62,8 +62,8 @@ public class GeneralConsoleAdapter {
 
     // Conexion con la base de datos
     String url = "jdbc:mysql://localhost:3306/Vuelos_globales";
-    String user = "root";
-    String password = "MVE11feb94";
+    String user = "campus2023";
+    String password = "Campus2023*";
 
     CountryMySQLRepository countryRepository = new CountryMySQLRepository(url, user, password);
     CitiesMySQLRepository citiesRepository = new CitiesMySQLRepository(url, user, password);
@@ -198,7 +198,7 @@ public class GeneralConsoleAdapter {
             System.out.println("1. Gestionar Paises y Ciudades");// INSERTARE PAISES Y CIUDADES
             System.out.println("2. Gestionar Aerolineas");
             System.out.println("3. Gestionar Aviones");// HECHOS
-            System.out.println("3. Gestionar Aeropuertos");// HECHOS
+            System.out.println("4. Gestionar Aeropuertos");// HECHOS
             System.out.println("5. Gestionar Tripulación");
             System.out.println("6. Gestionar Tipo de documento");// HECHOS
             System.out.println("7. Asignar Aeronave al trayecto"); 
@@ -432,7 +432,7 @@ public class GeneralConsoleAdapter {
             switch (choice) {
                 case 1:
                     System.out.println("Cliente - reserva de vuelo");
-                    flightfareConsoleAdapter.startFlightFare();
+                    tripbookingConsoleAdapter.start();
                     break;
                 case 2:
                     break;
@@ -454,7 +454,7 @@ public class GeneralConsoleAdapter {
 
     // Seccion del servicio de Mantenimiento
 
-    private void showMaintenanceTechMenu(Scanner scanner) throws ParseException {
+    public void showMaintenanceTechMenu(Scanner scanner) throws ParseException {
         int choice;
         do {
             System.out.println("Técnico de mantenimiento:");

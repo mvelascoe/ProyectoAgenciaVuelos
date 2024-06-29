@@ -53,7 +53,7 @@ public class TripbookingConsoleAdapter {
 
                 case 6:
                     exit();
-                    MP.showSalesAgentMenu(sc);
+                    MP.showClientMenu(sc);
                     return; // Salir del método start() al elegir salir
 
                 default:
