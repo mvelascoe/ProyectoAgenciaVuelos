@@ -4,9 +4,7 @@
 
 
 
-
-
-![image-20240628215108380](/home/sara/.config/Typora/typora-user-images/image-20240628215108380.png)
+![Diagrama Vuelos Globales](https://github.com/mvelascoe/ProyectoAgenciaVuelos/blob/main/img/Vuelos_globales.png)
 
 
 
@@ -27,6 +25,9 @@
 
 
  Se implementó un modelo estándar de desarrollo de software, enfocado en operaciones CRUD para aproximadamente 20 entidades. Cada entidad sigue los principios de arquitectura hexagonal, junto con divisiones verticales y un módulo dedicado para la gestión del flujo principal.
+
+![Arquitectura Hexagonal](https://github.com/mvelascoe/ProyectoAgenciaVuelos/blob/main/img/ArquitecturaHexagonal.JPG)
+
 
 Dentro de la arquitectura hexagonal, se diseñó un módulo específico para la gestión de la conexión con la base de datos, denominado MySQLRepository. Además, se incluyó un diagrama ERD de la base de datos, acompañado de su respectivo script SQL.
 
