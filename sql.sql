@@ -157,6 +157,14 @@ CREATE TABLE documenttype(
     PRIMARY KEY(id_documento)
 );
 
+CREATE TABLE flight_booking_details (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_trip INT,
+    id_cliente VARCHAR(20),
+    id_asiento INT,
+    FOREIGN KEY (id_trip) REFERENCES trip(id_trip),
+    FOREIGN KEY (id_cliente) REFERENCES costumer(id_cliente)
+);
 
 
 ALTER TABLE flightconnection

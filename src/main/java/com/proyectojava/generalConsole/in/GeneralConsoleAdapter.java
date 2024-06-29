@@ -62,8 +62,8 @@ public class GeneralConsoleAdapter {
 
     // Conexion con la base de datos
     String url = "jdbc:mysql://localhost:3306/Vuelos_globales";
-    String user = "campus2023";
-    String password = "Campus2023*";
+    String user = "root";
+    String password = "MVE11feb94";
 
     CountryMySQLRepository countryRepository = new CountryMySQLRepository(url, user, password);
     CitiesMySQLRepository citiesRepository = new CitiesMySQLRepository(url, user, password);
@@ -210,7 +210,7 @@ public class GeneralConsoleAdapter {
 
             switch (choice) {
                 case 1:
-                    System.out.println("GESTIONAR PAISES Y CIUDADES");// Voy a insertar datos para paises y ciudades
+                    System.out.println("");// Voy a insertar datos para paises y ciudades
                     cityAndCountrys(scanner);
                     break;
                 
@@ -263,10 +263,12 @@ public class GeneralConsoleAdapter {
     public void cityAndCountrys(Scanner scanner) throws ParseException {
         int choice;
         do {
+            System.out.println("");
             System.out.println("REGISTRO DE PAISES Y CIUDADES");
             System.out.println("1. Gestionar Paises");
             System.out.println("2. Gestionar Ciudades");
             System.out.println("3. Volver al menu anterior");
+            System.out.println("");
 
             choice = scanner.nextInt();
 
@@ -290,6 +292,7 @@ public class GeneralConsoleAdapter {
     public void gestionAviones(Scanner scanner) throws ParseException{
         int choice;
         do{
+            System.out.println("");
             System.out.println(" Gestion de aviones");
             System.out.println("");
             System.out.println("1. Gestioner los fabricantes de aviones");
@@ -319,6 +322,7 @@ public class GeneralConsoleAdapter {
     public void tripulations(Scanner scanner) throws ParseException {
         int choice;
         do {
+            System.out.println("");
             System.out.println("1. Gestion de roles");
             System.out.println("2. Gestion de Empleado");
             System.out.println("3. Asignar tripulacion a trayecto");
@@ -352,6 +356,7 @@ public class GeneralConsoleAdapter {
     public void trayectoEscala(Scanner scanner) throws ParseException{
         int choice;
         do{
+            System.out.println("");
             System.out.println("1. Ingresar un Vuelo");
             System.out.println("2. Asignacion de Escalas, Avion, y Aeropuerto");
 
@@ -372,6 +377,7 @@ public class GeneralConsoleAdapter {
     public void showSalesAgentMenu(Scanner scanner) throws ParseException {
         int choice;
         do {
+            System.out.println("");
             System.out.println("Agente de ventas:");
             System.out.println("1. Gestionar clientes");/// HECHOS
             System.out.println("2. Gestionar reservas de vuelo");/// HECHOS
@@ -420,6 +426,7 @@ public class GeneralConsoleAdapter {
     public void showClientMenu(Scanner scanner) throws ParseException {
         int choice;
         do {
+            System.out.println("");
             System.out.println("Cliente:");
             System.out.println("1.  Gestion de reserva de vuelo");
             System.out.println("2. Opción 2");
@@ -457,6 +464,7 @@ public class GeneralConsoleAdapter {
     public void showMaintenanceTechMenu(Scanner scanner) throws ParseException {
         int choice;
         do {
+            System.out.println("");
             System.out.println("Técnico de mantenimiento:");
             System.out.println("1. Gestion revisiones");
             System.out.println("2. Consulta revision por matricula");

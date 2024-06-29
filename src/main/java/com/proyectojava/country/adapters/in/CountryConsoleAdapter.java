@@ -59,6 +59,7 @@ public class CountryConsoleAdapter {
     }
 
     private void menuPais() {
+        System.out.println("");
         System.out.println("1. Crear País");
         System.out.println("2. Actualizar País");
         System.out.println("3. Buscar País por ID");
