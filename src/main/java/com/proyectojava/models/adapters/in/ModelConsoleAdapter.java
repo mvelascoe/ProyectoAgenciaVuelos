@@ -51,7 +51,7 @@ public class ModelConsoleAdapter {
 
                 case 6:
                     exit();
-                    MP.showMainMenu();
+                    MP.showAdminMenu(scanner);
                     break;
 
                 default:

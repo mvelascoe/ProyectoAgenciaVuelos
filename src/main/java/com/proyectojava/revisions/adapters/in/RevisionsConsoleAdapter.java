@@ -52,7 +52,7 @@ public class RevisionsConsoleAdapter {
 
                 case 6:
                     exit();
-                    MP.showMainMenu();
+                    MP.showMaintenanceTechMenu(scanner);
                     break;
 
                 default:
