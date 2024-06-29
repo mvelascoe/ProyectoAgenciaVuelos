@@ -264,5 +264,36 @@ INSERT INTO trip (id_trip, precio, lugar_ida, lugar_llegada) VALUES
 (9, 180.00, 'Ciudad de México', 'Guadalajara'),
 (10, 280.00, 'Mumbai', 'Nueva Delhi');
 
-INSERT INTO statusA (id_estado, nombre_estado) VALUES
-(1,'Sin asignar');
+INSERT INTO statusA (id_estado, nombre_estado)
+VALUES
+    (1, 'Activo'),
+    (2, 'En mantenimiento'),
+    (3, 'En reparación'),
+    (4, 'Fuera de servicio');
+
+INSERT INTO manufacturer (id_manufactura, nombre_manufactura)
+VALUES
+    (1, 'Boeing'),
+    (2, 'Airbus'),
+    (3, 'Embraer'),
+    (4, 'Bombardier');
+
+
+INSERT INTO models (id_modelo, nombre_modelo, id_manufactura)
+VALUES
+    (101, 'Boeing 737', 1),
+    (102, 'Airbus A320', 2),
+    (103, 'Embraer E190', 3),
+    (104, 'Bombardier CRJ900', 4);
+
+INSERT INTO planes (id_avion,matricula, capacidad, fecha_fabricacion, id_estado, id_modelo)
+VALUES
+    (901,'ABC123', 180, '2015-10-15', 1, 101),
+    (902,'DEF456', 220, '2018-04-25', 2, 102),
+    (903,'GHI789', 100, '2017-12-03', 3, 103),
+    (905,'JKL012', 150, '2016-08-20', 4, 104);
+
+INSERT INTO revisions (fecha_revision, id_avion, detalle) VALUES 
+    ('2023-01-10', 901, 'Revisión de mantenimiento programada'),
+    ('2023-03-15', 901, 'Inspección de seguridad realizada'),
+    ('2023-05-20', 905, 'Actualización de componentes internos');

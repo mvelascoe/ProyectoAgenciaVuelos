@@ -125,7 +125,7 @@ public class PlaneMySQLRepository implements PlaneRepository{
 
     @Override
     public Optional<Plane> findMatricula(String matricula){
-        try (Connection connection = DriverManager.getConnection(matricula, matricula, matricula)){
+        try (Connection connection = DriverManager.getConnection(url, user, password)){
             String query = "SELECT id_avion, matricula, capacidad, fecha_fabricacion, id_estado, id_modelo FROM planes WHERE matricula = ?";
             try(PreparedStatement statement = connection.prepareStatement(query)){
                 statement.setString(1, matricula);
