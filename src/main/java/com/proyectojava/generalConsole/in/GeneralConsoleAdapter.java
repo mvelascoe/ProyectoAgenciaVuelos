@@ -460,7 +460,7 @@ public class GeneralConsoleAdapter {
             System.out.println("Técnico de mantenimiento:");
             System.out.println("1. Gestion revisiones");
             System.out.println("2. Consulta revision por matricula");
-            System.out.println("3.  Volver al menú principal");
+            System.out.println("3. Volver al menú principal");
 
             choice = scanner.nextInt();
 

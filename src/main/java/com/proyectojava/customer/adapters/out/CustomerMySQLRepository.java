@@ -90,7 +90,7 @@ public class CustomerMySQLRepository implements CustomerRepository {
     public List<Customer> findAll(){
         List<Customer> customers = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            String query = "SELECT id_cliente,nombre_ciudad,id_pais FROM costumer";
+            String query = "SELECT id_cliente, nombre_cliente, edad_cliente, id_documento FROM costumer";
             try (PreparedStatement statement = connection.prepareStatement(query);
                     ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
