@@ -145,14 +145,29 @@ public class RevisionsConsoleAdapter {
         System.out.println("Volviendo al menu principal...");
     }
 
-    public void reviMatricula(){
-        String matriculaID = validations.caracteres("Ingresa la matricula", 10);         
+    public void reviMatricula() {
+        String matriculaID = validations.caracteres("Ingresa la matricula: ", 10);         
         Optional<Plane> optionalPlane = revisionsService.findM(matriculaID);
-        if(optionalPlane.isPresent()){
+        
+        if (optionalPlane.isPresent()) {
+            List<Revisions> revisions = revisionsService.getAllRevisions();
             Plane avion = optionalPlane.get();
-            System.out.println(MessageFormat.format("Id_avion: {0}\nCapacidad: {1}\nFecha fabricacion: {2}\nEstado: {3}\nModelo: {4}", avion.getId_avion(),avion.getCapacidad(),avion.getFecha_fabricacion(),avion.getId_estado(),avion.getId_modelo()));
-
-            
+            System.out.println(MessageFormat.format(
+                "Id_avion: {0}\nCapacidad: {1}\nFecha fabricacion: {2}\nEstado: {3}\nModelo: {4}", 
+                avion.getId_avion(), avion.getCapacidad(), avion.getFecha_fabricacion(), 
+                avion.getId_estado(), avion.getId_modelo()));
+    
+            for (Revisions rev : revisions) {
+                System.out.println("Revision Id_avion: " + rev.getId_avion());
+                if (rev.getId_avion() == avion.getId_avion()) {
+                    System.out.println("Id de revision: " + rev.getId_revision());
+                    System.out.println("Fecha de revision: " + rev.getFecha_revision());
+                }
+            }
+        } else {
+            System.out.println("No se encontro un avion con la matricula " + matriculaID);
         }
     }
+    
+    
 }

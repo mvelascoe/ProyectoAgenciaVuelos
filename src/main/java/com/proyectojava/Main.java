@@ -1,7 +1,6 @@
 package com.proyectojava;
 
 import java.text.ParseException;
-import java.util.Scanner;
 
 import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
 

@@ -29,7 +29,6 @@ import com.proyectojava.employee.application.EmployeeService;
 import com.proyectojava.flightconnection.adapters.in.FlightConnectionConsoleAdapter;
 import com.proyectojava.flightconnection.adapters.out.FlightConnectionMySQLRepository;
 import com.proyectojava.flightconnection.application.FlightConnectionService;
-import com.proyectojava.flightconnection.domain.models.FlightConnection;
 import com.proyectojava.flightfare.adapters.in.FlightfareConsoleAdapter;
 import com.proyectojava.flightfare.adapters.out.FlightfareMySQLRepository;
 import com.proyectojava.flightfare.application.FlightfareService;
@@ -57,13 +56,14 @@ import com.proyectojava.trip.application.TripService;
 import com.proyectojava.tripbooking.adapters.in.TripbookingConsoleAdapter;
 import com.proyectojava.tripbooking.adapters.out.TripbookingMySQLRepository;
 import com.proyectojava.tripbooking.application.TripbookingService;
+import com.proyectojava.utility.Validations;
 
 public class GeneralConsoleAdapter {
-
+    Validations VLA = new Validations();
     // Conexion con la base de datos
     String url = "jdbc:mysql://localhost:3306/Vuelos_globales";
-    String user = "root";
-    String password = "MVE11feb94";
+    String user = "campus2023";
+    String password = "Campus2023*";
 
     CountryMySQLRepository countryRepository = new CountryMySQLRepository(url, user, password);
     CitiesMySQLRepository citiesRepository = new CitiesMySQLRepository(url, user, password);
@@ -429,10 +429,7 @@ public class GeneralConsoleAdapter {
             System.out.println("");
             System.out.println("Cliente:");
             System.out.println("1.  Gestion de reserva de vuelo");
-            System.out.println("2. Opción 2");
-            System.out.println("3. Consulta tarifa de vuelo");
-            System.out.println("4. Opción 4");
-            System.out.println("5. Volver al menú principal");
+            System.out.println("2. Volver al menú principal");
 
             choice = scanner.nextInt();
 
@@ -442,14 +439,6 @@ public class GeneralConsoleAdapter {
                     tripbookingConsoleAdapter.start();
                     break;
                 case 2:
-                    break;
-                case 3:
-                    System.out.println("Cliente -.");
-                    break;
-                case 4:
-                    System.out.println("Cliente - Opción 4 seleccionada.");
-                    break;
-                case 5:
                     System.out.println("Volviendo al menú principal.");
                     showMainMenu();
                     break;
@@ -458,6 +447,12 @@ public class GeneralConsoleAdapter {
             }
         } while (choice != 5);
     }
+
+    /*public void Pasajeros(){
+        tripConsoleAdapter.listAllTrips();
+        int idVueloSeleccionado = VLA.validarInt("Ingrese el ID del vuelo seleccionado: ");
+
+    }*/
 
     // Seccion del servicio de Mantenimiento
 
