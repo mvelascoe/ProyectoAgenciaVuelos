@@ -244,7 +244,7 @@ INSERT INTO cities (id_ciudad,nombre_ciudad,id_pais) VALUES
 ("C019","Mumbai","P010"),
 ("C020","Nueva Delhi","P010");
 
-INSERT INTO vuelos (id_trip, precio, lugar_ida, lugar_llegada) VALUES
+INSERT INTO trip (id_trip, precio, lugar_ida, lugar_llegada) VALUES
 (1, 250.00, 'Nueva York', 'Los Ángeles'),
 (2, 300.00, 'Toronto', 'Montreal'),
 (3, 150.00, 'São Paulo', 'Río de Janeiro'),
@@ -255,3 +255,6 @@ INSERT INTO vuelos (id_trip, precio, lugar_ida, lugar_llegada) VALUES
 (8, 350.00, 'Sídney', 'Melbourne'),
 (9, 180.00, 'Ciudad de México', 'Guadalajara'),
 (10, 280.00, 'Mumbai', 'Nueva Delhi');
+
+INSERT INTO statusA (id_estado, nombre_estado) VALUES
+(1,'Sin asignar');

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.proyectojava.flightconnection.domain.models.FlightConnection;
+import com.proyectojava.flightconnection.domain.models.FlightConnectionInfo;
 import com.proyectojava.flightconnection.infrastructure.FlightConnectionRepository;
 
 public class FlightConnectionMySQLRepository implements FlightConnectionRepository {
@@ -114,5 +115,28 @@ public class FlightConnectionMySQLRepository implements FlightConnectionReposito
             e.printStackTrace();
         }
         return connections;
+    }
+
+        public List<FlightConnectionInfo> findAllFlightConnections() {
+        List<FlightConnectionInfo> flightConnections = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(url, user, password)) {
+            String query = "SELECT fc.id_trayectoria, fc.trayectoria_numero, t.lugar_ida, t.lugar_llegada " +
+                           "FROM flightconnection fc " +
+                           "JOIN trip t ON fc.id_trip = t.id_trip";
+            try (PreparedStatement statement = connection.prepareStatement(query);
+                 ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    FlightConnectionInfo connectionInfo = new FlightConnectionInfo(
+                            resultSet.getInt("id_trayectoria"),
+                            resultSet.getString("trayectoria_numero"),
+                            resultSet.getString("lugar_ida"),
+                            resultSet.getString("lugar_llegada"));
+                    flightConnections.add(connectionInfo);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return flightConnections;
     }
 }

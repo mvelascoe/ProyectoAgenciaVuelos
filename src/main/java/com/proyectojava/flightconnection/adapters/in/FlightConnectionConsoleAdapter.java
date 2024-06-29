@@ -6,16 +6,22 @@ import java.util.Optional;
 import java.util.Scanner;
 import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
 import com.proyectojava.airport.domain.models.Airport;
+import com.proyectojava.country.domain.models.Country;
+import com.proyectojava.employee.application.EmployeeService;
+import com.proyectojava.employee.domain.models.Employee;
 import com.proyectojava.flightconnection.application.FlightConnectionService;
 import com.proyectojava.flightconnection.domain.models.FlightConnection;
+import com.proyectojava.flightconnection.domain.models.FlightConnectionInfo;
 import com.proyectojava.plane.domain.models.Plane;
 import com.proyectojava.trip.domain.models.Trip;
 
 public class FlightConnectionConsoleAdapter {
     private final FlightConnectionService flightConnectionService;
+    private final EmployeeService employeeService;
 
-    public FlightConnectionConsoleAdapter(FlightConnectionService flightConnectionService) {
+    public FlightConnectionConsoleAdapter(FlightConnectionService flightConnectionService, EmployeeService employeeService) {
         this.flightConnectionService = flightConnectionService;
+        this.employeeService = employeeService;
     }
 
     public void startFlightConnection() throws ParseException {
@@ -47,6 +53,7 @@ public class FlightConnectionConsoleAdapter {
                     System.out.println("-------------------------------");
                     System.out.printf("%-15s ", "ID_Avion");
                     System.out.println("-------------------------------");
+
                     if (optionalTrip.isPresent()) {
 
                         List<Plane> planes = flightConnectionService.getAllPlanes();
@@ -82,10 +89,11 @@ public class FlightConnectionConsoleAdapter {
                                 System.out.println("**************************************\n");
                             }
                         }
-                    }else{
+                    } else {
                         System.out.println("Error: Datos inexsistentes...");
                     }
                     break;
+
                 case 2:
                     System.out.println("Ingresa el id de la conexion a actualizar: ");
                     int up_id = sc.nextInt();
@@ -132,13 +140,20 @@ public class FlightConnectionConsoleAdapter {
                     System.out.println("*************************************\n");
                     break;
                 case 5:
-                    System.out.println("  ####    #####   ##   ##  #######  ###  ##   ######   #####   ##   ##  #######   #####   ");                    
-                    System.out.println(" ##  ##  ### ###  ###  ##   ##   #  ###  ##     ##    ### ###  ###  ##   ##   #  ##   ##  ");
-                    System.out.println("##       ##   ##  #### ##   ##       #####      ##    ##   ##  #### ##   ##      ##       ");                
-                    System.out.println("##       ##   ##  #######   ####      ###       ##    ##   ##  #######   ####     #####   ");                
-                    System.out.println("##       ##   ##  ## ####   ##       #####      ##    ##   ##  ## ####   ##           ##  ");                
-                    System.out.println(" ##  ##  ### ###  ##  ###   ##   #  ##  ###     ##    ### ###  ##  ###   ##   #  ##   ##  ");                
-                    System.out.println("  ####    #####   ##   ##  #######  ##  ###   ######   #####   ##   ##  #######   #####   ");
+                    System.out.println(
+                            "  ####    #####   ##   ##  #######  ###  ##   ######   #####   ##   ##  #######   #####   ");
+                    System.out.println(
+                            " ##  ##  ### ###  ###  ##   ##   #  ###  ##     ##    ### ###  ###  ##   ##   #  ##   ##  ");
+                    System.out.println(
+                            "##       ##   ##  #### ##   ##       #####      ##    ##   ##  #### ##   ##      ##       ");
+                    System.out.println(
+                            "##       ##   ##  #######   ####      ###       ##    ##   ##  #######   ####     #####   ");
+                    System.out.println(
+                            "##       ##   ##  ## ####   ##       #####      ##    ##   ##  ## ####   ##           ##  ");
+                    System.out.println(
+                            " ##  ##  ### ###  ##  ###   ##   #  ##  ###     ##    ### ###  ##  ###   ##   #  ##   ##  ");
+                    System.out.println(
+                            "  ####    #####   ##   ##  #######  ##  ###   ######   #####   ##   ##  #######   #####   ");
 
                     flightConnectionService.findAllConnecttions().forEach(cl -> {
                         System.out.println("Id: " + cl.getId_trayectoria() + ", Numero de trayectoria: "
@@ -157,4 +172,56 @@ public class FlightConnectionConsoleAdapter {
         }
 
     }
+
+    public void asignacionTrayecto() {
+        Scanner sc = new Scanner(System.in);
+    
+        // Mostrar trayectos disponibles
+        List<FlightConnectionInfo> flightConnections = flightConnectionService.findAllFlightConnections();
+        System.out.println("---------------------------------------------");
+        System.out.printf("%-15s %-20s %-20s %-20s\n", "ID Trayectoria", "Trayectoria Numero", "Lugar Ida", "Lugar Llegada");
+        System.out.println("---------------------------------------------");
+        for (FlightConnectionInfo connection : flightConnections) {
+            System.out.printf("%-15d %-20s %-20s %-20s\n", connection.getId_trayectoria(), connection.getTrayectoria_numero(), connection.getLugar_ida(), connection.getLugar_llegada());
+        }
+        System.out.println("---------------------------------------------");
+    
+        System.out.println("Seleccione el trayecto al que desea asignar un empleado (ingrese ID):");
+        int selectedTrayectoId = sc.nextInt();
+    
+        // Mostrar empleados disponibles
+        List<Employee> employees = flightConnectionService.findAllEmployees();
+        System.out.println("-----------------------------------------------------------------");
+        System.out.printf("%-15s %-20s %-10s %-15s %-10s %-10s%n", "ID Empleado", "Nombre Empleado", "ID Rol", "Fecha Ingreso", "ID Aerolínea", "ID Aeropuerto");
+        System.out.println("-----------------------------------------------------------------");
+        for (Employee employee : employees) {
+            System.out.printf("%-15s %-20s %-10d %-15s %-10d %-10s%n", employee.getId_empleado(), employee.getNombre_empleado(), employee.getId_rol(), employee.getFecha_ingreso(), employee.getId_aerolinea(), employee.getId_aeropuerto());
+        }
+        System.out.println("-----------------------------------------------------------------");
+    
+        // Permitir la selección de empleados
+        System.out.println("Seleccione los empleados que desea asignar (ingrese IDs separados por comas):");
+        sc.nextLine(); // Limpiar el buffer del scanner
+        String selectedEmployeeIds = sc.nextLine();
+        String[] employeeIdArray = selectedEmployeeIds.split(",");
+    
+        // Realizar la asignación de empleados al trayecto seleccionado
+        for (String employeeId : employeeIdArray) {
+            employeeId = employeeId.trim();
+            Optional<Employee> optionalEmployee = flightConnectionService.findEmployeeById(employeeId);
+            if (optionalEmployee.isPresent()) {
+                // Aquí deberías llamar a un método de servicio para asignar el empleado al trayecto
+                flightConnectionService.assignEmployeeToTrayecto(employeeId, selectedTrayectoId);
+                System.out.println("Empleado " + employeeId + " asignado correctamente al trayecto " + selectedTrayectoId);
+            } else {
+                System.out.println("Empleado con ID " + employeeId + " no encontrado.");
+            }
+        }
+    
+        System.out.println("\n************************************");
+        System.out.println("*       Trayectoria Asignada       *");
+        System.out.println("*************************************\n");
+    }
 }
+
+

@@ -68,6 +68,11 @@ public class FlightConnection {
         this.id_aeropuerto = id_aeropuerto;
     }
 
+    public static void startFlightConnection() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'startFlightConnection'");
+    }
+
     
     
 }

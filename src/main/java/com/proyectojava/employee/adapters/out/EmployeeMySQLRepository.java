@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import com.proyectojava.employee.domain.models.Employee;
 import com.proyectojava.employee.infrastructure.EmployeeRepository;
+import com.proyectojava.flightconnection.domain.models.FlightConnectionInfo;
 
 public class EmployeeMySQLRepository implements EmployeeRepository{
 
@@ -115,4 +116,21 @@ public class EmployeeMySQLRepository implements EmployeeRepository{
         }
         return employees;
     }
+    
+
+        @Override
+        public void updateTrayecto(String id_empleado, int id_trayecto) {
+        String query = "UPDATE employee SET id_trayecto = ? WHERE id_empleado = ?";
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+            PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, id_trayecto);
+            statement.setString(2, id_empleado);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    
 }

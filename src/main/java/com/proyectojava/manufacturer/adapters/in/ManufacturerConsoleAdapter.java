@@ -59,47 +59,47 @@ public class ManufacturerConsoleAdapter {
     }
 
     private void menuManufactura() {
-        System.out.println("1. Crear Manufactura");
-        System.out.println("2. Actualizar Manufactura");
-        System.out.println("3. Buscar Manufactura por ID");
-        System.out.println("4. Eliminar Manufactura");
-        System.out.println("5. Listar todas las Manufacturas");
+        System.out.println("1. Registrar fabricante");
+        System.out.println("2. Actualizar Fabricante");
+        System.out.println("3. Buscar Fabricante por ID");
+        System.out.println("4. Eliminar Fabricante");
+        System.out.println("5. Listar todas los Fabricantes");
         System.out.println("6. Salir");
     }
 
     private void createManufacturer() {
-        String createName = validations.campObligatorio("Ingrese el nombre de la manufactura: ");
+        String createName = validations.campObligatorio("Ingrese el nombre del fabricante: ");
         Manufacturer newManufacturer = new Manufacturer(0, createName); // ID será autogenerado
         manufacturerService.createManufacturer(newManufacturer);
         System.out.println("\n*********************************");
-        System.out.println("* Manufactura creada exitosamente. *");
+        System.out.println("* Fabricante creadi exitosamente. *");
         System.out.println("*********************************\n");
     }
 
     private void updateManufacturer() {
-        int updateId = validations.validarInt("Ingrese el ID de la manufactura a actualizar: ");
+        int updateId = validations.validarInt("Ingrese el ID del fabricante a actualizar: ");
         String updateName = validations.campObligatorio("Ingrese el nuevo nombre: ");
         Manufacturer updatedManufacturer = new Manufacturer(updateId, updateName);
         manufacturerService.updateManufacturer(updatedManufacturer);
         System.out.println("\n**************************************");
-        System.out.println("* Manufactura actualizada exitosamente. *");
+        System.out.println("* Fabricante actualizado exitosamente. *");
         System.out.println("****************************************\n");
     }
 
     private void findManufacturerById() {
-        int findId = validations.validarInt("Ingrese el ID de la manufactura a buscar: ");
+        int findId = validations.validarInt("Ingrese el ID de la fabricante a buscar: ");
 
         Optional<Manufacturer> manufacturer = manufacturerService.getManufacturerById(findId);
         manufacturer.ifPresentOrElse(
                 m -> System.out.println("ID: " + m.getId_manufactura() + ", Nombre: " + m.getNombre_manufactura()),
-                () -> System.out.println("Manufactura con id " + findId + " no encontrada"));
+                () -> System.out.println("Fabricante  con id " + findId + " no encontrada"));
     }
 
     private void deleteManufacturer() {
-        int deleteId = validations.validarInt("Ingrese el ID de la manufactura a eliminar: ");
+        int deleteId = validations.validarInt("Ingrese el ID del fabricamte a eliminar: ");
         manufacturerService.deleteManufacturer(deleteId);
         System.out.println("\n*********************************");
-        System.out.println("Manufactura eliminada exitosamente.");
+        System.out.println("Fabricante eliminado exitosamente.");
         System.out.println("*********************************\n");
     }
 

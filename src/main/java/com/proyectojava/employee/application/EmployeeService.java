@@ -17,6 +17,7 @@ public class EmployeeService {
     private final RolsRepository rolsRepository;
     private final AirlineRepository airlineRepository;
     private final AirportRepository airportRepository;
+    
 
     public EmployeeService(EmployeeRepository employeeRepository, RolsRepository rolsRepository,
             AirlineRepository airlineRepository, AirportRepository airportRepository) {
@@ -45,6 +46,18 @@ public class EmployeeService {
     public List<Employee> findAllEmployees() {
         return employeeRepository.findAll();
     }
+
+    public void assignEmployeeToTrayecto(String id_empleado, int id_trayecto) {
+        Optional<Employee> optionalEmployee = employeeRepository.findById(id_empleado);
+        if (optionalEmployee.isPresent()) {
+            Employee employee = optionalEmployee.get();
+            employee.assignTrayecto(id_trayecto); 
+            employeeRepository.update(employee); 
+        } else {
+            System.out.println("Empleado con ID " + id_empleado + " no encontrado.");
+        }
+    }
+
 
     // ROL
     public Optional<Rols> findRol(int id_rol) {

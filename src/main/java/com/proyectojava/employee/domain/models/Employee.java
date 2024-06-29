@@ -9,6 +9,7 @@ public class Employee {
     private Date fecha_ingreso;
     private int id_aerolinea;
     private String id_aeropuerto;
+    private int id_trayecto; // Nuevo campo para el ID del trayecto asignado
 
     public Employee(String id_empleado, String nombre_empleado, int id_rol, Date fecha_ingreso, int id_aerolinea,
             String id_aeropuerto) {
@@ -18,11 +19,11 @@ public class Employee {
         this.fecha_ingreso = fecha_ingreso;
         this.id_aerolinea = id_aerolinea;
         this.id_aeropuerto = id_aeropuerto;
+        this.id_trayecto = -1; // Inicializado como -1 o cualquier valor por defecto
     }
 
+    // Getters y setters para los campos existentes
 
-    //GETTERS AND SETTERS
-    
     public String getId_empleado() {
         return id_empleado;
     }
@@ -71,6 +72,18 @@ public class Employee {
         this.id_aeropuerto = id_aeropuerto;
     }
 
-    
-    
+    // Getter y setter para el campo id_trayecto
+
+    public int getId_trayecto() {
+        return id_trayecto;
+    }
+
+    public void setId_trayecto(int id_trayecto) {
+        this.id_trayecto = id_trayecto;
+    }
+
+    // Método para asignar trayecto
+    public void assignTrayecto(int id_trayecto) {
+        this.id_trayecto = id_trayecto;
+    }
 }

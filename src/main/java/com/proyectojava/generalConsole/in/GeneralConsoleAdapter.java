@@ -26,6 +26,10 @@ import com.proyectojava.documenttype.application.DocumenttypeService;
 import com.proyectojava.employee.adapters.in.EmployeeConsoleAdapter;
 import com.proyectojava.employee.adapters.out.EmployeeMySQLRepository;
 import com.proyectojava.employee.application.EmployeeService;
+import com.proyectojava.flightconnection.adapters.in.FlightConnectionConsoleAdapter;
+import com.proyectojava.flightconnection.adapters.out.FlightConnectionMySQLRepository;
+import com.proyectojava.flightconnection.application.FlightConnectionService;
+import com.proyectojava.flightconnection.domain.models.FlightConnection;
 import com.proyectojava.flightfare.adapters.in.FlightfareConsoleAdapter;
 import com.proyectojava.flightfare.adapters.out.FlightfareMySQLRepository;
 import com.proyectojava.flightfare.application.FlightfareService;
@@ -58,8 +62,8 @@ public class GeneralConsoleAdapter {
 
     // Conexion con la base de datos
     String url = "jdbc:mysql://localhost:3306/Vuelos_globales";
-    String user = "campus2023";
-    String password = "campus2023";
+    String user = "root";
+    String password = "MVE11feb94";
 
     CountryMySQLRepository countryRepository = new CountryMySQLRepository(url, user, password);
     CitiesMySQLRepository citiesRepository = new CitiesMySQLRepository(url, user, password);
@@ -77,11 +81,12 @@ public class GeneralConsoleAdapter {
     TripbookingMySQLRepository tripbookingMySQLRepository = new TripbookingMySQLRepository(url, user, password);
     FlightfareMySQLRepository flightfareMySQLRepository = new FlightfareMySQLRepository(url, user, password);
     RevisionsMySQLRepository revisionsMySQLRepository = new RevisionsMySQLRepository(url, user, password);
+    FlightConnectionMySQLRepository flightConnectionMySQLRepository = new FlightConnectionMySQLRepository(url, user, password);
 
     CountryService countryService = new CountryService(countryRepository);
     CitiesService citiesService = new CitiesService(citiesRepository, countryRepository);
     PlaneService planeService = new PlaneService(planeMySQLRepository, statusMySQLRepository, modelMySQLRepository,
-            airlineMySQLRepository);
+                airlineMySQLRepository);
     AirportService airportService = new AirportService(airportMySQLRepository, citiesRepository);
     DocumenttypeService documenttypeService = new DocumenttypeService(documenttypeMySQLRepository);
     ModelService modelService = new ModelService(modelMySQLRepository, manufacturerMySQLRepository);
@@ -90,12 +95,13 @@ public class GeneralConsoleAdapter {
     StatusService statusService = new StatusService(statusMySQLRepository);
     CustomerService customerService = new CustomerService(customerMySQLRepository, documenttypeMySQLRepository);
     RolsService rolsService = new RolsService(rolsMySQLRepository);
-    EmployeeService employeeService = new EmployeeService(employeeMySQLRepository, rolsMySQLRepository,
-            airlineMySQLRepository, airportMySQLRepository);
-    TripService tripService = new TripService(tripMySQLRepository);
+    EmployeeService employeeService = new EmployeeService(employeeMySQLRepository, rolsMySQLRepository, 
+                    airlineMySQLRepository, airportMySQLRepository);
+    TripService tripService = new TripService(tripMySQLRepository, flightConnectionMySQLRepository);
     TripbookingService tripbookingService = new TripbookingService(tripbookingMySQLRepository, tripMySQLRepository);
     FlightfareService flightfareService = new FlightfareService(flightfareMySQLRepository);
     RevisionsService revisionsService = new RevisionsService(revisionsMySQLRepository, planeMySQLRepository);
+    FlightConnectionService flightConnectionService = new FlightConnectionService(flightConnectionMySQLRepository, tripMySQLRepository, planeMySQLRepository, airportMySQLRepository, employeeMySQLRepository);
 
     // Inicialización de los adaptadores de consola
 
@@ -115,6 +121,7 @@ public class GeneralConsoleAdapter {
     TripbookingConsoleAdapter tripbookingConsoleAdapter = new TripbookingConsoleAdapter(tripbookingService);
     FlightfareConsoleAdapter flightfareConsoleAdapter = new FlightfareConsoleAdapter(flightfareService);
     RevisionsConsoleAdapter revisionsConsoleAdapter = new RevisionsConsoleAdapter(revisionsService);
+    FlightConnectionConsoleAdapter flightConnectionConsoleAdapter = new FlightConnectionConsoleAdapter(flightConnectionService, employeeService);
 
     // Menu Principal, Seleccion de usuario
     private Map<Integer, String> rolePasswords;
@@ -189,14 +196,15 @@ public class GeneralConsoleAdapter {
         do {
             System.out.println("\n\nADMINISTRADOR DEL SISTEMA\n");
             System.out.println("1. Gestionar Paises y Ciudades");// INSERTARE PAISES Y CIUDADES
-            System.out.println("2. Gestionar Aviones");/// HECHOS
-            System.out.println("3. Gestionar Aeropuertos");/// HECHOS
-            System.out.println("4. Gestionar Tripulación");
-            System.out.println("5. Gestionar Tipo de documento");// HECHOS
-            System.out.println("6.Asignar Aeronave al proyecto");
-            System.out.println("7. Consultar informacion de vuelo");// INSERTARE VUELOS
-            System.out.println("8. Gestionar tarifas de vuelo");/// HECHOS
-            System.out.println("9. Volver al menú principal");
+            System.out.println("2. Gestionar Aerolineas");
+            System.out.println("3. Gestionar Aviones");// HECHOS
+            System.out.println("3. Gestionar Aeropuertos");// HECHOS
+            System.out.println("5. Gestionar Tripulación");
+            System.out.println("6. Gestionar Tipo de documento");// HECHOS
+            System.out.println("7. Asignar Aeronave al trayecto"); 
+            System.out.println("8. Consultar informacion de vuelo");// INSERTARE VUELOS
+            System.out.println("9. Gestionar tarifas de vuelo");// HECHOS
+            System.out.println("10. Volver al menú principal");
 
             choice = scanner.nextInt();
 
@@ -205,38 +213,43 @@ public class GeneralConsoleAdapter {
                     System.out.println("GESTIONAR PAISES Y CIUDADES");// Voy a insertar datos para paises y ciudades
                     cityAndCountrys(scanner);
                     break;
-
+                
                 case 2:
-                    System.out.println("GESTIONAR AVIONES");
-                    planeConsoleAdapter.start();
+                    System.out.println("REGISTRO DE AEROLINEAS");
+                    airlineConsoleAdapter.startAirline();
 
-                    break;
                 case 3:
-                    System.out.println("GESTIONAR AEROPUERTOS");
-                    airportConsoleAdapter.startAirports();
+                    System.out.println("GESTIONAR AVIONES"); //Revisar tablas - pendiente arreglar menus se devuelven al primero
+                    gestionAviones(scanner);
 
                     break;
                 case 4:
+                    System.out.println("GESTIONAR AEROPUERTOS"); 
+                    airportConsoleAdapter.startAirports();
+
+                    break;
+                case 5:
                     System.out.println("GESTIONAR TRIPULACION");
                     tripulations(scanner);
                     break;
-                case 5:
+                case 6:
                     System.out.println("GESTIONAR TIPO DE DOCUMENTO");
                     documenttypeConsoleAdapter.start();
 
-                case 6:
-                    // CONFIO EN TI MARITZA
-                    break;
                 case 7:
+                    System.out.println("GESTIONAR TRAYECTOS Y ESCALAS");
+                    trayectoEscala(scanner);
+                    
+                case 8:
                     System.out.println("INFO DE VUELOS");
                     tripConsoleAdapter.listIdTrip();
                     tripConsoleAdapter.findTripById();
                     break;
-                case 8:
+                case 9:
                     System.out.println("GESTIONA TARIFAS DE VUELO");
                     flightfareConsoleAdapter.startFlightFare();
                     break;
-                case 9:
+                case 10:
                     System.out.println("Volviendo al menu principal...");
                     showMainMenu();
                     break;
@@ -273,14 +286,42 @@ public class GeneralConsoleAdapter {
         } while (choice != 2);
     }
 
+    //Gestionar Aviones
+    public void gestionAviones(Scanner scanner) throws ParseException{
+        int choice;
+        do{
+            System.out.println(" Gestion de aviones");
+            System.out.println("");
+            System.out.println("1. Gestioner los fabricantes de aviones");
+            System.out.println("2. Gestionar los modelos");
+            System.out.println("3. Gestionar los estados");
+            System.out.println("4. Registrar Avion");
+            
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    manufacturerConsoleAdapter.start();
+                case 2:
+                    modelConsoleAdapter.start();
+                    break;
+                case 3: 
+                    statusConsoleAdapter.startStatus();
+                    break;
+                case 4:
+                    planeConsoleAdapter.start();
+                    break;
+            }
+        }while(choice != 4);
+    }
+
     // gestion de tripulacion
     public void tripulations(Scanner scanner) throws ParseException {
         int choice;
         do {
-            System.out.println("GESTIONAR TRIPULACION");
             System.out.println("1. Gestion de roles");
             System.out.println("2. Gestion de Empleado");
-            System.out.println("3. Asignar trayecto");
+            System.out.println("3. Asignar tripulacion a trayecto");
             System.out.println("4. Volver el menu principal");
 
             choice = scanner.nextInt();
@@ -293,7 +334,7 @@ public class GeneralConsoleAdapter {
                     employeeConsoleAdapter.startEmployee();
                     break;
                 case 3:
-                    // CONFIO EN TI MARITZA
+                    flightConnectionConsoleAdapter.asignacionTrayecto();
                     break;
                 case 4:
                     showAdminMenu(scanner);
@@ -304,6 +345,26 @@ public class GeneralConsoleAdapter {
             }
         } while (choice != 2);
 
+    }
+
+    //gestion de trayectos y escalas
+
+    public void trayectoEscala(Scanner scanner) throws ParseException{
+        int choice;
+        do{
+            System.out.println("1. Ingresar un Vuelo");
+            System.out.println("2. Asignacion de Escalas, Avion, y Aeropuerto");
+
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    tripConsoleAdapter.start();                    
+                    break;
+                case 2:
+                    flightConnectionConsoleAdapter.startFlightConnection();
+                    break;
+            }
+        }while(choice != 2);    
     }
 
     // Seccion del Agente de Ventas

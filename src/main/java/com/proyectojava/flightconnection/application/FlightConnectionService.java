@@ -5,7 +5,10 @@ import java.util.Optional;
 
 import com.proyectojava.airport.domain.models.Airport;
 import com.proyectojava.airport.infrastructure.AirportRepository;
+import com.proyectojava.employee.domain.models.Employee;
+import com.proyectojava.employee.infrastructure.EmployeeRepository;
 import com.proyectojava.flightconnection.domain.models.FlightConnection;
+import com.proyectojava.flightconnection.domain.models.FlightConnectionInfo;
 import com.proyectojava.flightconnection.infrastructure.FlightConnectionRepository;
 import com.proyectojava.plane.domain.models.Plane;
 import com.proyectojava.plane.infrastructure.PlaneRepository;
@@ -17,13 +20,16 @@ public class FlightConnectionService {
     private final TripRepository tripRepository;
     private final PlaneRepository planeRepository;
     private final AirportRepository airportRepository;
+    private final EmployeeRepository employeeRepository;
+    
 
     public FlightConnectionService(FlightConnectionRepository flightConnectionRepository, TripRepository tripRepository,
-            PlaneRepository planeRepository, AirportRepository airportRepository) {
+            PlaneRepository planeRepository, AirportRepository airportRepository, EmployeeRepository employeeRepository) {
         this.flightConnectionRepository = flightConnectionRepository;
         this.airportRepository = airportRepository;
         this.planeRepository = planeRepository;
         this.tripRepository = tripRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     public void createConnection(FlightConnection flightConnection) {
@@ -45,6 +51,10 @@ public class FlightConnectionService {
     public List<FlightConnection> findAllConnecttions() {
         return flightConnectionRepository.findAll();
     }
+
+    public List<FlightConnectionInfo> findAllFlightConnections() {
+        return flightConnectionRepository.findAllFlightConnections();
+}
 
     // Metodos del Trip
 
@@ -87,4 +97,24 @@ public class FlightConnectionService {
     public List<Airport> findAllAirports() {
         return airportRepository.findAll();
     }
+
+    //metodos employee
+
+    public List<Employee> findAllEmployees() {
+        return employeeRepository.findAll();
+    }
+
+    public Optional<Employee> findEmployeeById(String id_empleado) {
+        return employeeRepository.findById(id_empleado);
+    }
+
+    public void assignEmployeeToTrayecto(String employeeId, int selectedTrayectoId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'assignEmployeeToTrayecto'");
+    }
+
+
+
+
 }
+

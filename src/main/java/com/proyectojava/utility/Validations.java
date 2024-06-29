@@ -119,4 +119,14 @@ public class Validations {
         }
         return dato;
     }
+
+    public boolean validarBoolean(String mensaje) {
+        System.out.println(mensaje);
+        String entrada = scanner.next();
+        while (!entrada.equalsIgnoreCase("y") && !entrada.equalsIgnoreCase("n")) {
+            System.out.println("Entrada no válida. " + mensaje);
+            entrada = scanner.next();
+        }
+        return entrada.equalsIgnoreCase("y");
+    }
 }

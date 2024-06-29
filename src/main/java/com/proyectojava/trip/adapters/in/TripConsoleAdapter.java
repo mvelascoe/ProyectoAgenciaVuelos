@@ -3,7 +3,6 @@ package com.proyectojava.trip.adapters.in;
 import com.proyectojava.trip.application.TripService;
 import com.proyectojava.trip.domain.models.Trip;
 import com.proyectojava.utility.Validations;
-import com.proyectojava.flightfare.domain.models.Flightfare;
 import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
 
 import java.text.ParseException;
@@ -71,14 +70,22 @@ public class TripConsoleAdapter {
 
     private void createTrip() {
         double precio = validations.validarDouble("Ingrese el precio del viaje: ");
-        String lugarIda = validations.caracteres("Ingrese el lugar de ida: ", 50);
-        String lugarLlegada = validations.caracteres("Ingrese el lugar de llegada: ", 50);
+        String lugarIda = validations.caracteres("Ingrese el lugar de Origen: ", 50);
+        //Pendiente Listar Ciudades
+        String lugarLlegada = validations.caracteres("Ingrese el Destino: ", 50);
+        //Pendiente Listar Ciudades
+
         Trip newTrip = new Trip(0, precio, lugarIda, lugarLlegada);
         tripService.createTrip(newTrip);
-        System.out.println("\n*******************************");
+
+        System.out.println("\n****************************");
         System.out.println("* Viaje creado exitosamente. *");
-        System.out.println("*******************************\n");
+        System.out.println("******************************\n");
+
+
+
     }
+
 
     private void updateTrip() {
         int idTrip = validations.validarInt("Ingrese el ID del viaje a actualizar: ");

@@ -11,6 +11,7 @@ import com.proyectojava.airline.domain.models.Airline;
 import com.proyectojava.airport.domain.models.Airport;
 import com.proyectojava.employee.application.EmployeeService;
 import com.proyectojava.employee.domain.models.Employee;
+import com.proyectojava.flightconnection.domain.models.FlightConnectionInfo;
 import com.proyectojava.rols.domain.models.Rols;
 import com.proyectojava.generalConsole.in.GeneralConsoleAdapter;
 
@@ -191,4 +192,5 @@ public class EmployeeConsoleAdapter {
             }
         }
     }
+
 }

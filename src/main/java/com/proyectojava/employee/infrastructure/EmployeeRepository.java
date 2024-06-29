@@ -11,4 +11,6 @@ public interface EmployeeRepository {
     Optional<Employee> findById(String id_empleado);
     void delete(String id_empleado);
     List<Employee> findAll();
+    void updateTrayecto(String id_empleado, int id_trayecto);
+   
 }
